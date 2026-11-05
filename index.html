@@ -709,7 +709,7 @@
       <div class="actions">
         <a class="btn btn-primary" href="mailto:tobias.muenchen@gmail.com">Schreib mir direkt</a>
         <a class="btn btn-outline" href="https://www.linkedin.com/in/tobias-your-new-ai-expert" target="_blank" rel="noopener">LinkedIn-Profil</a>
-        <a class="btn btn-outline" href="#projekte">KI-Konzepte erleben</a>
+        <a class="btn btn-outline" href="#h-mindset">Mein Antrieb &amp; Weg</a>
         <a class="btn btn-outline" href="#galerie">Berg- &amp; Flugbilder</a>
       </div>
     </div>
@@ -815,88 +815,7 @@
     </div>
   </section>
 
-  <!-- 3. INTERAKTIVE KI-KONZEPTE (neutralisiert am Outdoor-/Alpen-Beispiel & animiert) -->
-  <section class="section reveal" id="projekte" aria-labelledby="h-proj">
-    <p class="section-kicker">Interaktive Konzepte · Neutrales Outdoor-Beispiel</p>
-    <h2 class="section-title" id="h-proj">Wie ich KI-Lösungen aus einem Guss denke – zum Ausprobieren</h2>
-    <p class="section-intro">
-      Aus Vertraulichkeitsgründen zeige ich meine Arbeitsweise hier an einem neutralen Beispiel aus der Bergsport- und Tourenwelt. Klicke auf die Bausteine, um die Abläufe live zu sehen.
-    </p>
-
-    <div class="projects-grid">
-      <!-- Konzept 1: Mehrsprachiges Feedback mit animiertem Mehrheitsentscheid -->
-      <article class="card" aria-labelledby="p1">
-        <h3 id="p1">1. Freitext-Stimmen mehrsprachig verstehen &amp; absichern</h3>
-        <p class="what">Statt Bauchgefühl: Rückmeldungen aus verschiedenen Sprachen automatisch in Thema, Detailpunkt und Stimmung ordnen – abgesichert über mehrere Prüfdurchläufe.</p>
-        <div class="chips" role="group" aria-label="Beispiel-Rückmeldung wählen">
-          <button type="button" data-fb="0" aria-pressed="true">DE · Höhenprofil</button>
-          <button type="button" data-fb="1" aria-pressed="false">EN · Wetterradar</button>
-          <button type="button" data-fb="2" aria-pressed="false">FR · Hüttenbuchung</button>
-          <button type="button" data-fb="3" aria-pressed="false">IT · Offline-Karte</button>
-        </div>
-        <div class="box" aria-live="polite">
-          <p class="k">Nutzerstimme (Neutrales Tourenportal-Beispiel)</p>
-          <p class="say" id="fb-text">„Der Offline-Download der Gratroute klappt sofort, aber das Höhenprofil aktualisiert sich bei schwachem Empfang erst nach zwei Minuten.“</p>
-
-          <p class="k">Qualitätssicherung per Mehrheitsentscheid</p>
-          <div class="vote-row" id="vote-row">
-            <span class="run-pill active">Durchlauf 1 ✓</span>
-            <span class="run-pill active">Durchlauf 2 ✓</span>
-            <span class="run-pill active">Durchlauf 3 ✓</span>
-            <span class="run-pill active">→ Konsens erreicht</span>
-          </div>
-
-          <p class="k">Automatische Einordnung in die Themen-Struktur</p>
-          <div class="tags" id="fb-tags">
-            <span class="tag">Bereich: Tourenplanung &amp; GPS</span>
-            <span class="tag">Detail: Höhenprofil-Synchronisation</span>
-            <span class="tag neg">Signal: Verzögerung prüfen</span>
-          </div>
-        </div>
-        <p class="proof">
-          <strong>Mein Prinzip in der Praxis:</strong> Sprachmodelle schwanken, wenn man sie nur einmal fragt. Erst durch den Abgleich gegen tausende handgeprüfte Referenzfälle und einen Mehrheitsentscheid über mehrere Durchläufe entsteht eine <strong>reproduzierbare Trefferquote von 90 %</strong>.
-        </p>
-      </article>
-
-      <!-- Konzept 2: Mit Daten sprechen bis zur fertigen Folie -->
-      <article class="card" aria-labelledby="p2">
-        <h3 id="p2">2. Mit Daten sprechen – von der Frage bis zur fertigen Folie</h3>
-        <p class="what">Wenn Daten vorab sauber strukturiert und Geschäftsbegriffe klar hinterlegt sind, erstellen Teams in wenigen Minuten selbst Auswertungen bis zur fertigen Präsentationsfolie.</p>
-        <div class="chips" role="group" aria-label="Beispielfrage wählen">
-          <button type="button" data-q="0" aria-pressed="true">Nachfrage nach Bergsport-Sparte</button>
-          <button type="button" data-q="1" aria-pressed="false">Buchungstrend im Saisonverlauf</button>
-          <button type="button" data-q="2" aria-pressed="false">Regionen nach Zufriedenheit</button>
-        </div>
-        <div class="box" aria-live="polite">
-          <div class="flow-steps" id="flow-steps" aria-label="Ablauf aus einem Guss">
-            <span class="flow-step done">1. Alltagsfrage</span>
-            <span class="flow-step done">2. Begriffslogik</span>
-            <span class="flow-step done">3. Datenabfrage</span>
-            <span class="flow-step done">4. Folien-Export</span>
-          </div>
-
-          <pre><code id="q-sql">SELECT sparte, ROUND(SUM(volumen_eur)/1000, 1) AS tsd_eur
-FROM bergsport_modell.saison_auswertung
-WHERE saison = 2026
-GROUP BY sparte ORDER BY tsd_eur DESC;</code></pre>
-          <ul class="bars" id="q-bars">
-            <li><span>Gleitschirm &amp; Flug</span><span class="bar"><i style="width:100%"></i></span><b>480 T€</b></li>
-            <li><span>Hochtouren &amp; Fels</span><span class="bar"><i style="width:76%"></i></span><b>365 T€</b></li>
-            <li><span>Skitour &amp; Lawine</span><span class="bar"><i style="width:54%"></i></span><b>260 T€</b></li>
-          </ul>
-          <div class="slide-preview" id="q-slide">
-            <span><strong>Fertige Folien-Vorschau:</strong> „Gleitschirm &amp; Flug führt die Saison 2026 mit 480 T€ (+18 % zum Vorjahr) an.“</span>
-            <small>✓ Direkt ins Foliendeck</small>
-          </div>
-        </div>
-        <p class="proof">
-          <strong>Mein Prinzip in der Praxis:</strong> Keine Insellösung, sondern alles aus einem Guss – von der vorbereiteten Datenlogik über den sicheren Zugriff bis zur automatischen Übergabe in Standard-Präsentationsfolien.
-        </p>
-      </article>
-    </div>
-  </section>
-
-  <!-- 4. AUTHENTISCHE GALERIE (mit Lightbox) -->
+  <!-- 3. AUTHENTISCHE GALERIE (mit Lightbox) -->
   <section class="section reveal" id="galerie" aria-labelledby="h-gal">
     <p class="section-kicker">Echte Momente · Klick zum Vergrößern</p>
     <h2 class="section-title" id="h-gal">Draußen unterwegs – zwischen Viertausendern, Felsgrat und Thermik</h2>
