@@ -810,7 +810,36 @@
     #cc-banner .actions { margin-top: 14px; }
     #cc-banner .btn { flex: 1; justify-content: center; }
 
-        /* Animation unter "Laufschuhe" */
+            /* Konzernschuhe: rot eingefärbt und rot unterstrichen */
+    .shoes-old {
+      position: relative;
+      display: inline-block;
+      white-space: nowrap;
+      color: #d9381e;
+    }
+    .shoes-old::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 100%;
+      height: 4.5px;
+      border-radius: 4px;
+      background: #d9381e;
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+      animation: drawUnderline 0.75s 0.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      box-shadow: 0 2px 8px rgba(217, 56, 30, 0.35);
+    }
+    html[data-theme="dark"] .shoes-old {
+      color: #f87171;
+    }
+    html[data-theme="dark"] .shoes-old::after {
+      background: #f87171;
+      box-shadow: 0 2px 8px rgba(248, 113, 113, 0.35);
+    }
+
+    /* Laufschuhe: Akzentfarbe und Alpingrün/Blau-Unterstreichung */
     .shoes-accent {
       position: relative;
       display: inline-block;
@@ -823,12 +852,12 @@
       left: 0;
       bottom: -3px;
       width: 100%;
-      height: 5px;
+      height: 4.5px;
       border-radius: 4px;
       background: linear-gradient(90deg, var(--alpine-green), var(--accent));
       transform: scaleX(0);
       transform-origin: 0 50%;
-      animation: drawUnderline 0.85s 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation: drawUnderline 0.85s 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
       box-shadow: 0 2px 10px rgba(13, 82, 150, 0.3);
     }
     @keyframes drawUnderline {
@@ -961,7 +990,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
-      .reveal, .stagger > *, .shoes-accent::after { opacity: 1 !important; transform: none !important; animation: none !important; }
+      .reveal, .stagger > *, .shoes-old::after, .shoes-accent::after { opacity: 1 !important; transform: none !important; animation: none !important; }
     }
   </style>
 </head>
@@ -1013,18 +1042,21 @@
         </div>
       </div>
 
-      <h1 data-de="Konzernschuhe aus.<br>Schnelle &amp;amp; leichte <span class=&quot;shoes-accent&quot;&gt;Laufschuhe&lt;/span&gt; an." data-en="Corporate boots off.<br>Fast &amp;amp; light <span class=&quot;shoes-accent&quot;&gt;running shoes&lt;/span&gt; on.">Konzernschuhe aus.<br>Schnelle &amp; leichte <span class="shoes-accent">Laufschuhe</span> an.</h1>
+      <h1 data-de="<span class=&quot;shoes-old&quot;>Konzernschuhe</span> aus.<br>Schnelle &amp;amp; leichte <span class=&quot;shoes-accent&quot;>Laufschuhe</span> an."
+          data-en="<span class=&quot;shoes-old&quot;>Corporate boots</span> off.<br>Fast &amp;amp; light <span class=&quot;shoes-accent&quot;>running shoes</span> on.">
+        <span class="shoes-old">Konzernschuhe</span> aus.<br>Schnelle &amp; leichte <span class="shoes-accent">Laufschuhe</span> an.
+      </h1>
 
       <p class="lead"
-         data-de="Ich habe mich beruflich alle drei bis vier Jahre intern komplett neu erfunden und mir immer wieder bewusst neue Stellen mit ganz neuen Aufgaben und Herausforderungen gesucht. „Training on the job“ war dabei meine Devise."
-         data-en="Every three to four years, I deliberately reinvented myself internally—seeking out completely new roles, unfamiliar challenges, and fresh territory. 'Training on the job' has always been my guiding principle.">
-        Ich habe mich beruflich alle drei bis vier Jahre intern komplett neu erfunden und mir immer wieder bewusst neue Stellen mit ganz neuen Aufgaben und Herausforderungen gesucht. „Training on the job“ war dabei meine Devise.
+         data-de="Über zehn Jahre bei BMW: Alle drei bis vier Jahre habe ich die Abteilung gewechselt und mich in neue Domänen eingearbeitet – vom Frontend über Big-Data-Pipelines bis zu Enterprise-KI. Alles direkt in der Praxis aufgebaut und produktiv gesetzt."
+         data-en="Over ten years at BMW: every three to four years, I switched teams and mastered a new domain—from web frontends to big data pipelines and enterprise AI. Everything built directly on the job and shipped to production.">
+        Über zehn Jahre bei BMW: Alle drei bis vier Jahre habe ich die Abteilung gewechselt und mich in neue Domänen eingearbeitet – vom Frontend über Big-Data-Pipelines bis zu Enterprise-KI. Alles direkt in der Praxis aufgebaut und produktiv gesetzt.
       </p>
 
       <p class="sublead"
-         data-de="Ob beim Gleitschirmfliegen vor den Gletschern, als Tandempilot, auf Hochtour am Grat oder beim Bau digitaler Lösungen: Mich treibt ein nimmersattes Wesen bei Neuerungen, eigene Kreativität und das selbst gewählte Kredo des lebenslangen Lernens an. Jetzt bin ich bereit, meine groß und träge gewordenen Konzernschuhe gegen schnelle, leichte Laufschuhe einzutauschen."
-         data-en="Whether paragliding in front of glaciers, flying tandem passengers, climbing alpine ridges, or building digital products: I am driven by an insatiable curiosity for innovation, hands-on creativity, and lifelong learning. Now I am ready to trade my heavy, slow-moving corporate boots for fast, light running shoes.">
-        Ob beim Gleitschirmfliegen vor den Gletschern, als Tandempilot, auf Hochtour am Grat oder beim Bau digitaler Lösungen: Mich treibt ein nimmersattes Wesen bei Neuerungen, eigene Kreativität und das selbst gewählte Kredo des lebenslangen Lernens an. Jetzt bin ich bereit, meine groß und träge gewordenen Konzernschuhe gegen schnelle, leichte Laufschuhe einzutauschen.
+         data-de="Gleitschirmpilot, Alpinist, Allrounder für digitale Produkte. In den Bergen wie im Job suche ich kurze Entscheidungswege, klare Verantwortung und ein Team, das etwas bewegen will. Zeit, die schweren Konzernschuhe abzulegen – und die schnellen, leichten anzuziehen."
+         data-en="Paragliding pilot, alpine mountaineer, all-rounder for digital products. In the mountains as in engineering, I value short decision paths, clear ownership, and a team driven to build. Time to leave the heavy corporate boots behind—and lace up fast, light running shoes.">
+        Gleitschirmpilot, Alpinist, Allrounder für digitale Produkte. In den Bergen wie im Job suche ich kurze Entscheidungswege, klare Verantwortung und ein Team, das etwas bewegen will. Zeit, die schweren Konzernschuhe abzulegen – und die schnellen, leichten anzuziehen.
       </p>
 
       <div class="actions">
@@ -1081,14 +1113,14 @@
 
   <!-- 2. MINDSET: Gleitschirm, Bergsteigen & Neuerfindung -->
   <section class="section reveal" id="mindset" aria-labelledby="h-mindset">
-    <p class="section-kicker" data-de="Metaphern mit Tiefgang · Haltung &amp; Antrieb" data-en="Metaphors with Depth · Mindset &amp; Drive">Metaphern mit Tiefgang · Haltung &amp; Antrieb</p>
+    <p class="section-kicker" data-de="Arbeitsweise &amp; Antrieb · München" data-en="Way of Working · Munich">Arbeitsweise &amp; Antrieb · München</p>
     <h2 class="section-title" id="h-mindset"
-        data-de="Warum ich so arbeite, wie ich fliege und auf Berge steige"
-        data-en="Why I work the same way I fly and climb mountains">Warum ich so arbeite, wie ich fliege und auf Berge steige</h2>
+        data-de="Wie ich denke und arbeite"
+        data-en="How I think and work">Wie ich denke und arbeite</h2>
     <p class="section-intro"
-       data-de="Auf dem Papier sieht man viele Jahre unter einem Dach. Wer genauer hinschaut, erkennt jemanden, der nie stillgestanden ist, sondern sich alle paar Jahre in ein völlig neues Feld eingearbeitet hat."
-       data-en="On paper, you see many years under one roof. Look closer and you will find someone who never stood still—stepping into an entirely new field every few years.">
-      Auf dem Papier sieht man viele Jahre unter einem Dach. Wer genauer hinschaut, erkennt jemanden, der nie stillgestanden ist, sondern sich alle paar Jahre in ein völlig neues Feld eingearbeitet hat.
+       data-de="Zehn Jahre beim selben Arbeitgeber bedeuten bei mir keine zehn Jahre Routine. Ich habe jede Station genutzt, um bei null anzufangen, neue Technologien zu lernen und Ergebnisse zu liefern."
+       data-en="Ten years with the same employer never meant ten years of routine. I used each chapter to start fresh, learn new technologies hands-on, and deliver real results.">
+      Zehn Jahre beim selben Arbeitgeber bedeuten bei mir keine zehn Jahre Routine. Ich habe jede Station genutzt, um bei null anzufangen, neue Technologien zu lernen und Ergebnisse zu liefern.
     </p>
 
     <div class="mindset-grid stagger">
@@ -1096,14 +1128,14 @@
         <img src="./assets/chamonix-gletscher-luftbild.jpg"
              alt="Blick aus dem Gleitschirm auf Gletscher und Felsnadeln"
              data-lightbox="./assets/chamonix-gletscher-luftbild.jpg"
-             data-caption-de="Blick aus dem Gurtzeug auf die Gletscherwelt: komplexe Strukturen von oben überblicken"
-             data-caption-en="View from the harness onto the glacier world: seeing complex terrain from above">
+             data-caption-de="Blick aus dem Gurtzeug auf die Gletscherwelt von Chamonix"
+             data-caption-en="View from the harness over the Chamonix glacier terrain">
         <div class="mindset-body">
-          <span class="mindset-tag" data-de="Gleitschirmfliegen · Weitblick" data-en="Paragliding · Big Picture">Gleitschirmfliegen · Weitblick</span>
-          <h3 data-de="Thermik lesen, nicht blind gegen den Wind kämpfen" data-en="Reading thermals instead of fighting the wind">Thermik lesen, nicht blind gegen den Wind kämpfen</h3>
-          <p data-de="Beim Streckenfliegen im Hochgebirge gewinnt man Höhe, indem man das Gelände liest, tragende Luftströme spürt und im richtigen Moment konsequent steuert. Genauso gehe ich digitale Produkte an: erst aus der Vogelperspektive verstehen, wo es hakt, und dann eine Lösung schaffen, die sich im Alltag leicht anfühlt."
-             data-en="In cross-country alpine flying, you gain altitude by reading the terrain, feeling lifting air currents, and steering decisively at the right moment. That is how I approach digital products: first understand the bottleneck from a bird's-eye view, then build a solution that feels effortless in daily use.">
-            Beim Streckenfliegen im Hochgebirge gewinnt man Höhe, indem man das Gelände liest, tragende Luftströme spürt und im richtigen Moment konsequent steuert. Genauso gehe ich digitale Produkte an: erst aus der Vogelperspektive verstehen, wo es hakt, und dann eine Lösung schaffen, die sich im Alltag leicht anfühlt.
+          <span class="mindset-tag" data-de="Analytisch · Überblick" data-en="Analytical · Big Picture">Analytisch · Überblick</span>
+          <h3 data-de="Erst den Engpass verstehen, dann bauen" data-en="Isolate the bottleneck before building">Erst den Engpass verstehen, dann bauen</h3>
+          <p data-de="Beim Streckenfliegen in den Alpen gewinnst du keine Höhe mit der Brechstange. Du liest das Gelände, verstehst den Wind und nutzt den Aufwind gezielt. Bei Software und Daten ist es dasselbe: Erst die echte Ursache im System isolieren – dann eine Lösung bauen, die dauerhaft trägt."
+             data-en="In alpine cross-country flying, you cannot force altitude. You read the terrain, understand the wind, and use the lift decisively. It is the exact same with software and data: isolate the root cause first—then build a solution that lasts.">
+            Beim Streckenfliegen in den Alpen gewinnst du keine Höhe mit der Brechstange. Du liest das Gelände, verstehst den Wind und nutzt den Aufwind gezielt. Bei Software und Daten ist es dasselbe: Erst die echte Ursache im System isolieren – dann eine Lösung bauen, die dauerhaft trägt.
           </p>
         </div>
       </article>
@@ -1112,14 +1144,14 @@
         <img src="./assets/granittuerme-schneegrat.jpg"
              alt="Aufstieg über einen steilen Schneegrat auf zwei markante Granittürme zu"
              data-lightbox="./assets/granittuerme-schneegrat.jpg"
-             data-caption-de="Hochalpine Überschreitung: fokussiert bleiben, wenn das Gelände anspruchsvoll wird"
-             data-caption-en="High-alpine traverse: staying focused when the terrain gets demanding">
+             data-caption-de="Hochalpine Überschreitung am Grat"
+             data-caption-en="High-alpine ridge traverse">
         <div class="mindset-body">
-          <span class="mindset-tag" data-de="Bergsteigen · Training on the Job" data-en="Mountaineering · Training on the Job">Bergsteigen · Training on the Job</span>
-          <h3 data-de="Alle 3 bis 4 Jahre ein neuer Gipfel" data-en="A new summit every 3 to 4 years">Alle 3 bis 4 Jahre ein neuer Gipfel</h3>
-          <p data-de="Routine ohne Lernkurve liegt mir nicht. Sobald ein Thema rund lief, habe ich mir intern das nächste Neuland gesucht: von großen Webportalen über das Stabilisieren riesiger Datenströme bis hin zu interaktiven KI-Werkzeugen. Lebenslanges Lernen ist für mich kein Schlagwort, sondern gelebter Alltag."
-             data-en="Routine without a learning curve isn't for me. Whenever a system ran smoothly, I sought out the next uncharted territory: from large-scale customer web portals to stabilizing massive data streams and building interactive AI tools. Lifelong learning isn't a buzzword to me—it's how I work.">
-            Routine ohne Lernkurve liegt mir nicht. Sobald ein Thema rund lief, habe ich mir intern das nächste Neuland gesucht: von großen Webportalen über das Stabilisieren riesiger Datenströme bis hin zu interaktiven KI-Werkzeugen. Lebenslanges Lernen ist für mich kein Schlagwort, sondern gelebter Alltag.
+          <span class="mindset-tag" data-de="Hands-on · Pragmatisch" data-en="Hands-on · Practical">Hands-on · Pragmatisch</span>
+          <h3 data-de="Neues lernen durch Machen" data-en="Learning new domains by doing">Neues lernen durch Machen</h3>
+          <p data-de="Ich warte nicht auf Schulungen. Sobald ein Bereich lief, habe ich mir das nächste Thema gesucht: Web-Architekturen umgebaut, Pipelines für Milliarden App-Events aufgesetzt, generative KI in den Arbeitsalltag geholt. Training on the Job heißt für mich: anpacken, verstehen, liefern."
+             data-en="I don't wait for training courses. As soon as one area was humming, I took on the next challenge: rebuilt web frontends, engineered pipelines for billions of app events, and brought generative AI into production. For me, training on the job means rolling up sleeves, understanding deeply, and delivering.">
+            Ich warte nicht auf Schulungen. Sobald ein Bereich lief, habe ich mir das nächste Thema gesucht: Web-Architekturen umgebaut, Pipelines für Milliarden App-Events aufgesetzt, generative KI in den Arbeitsalltag geholt. Training on the Job heißt für mich: anpacken, verstehen, liefern.
           </p>
         </div>
       </article>
@@ -1128,14 +1160,14 @@
         <img src="./assets/gleitschirm-start-hochland.jpg"
              alt="Start mit dem Gleitschirm über einem weiten Hochland-See"
              data-lightbox="./assets/gleitschirm-start-hochland.jpg"
-             data-caption-de="Startlauf am Hang: wenn Vorbereitung und Entschlossenheit zusammenkommen"
-             data-caption-en="Launch run on the slope: where preparation meets commitment">
+             data-caption-de="Startlauf am Steilhang"
+             data-caption-en="Launch run on the mountain slope">
         <div class="mindset-body">
-          <span class="mindset-tag" data-de="Wechselbereit · Startup-Tempo" data-en="Ready for Change · Scaleup Pace">Wechselbereit · Startup-Tempo</span>
-          <h3 data-de="Schnellere Laufschuhe für echtes Wachstum" data-en="Faster running shoes for real momentum">Schnellere Laufschuhe für echtes Wachstum</h3>
-          <p data-de="Wer abheben will, braucht einen entschlossenen Startlauf und leichtes Gepäck. Meine Konzernschuhe sind mir über die Jahre schlicht zu groß und zu träge geworden. Ich möchte meine Kreativität und Hands-on-Mentalität jetzt dort einbringen, wo Entscheidungen schnell fallen und man gemeinsam wächst."
-             data-en="To get airborne, you need a committed launch run and light gear. Over the years, my corporate boots simply grew too big and sluggish. I want to bring my creativity and hands-on mentality to a place where decisions happen fast and teams grow together.">
-            Wer abheben will, braucht einen entschlossenen Startlauf und leichtes Gepäck. Meine Konzernschuhe sind mir über die Jahre schlicht zu groß und zu träge geworden. Ich möchte meine Kreativität und Hands-on-Mentalität jetzt dort einbringen, wo Entscheidungen schnell fallen und man gemeinsam wächst.
+          <span class="mindset-tag" data-de="Wechselbereit · Tempo" data-en="Ready for Scaleups · Pace">Wechselbereit · Tempo</span>
+          <h3 data-de="Kurze Wege statt Konzernbürokratie" data-en="Short paths instead of red tape">Kurze Wege statt Konzernbürokratie</h3>
+          <p data-de="Am Steilhang brauchst du Entschlossenheit und leichtes Gepäck. Im Großkonzern wurden die Abstimmungsschleifen über die Jahre immer länger. Ich möchte meine Energie wieder dort einsetzen, wo Teams in Tagen entscheiden, Dinge ausprobieren und direkt live bringen."
+             data-en="On a steep mountain slope, you need clear commitment and light gear. Over the years, corporate approval chains grew longer and longer. I want to bring my momentum to a place where teams decide in days, test fast, and ship directly.">
+            Am Steilhang brauchst du Entschlossenheit und leichtes Gepäck. Im Großkonzern wurden die Abstimmungsschleifen über die Jahre immer länger. Ich möchte meine Energie wieder dort einsetzen, wo Teams in Tagen entscheiden, Dinge ausprobieren und direkt live bringen.
           </p>
         </div>
       </article>
@@ -1143,29 +1175,29 @@
 
     <!-- Die 3 Etappen (neutral formuliert) + animierter 3D-Flugtrack -->
     <div class="journey-wrap">
-      <div class="journey stagger" aria-label="Meine drei Stationen der Neuerfindung">
+      <div class="journey stagger" aria-label="Drei Stationen bei BMW">
         <div class="step">
-          <small data-de="Etappe 1 · Web &amp; Portale" data-en="Stage 1 · Web &amp; Portals">Etappe 1 · Web &amp; Portale</small>
-          <strong data-de="Digitale Kundenplattformen" data-en="Digital Customer Platforms">Digitale Kundenplattformen</strong>
-          <p data-de="Große Kundenportale und zentrale Marken-Webseiten gebaut und betreut – inklusive des Umbaus einer gewachsenen Frontend-Welt auf eine moderne Architektur."
-             data-en="Built and ran major customer portals and flagship brand websites—including migrating a legacy frontend landscape to a modern architecture.">
-            Große Kundenportale und zentrale Marken-Webseiten gebaut und betreut – inklusive des Umbaus einer gewachsenen Frontend-Welt auf eine moderne Architektur.
+          <small data-de="Station 1 · Portale" data-en="Stage 1 · Portals">Station 1 · Portale</small>
+          <strong data-de="Frontend-Architektur" data-en="Frontend Architecture">Frontend-Architektur</strong>
+          <p data-de="Zentrale Kundenplattformen und Marken-Websites mitentwickelt. Gewachsene Frontend-Systeme auf moderne Architekturen umgestellt."
+             data-en="Co-developed key customer platforms and brand web properties. Migrated legacy frontends to modern component architectures.">
+            Zentrale Kundenplattformen und Marken-Websites mitentwickelt. Gewachsene Frontend-Systeme auf moderne Architekturen umgestellt.
           </p>
         </div>
         <div class="step">
-          <small data-de="Etappe 2 · Datenflüsse &amp; Stabilität" data-en="Stage 2 · Data Flows &amp; Reliability">Etappe 2 · Datenflüsse &amp; Stabilität</small>
-          <strong data-de="Pipelines &amp; Monitoring" data-en="Pipelines &amp; Monitoring">Pipelines &amp; Monitoring</strong>
-          <p data-de="Durchgängige Datenstrecken von der Nutzungserfassung bis in die zentrale Datenplattform angebunden, große Datenmengen laufzeitoptimiert geteilt und durch Monitorings abgesichert."
-             data-en="Connected end-to-end data pipelines from app telemetry to the central data platform, split massive datasets with runtime optimization, and safeguarded operations via multi-stage monitoring.">
-            Durchgängige Datenstrecken von der Nutzungserfassung bis in die zentrale Datenplattform angebunden, große Datenmengen laufzeitoptimiert geteilt und durch Monitorings abgesichert.
+          <small data-de="Station 2 · Datenströme" data-en="Stage 2 · Data Streams">Station 2 · Datenströme</small>
+          <strong data-de="Data Engineering &amp; Monitoring" data-en="Data Engineering &amp; Monitoring">Data Engineering &amp; Monitoring</strong>
+          <p data-de="Milliarden Nutzungs-Events aus der Kunden-App über AWS Glue und Spark in den Data Lake überführt. Laufzeiten optimiert und Monitoring aufgesetzt."
+             data-en="Ingested billions of user app events into central lakehouses using AWS Glue and Spark. Optimized job runtimes and established monitoring.">
+            Milliarden Nutzungs-Events aus der Kunden-App über AWS Glue und Spark in den Data Lake überführt. Laufzeiten optimiert und Monitoring aufgesetzt.
           </p>
         </div>
         <div class="step">
-          <small data-de="Etappe 3 · KI aus einem Guss" data-en="Stage 3 · End-to-End AI">Etappe 3 · KI aus einem Guss</small>
-          <strong data-de="Von der Frage bis zur Folie" data-en="From Question to Slide Deck">Von der Frage bis zur Folie</strong>
-          <p data-de="Daten KI-gerecht strukturiert und die Geschäftslogik als gemeinsame Sprache abgebildet: Teams erstellen in wenigen Minuten selbst Auswertungen bis ins fertige Präsentationsdeck."
-             data-en="Structured data for AI readiness and modeled business semantics as a shared language—enabling teams to go from plain-language questions to finished presentation decks in minutes.">
-            Daten KI-gerecht strukturiert und die Geschäftslogik als gemeinsame Sprache abgebildet: Teams erstellen in wenigen Minuten selbst Auswertungen bis ins fertige Präsentationsdeck.
+          <small data-de="Station 3 · KI &amp; Analytics" data-en="Stage 3 · AI &amp; Analytics">Station 3 · KI &amp; Analytics</small>
+          <strong data-de="Angewandte KI für Fachbereiche" data-en="Applied AI for Business Teams">Angewandte KI für Fachbereiche</strong>
+          <p data-de="Semantische Datenschicht für NL-to-SQL aufgebaut und Kundenfeedback per LLM klassifiziert. Fachbereiche erstellen eigene Analysen in Minuten."
+             data-en="Built semantic data layers for NL-to-SQL and classified user feedback with LLMs. Business users run self-service analyses in minutes.">
+            Semantische Datenschicht für NL-to-SQL aufgebaut und Kundenfeedback per LLM klassifiziert. Fachbereiche erstellen eigene Analysen in Minuten.
           </p>
         </div>
       </div>
@@ -1181,10 +1213,10 @@
           </svg>
         </div>
         <div class="telemetry-body">
-          <strong data-de="Warum Daten für mich lebendig sind" data-en="Why data feels alive to me">Warum Daten für mich lebendig sind</strong>
-          <span data-de="Selbst in der Luft läuft die Telemetrie mit: 3.330 m Höhe, +2,2 m/s Steigen, 48,3 km Strecke – gute Daten zeigen sofort, wo der nächste Aufwind steht."
-                data-en="Even in the air, telemetry runs along: 3,330 m altitude, +2.2 m/s climb, 48.3 km distance—good data immediately reveals where the next thermal lifts.">
-            Selbst in der Luft läuft die Telemetrie mit: 3.330 m Höhe, +2,2 m/s Steigen, 48,3 km Strecke – gute Daten zeigen sofort, wo der nächste Aufwind steht.
+          <strong data-de="Telemetrie im Flug" data-en="In-Flight Telemetry">Telemetrie im Flug</strong>
+          <span data-de="3.330 m Höhe, 2,2 m/s Steigen, 48 km Strecke. Gute Daten sind Werkzeug, kein Selbstzweck – in der Luft wie im Beruf."
+                data-en="3,330 m altitude, +2.2 m/s climb, 48 km distance. Good data is a tool, not an end in itself—in the sky and on the job.">
+            3.330 m Höhe, 2,2 m/s Steigen, 48 km Strecke. Gute Daten sind Werkzeug, kein Selbstzweck – in der Luft wie im Beruf.
           </span>
         </div>
       </figure>
@@ -1193,14 +1225,14 @@
 
   <!-- 3. TEAMFÄHIGKEIT: Gemeinsam im Aufwind & Tandemfliegen -->
   <section class="section reveal" id="team" aria-labelledby="h-team">
-    <p class="section-kicker" data-de="Teamfähigkeit · Vertrauen &amp; Verantwortung" data-en="Teamwork · Trust &amp; Shared Responsibility">Teamfähigkeit · Vertrauen &amp; Verantwortung</p>
+    <p class="section-kicker" data-de="Zusammenarbeit · Vertrauen" data-en="Teamwork · Trust">Zusammenarbeit · Vertrauen</p>
     <h2 class="section-title" id="h-team"
-        data-de="Warum man gemeinsam höher steigt – beim Fliegen wie im Team"
-        data-en="Why you climb higher together—in the air and in a team">Warum man gemeinsam höher steigt – beim Fliegen wie im Team</h2>
+        data-de="Team &amp; Tandem"
+        data-en="Team &amp; Tandem">Team &amp; Tandem</h2>
     <p class="section-intro"
-       data-de="Fliegen wirkt auf den ersten Blick wie ein Einzelsport. In Wahrheit lernt man nirgendwo schneller, was blindes Vertrauen, klare Kommunikation und gegenseitige Unterstützung bedeuten – ob zu zweit in derselben Thermik oder als Tandempilot mit einem Passagier."
-       data-en="At first glance, flying looks like a solo sport. In reality, nowhere do you learn faster what real trust, clear communication, and mutual support mean—whether sharing a thermal with a wingman or flying a passenger on a tandem wing.">
-      Fliegen wirkt auf den ersten Blick wie ein Einzelsport. In Wahrheit lernt man nirgendwo schneller, was blindes Vertrauen, klare Kommunikation und gegenseitige Unterstützung bedeuten – ob zu zweit in derselben Thermik oder als Tandempilot mit einem Passagier.
+       data-de="Am Berg und in der Luft zählt verlässliche Absprache mehr als jede Einzelleistung. Im Engineering halte ich es genauso."
+       data-en="In the mountains and in the air, reliability and clear communication matter more than individual heroics. I take the exact same stance in engineering.">
+      Am Berg und in der Luft zählt verlässliche Absprache mehr als jede Einzelleistung. Im Engineering halte ich es genauso.
     </p>
 
     <div class="team-layout">
@@ -1221,26 +1253,26 @@
         </div>
         <div class="team-feature-body">
           <div>
-            <span class="mindset-tag green" data-de="Gemeinsam im Aufwind · Keine Silos" data-en="Shared Lift · Zero Silos">Gemeinsam im Aufwind · Keine Silos</span>
+            <span class="mindset-tag green" data-de="Wissen teilen" data-en="Knowledge Sharing">Wissen teilen</span>
             <h3 data-de="Wer den Aufwind findet, zeigt den anderen den Einstieg"
-                data-en="Whoever finds the thermal shows the team the way up">Wer den Aufwind findet, zeigt den anderen den Einstieg</h3>
-            <p data-de="Beim Streckenfliegen beobachtet man sich gegenseitig am Himmel: Steigt ein Pilot vor dir in einem Bart, fliegst du dazu, zentrierst gemeinsam und erreichst zusammen die Wolkenbasis viel schneller als allein. Genauso verstehe ich Teamarbeit: Wissen nicht horten, sondern Kollegen sofort mitnehmen, wenn man einen guten Lösungsweg gefunden hat."
-               data-en="On cross-country flights, pilots watch out for one another in the sky: when one pilot finds a thermal climb ahead, you join in, center the lift together, and reach cloudbase much faster than alone. That is how I view teamwork: never hoard knowledge—bring teammates along as soon as you find a path that works.">
-              Beim Streckenfliegen beobachtet man sich gegenseitig am Himmel: Steigt ein Pilot vor dir in einem Bart, fliegst du dazu, zentrierst gemeinsam und erreichst zusammen die Wolkenbasis viel schneller als allein. Genauso verstehe ich Teamarbeit: Wissen nicht horten, sondern Kollegen sofort mitnehmen, wenn man einen guten Lösungsweg gefunden hat.
+                data-en="Whoever finds lift marks the thermal for the group">Wer den Aufwind findet, zeigt den anderen den Einstieg</h3>
+            <p data-de="Beim Streckenfliegen beobachtet man seine Mitflieger: Findet jemand vor dir den Aufwind, fliegst du dazu; findest du ihn zuerst, kurbelst du an und gibst die Position weiter. Zusammen kommt man schneller an die Basis. Im Team halte ich nichts von Wissensinseln: Wer eine gute Lösung findet, teilt sie direkt mit den Kollegen."
+               data-en="In cross-country flying, you watch your wingmen: when someone hits lift ahead, you join them; when you find it first, you core it and mark the thermal. Together you reach cloudbase faster. In tech teams, I don't believe in information silos: whoever finds a solid solution shares it with the team right away.">
+              Beim Streckenfliegen beobachtet man seine Mitflieger: Findet jemand vor dir den Aufwind, fliegst du dazu; findest du ihn zuerst, kurbelst du an und gibst die Position weiter. Zusammen kommt man schneller an die Basis. Im Team halte ich nichts von Wissensinseln: Wer eine gute Lösung findet, teilt sie direkt mit den Kollegen.
             </p>
           </div>
           <div class="team-pillars stagger">
             <div class="team-pillar">
-              <strong data-de="Wissen teilen" data-en="Share Knowledge">Wissen teilen</strong>
-              <span data-de="Training on the Job aktiv an Kollegen weitergeben" data-en="Actively pass on lessons learned on the job">Training on the Job aktiv an Kollegen weitergeben</span>
+              <strong data-de="Direkt weitergeben" data-en="Share Directly">Direkt weitergeben</strong>
+              <span data-de="Erkenntnisse aus der Praxis ohne Hürden im Team teilen" data-en="Pass on practical findings directly within the team">Erkenntnisse aus der Praxis ohne Hürden im Team teilen</span>
             </div>
             <div class="team-pillar">
-              <strong data-de="Brücken bauen" data-en="Build Bridges">Brücken bauen</strong>
-              <span data-de="Zwischen Fachbereich, Technik und Entscheidern übersetzen" data-en="Translate clearly between business, tech, and leadership">Zwischen Fachbereich, Technik und Entscheidern übersetzen</span>
+              <strong data-de="Übersetzen" data-en="Bridge Roles">Übersetzen</strong>
+              <span data-de="Klar zwischen Entwicklern und Fachbereich vermitteln" data-en="Communicate clearly between engineers and business stakeholders">Klar zwischen Entwicklern und Fachbereich vermitteln</span>
             </div>
             <div class="team-pillar">
-              <strong data-de="Verlässlichkeit" data-en="Reliability">Verlässlichkeit</strong>
-              <span data-de="Ruhe bewahren, auch wenn der Wind auffrischt" data-en="Stay calm and steady when headwinds pick up">Ruhe bewahren, auch wenn der Wind auffrischt</span>
+              <strong data-de="Verlässlich" data-en="Reliable">Verlässlich</strong>
+              <span data-de="Ruhig bleiben und liefern, auch wenn Termine drücken" data-en="Stay calm and execute even under tight deadlines">Ruhig bleiben und liefern, auch wenn Termine drücken</span>
             </div>
           </div>
         </div>
@@ -1281,17 +1313,17 @@
         </div>
 
         <article class="tandem-card">
-          <span class="mindset-tag" data-de="Tandempilot · Menschen abholen" data-en="Tandem Pilot · Empowering People">Tandempilot · Menschen abholen</span>
-          <h3 data-de="Tandemfliegen: Komplexität nehmen, gemeinsam sicher landen"
-              data-en="Tandem Flying: Removing complexity and landing safely together">Tandemfliegen: Komplexität nehmen, gemeinsam sicher landen</h3>
-          <p data-de="Als Tandempilot nehme ich Menschen mit in die Luft, die noch nie zuvor geflogen sind. Vor dem Start geht es darum, ruhig zu erklären, Unsicherheit zu nehmen und beim Startlauf im gleichen Schritt zu laufen – und nach der Landung packt man auf der Wiese gemeinsam den Schirm zusammen. Genauso begleite ich Teams und Fachbereiche bei neuen KI- und Datenlösungen: verständlich auf Augenhöhe, ohne Fachchinesisch, bis das Ergebnis sauber steht."
-             data-en="As a tandem pilot, I take passengers into the sky who have never flown before. Before takeoff, it is all about explaining calmly, removing uncertainty, and running in step—and after landing, we pack up the wing together on the meadow. That is exactly how I guide teams and stakeholders through new AI and data solutions: at eye level, without jargon, until we land the result together.">
-            Als Tandempilot nehme ich Menschen mit in die Luft, die noch nie zuvor geflogen sind. Vor dem Start geht es darum, ruhig zu erklären, Unsicherheit zu nehmen und beim Startlauf im gleichen Schritt zu laufen – und nach der Landung packt man auf der Wiese gemeinsam den Schirm zusammen. Genauso begleite ich Teams und Fachbereiche bei neuen KI- und Datenlösungen: verständlich auf Augenhöhe, ohne Fachchinesisch, bis das Ergebnis sauber steht.
+          <span class="mindset-tag" data-de="Tandempilot · Verantwortung" data-en="Tandem Pilot · Ownership">Tandempilot · Verantwortung</span>
+          <h3 data-de="Komplexität nehmen, gemeinsam sicher landen"
+              data-en="Removing complexity, landing safely together">Komplexität nehmen, gemeinsam sicher landen</h3>
+          <p data-de="Als Tandempilot nehme ich Passagiere ohne Vorkenntnisse mit in die Luft. Vor dem Start: Nervosität nehmen, Ablauf erklären, beim Startlauf im gleichen Takt losrennen. Nach der Landung packen wir gemeinsam den Schirm ein. Genauso führe ich Teams an neue Tools wie KI oder Data-Plattformen heran: verständlich, auf Augenhöhe, ohne Fachchinesisch."
+             data-en="As a tandem pilot, I take passengers without prior experience into the sky. Before launch: remove nervousness, explain the procedure, run in step. After landing, we pack up the wing together. That is how I onboard teams to new tools like AI or data platforms: approachable, practical, jargon-free.">
+            Als Tandempilot nehme ich Passagiere ohne Vorkenntnisse mit in die Luft. Vor dem Start: Nervosität nehmen, Ablauf erklären, beim Startlauf im gleichen Takt losrennen. Nach der Landung packen wir gemeinsam den Schirm ein. Genauso führe ich Teams an neue Tools wie KI oder Data-Plattformen heran: verständlich, auf Augenhöhe, ohne Fachchinesisch.
           </p>
           <div class="actions">
             <a class="btn btn-outline" href="https://tobmuc.github.io/tandemflug/" target="_blank" rel="noopener"
                data-de="Tandemflug-Seite ansehen →"
-               data-en="Visit Tandem Flight Page →">Tandemflug-Seite ansehen →</a>
+               data-en="View Tandem Flight Page →">Tandemflug-Seite ansehen →</a>
           </div>
         </article>
       </div>
@@ -1300,14 +1332,14 @@
 
   <!-- 4. LIVE 3D-FLUG-VIDEO & EIGENE WEB-APP (TRACK-AUSWERTUNG) -->
   <section class="section reveal" id="track-app" aria-labelledby="h-track">
-    <p class="section-kicker" data-de="Wenn Fliegen &amp; Daten zusammenkommen · Eigenes Projekt" data-en="Where Flying Meets Data · Personal Project">Wenn Fliegen &amp; Daten zusammenkommen · Eigenes Projekt</p>
+    <p class="section-kicker" data-de="Eigenes Projekt · Browser-App" data-en="Personal Project · Browser App">Eigenes Projekt · Browser-App</p>
     <h2 class="section-title" id="h-track"
-        data-de="3D-Track-Auswertung – meine Flüge als interaktives Datenmodell"
-        data-en="3D Flight Track Analyzer – Turning my flights into an interactive data model">3D-Track-Auswertung – meine Flüge als interaktives Datenmodell</h2>
+        data-de="3D-Track-Auswertung im Browser"
+        data-en="3D Flight Track Analyzer in the Browser">3D-Track-Auswertung im Browser</h2>
     <p class="section-intro"
-       data-de="Für mich sind Daten keine trockenen Tabellen. In meiner selbst gebauten Browser-Anwendung werte ich echte GPS-Flugaufzeichnungen (IGC-Tracks) von Gleitschirm- und Hike-&amp;-Fly-Touren samt Thermik, Steigwerten und 3D-Gelände direkt im Browser aus."
-       data-en="To me, data is never just dry tables. In my self-built browser application, I analyze real GPS flight logs (IGC tracks) from paragliding and hike-and-fly tours—complete with thermal climbs, sink rates, and 3D terrain directly in the browser.">
-      Für mich sind Daten keine trockenen Tabellen. In meiner selbst gebauten Browser-Anwendung werte ich echte GPS-Flugaufzeichnungen (IGC-Tracks) von Gleitschirm- und Hike-&amp;-Fly-Touren samt Thermik, Steigwerten und 3D-Gelände direkt im Browser aus.
+       data-de="Meine Gleitschirmflüge werte ich mit einer selbst entwickelten Web-Anwendung aus: GPS-Tracks (IGC-Dateien) werden direkt im Browser mit Steigwerten, Geschwindigkeit und 3D-Gelände visualisiert."
+       data-en="I analyze my paragliding flights using a web app I built from scratch: GPS tracks (IGC files) are visualized directly in the browser with climb rates, speed, and 3D terrain.">
+      Meine Gleitschirmflüge werte ich mit einer selbst entwickelten Web-Anwendung aus: GPS-Tracks (IGC-Dateien) werden direkt im Browser mit Steigwerten, Geschwindigkeit und 3D-Gelände visualisiert.
     </p>
 
     <div class="track-showcase">
@@ -1319,12 +1351,12 @@
       <div>
         <span class="mindset-tag" data-de="Hands-on gebaut · Direkt im Browser" data-en="Built Hands-On · Directly in the Browser">Hands-on gebaut · Direkt im Browser</span>
         <h3 style="margin:0 0 10px;font-size:21px;line-height:1.3"
-            data-de="Vom Vario-Piepsen zur 3D-Visualisierung"
-            data-en="From Vario Beeps to 3D Terrain Visualization">Vom Vario-Piepsen zur 3D-Visualisierung</h3>
+            data-de="GPS-Telemetrie als 3D-Flugmodell"
+            data-en="GPS Telemetry as a 3D Flight Model">GPS-Telemetrie als 3D-Flugmodell</h3>
         <p style="margin:0;color:var(--muted);font-size:15px"
-           data-de="Jeder Aufwind, jede Gleitpassage und jede Entscheidung in der Luft hinterlässt eine Spur aus Zeitstempeln, Koordinaten und Höhenmetern. Die Anwendung macht genau sichtbar, wo die Thermik getragen hat und wie der Flug im alpinen Gelände verlief."
-           data-en="Every thermal climb, glide transition, and in-flight decision leaves a trail of timestamps, coordinates, and altitude meters. The web app visualizes exactly where the lift carried and how the flight unfolded across alpine terrain.">
-          Jeder Aufwind, jede Gleitpassage und jede Entscheidung in der Luft hinterlässt eine Spur aus Zeitstempeln, Koordinaten und Höhenmetern. Die Anwendung macht genau sichtbar, wo die Thermik getragen hat und wie der Flug im alpinen Gelände verlief.
+           data-de="Jeder Kreis in der Thermik und jede Gleitpassage hinterlässt eine exakte Spur aus Koordinaten und Zeitstempeln. Die App macht die Flugroute im alpinen Gelände greifbar – ohne Server, rein im Client gerendert."
+           data-en="Every thermal turn and glide transition leaves an exact trail of coordinates and timestamps. The app renders the flight route over alpine terrain—client-side, without servers.">
+          Jeder Kreis in der Thermik und jede Gleitpassage hinterlässt eine exakte Spur aus Koordinaten und Zeitstempeln. Die App macht die Flugroute im alpinen Gelände greifbar – ohne Server, rein im Client gerendert.
         </p>
         <div class="track-metrics stagger" aria-label="Eckdaten aus dem Demo-Flug">
           <div class="track-metric"><strong>3.330 m</strong><span data-de="Maximale Flughöhe" data-en="Peak Altitude">Maximale Flughöhe</span></div>
