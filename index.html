@@ -181,6 +181,37 @@
     }
     .theme-btn:hover { border-color: var(--accent); transform: translateY(-1px); }
 
+    /* Accessibility & Tastatur-Fokus (WCAG 2.1 AA) */
+    :focus-visible {
+      outline: 2px solid var(--accent) !important;
+      outline-offset: 3px !important;
+    }
+    .btn:focus-visible,
+    .theme-btn:focus-visible,
+    .pill-switch button:focus-visible {
+      border-radius: 999px;
+    }
+    .lightbox-close:focus-visible {
+      border-radius: 50%;
+    }
+
+    /* Touch-Target Optimierungen fr mobile Navigation & Footer */
+    .nav-links a {
+      padding: 8px 6px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .pill-switch button {
+      min-height: 34px;
+      padding: 6px 13px;
+    }
+    footer a, footer button {
+      padding: 6px 4px;
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+    }
+
     main { max-width: 1160px; margin: 0 auto; padding: 30px 24px 28px; }
 
     /* Scroll Reveal & Keyframe Animations */
@@ -754,11 +785,42 @@
       cursor: zoom-out;
     }
     #lightbox.open { display: flex; }
+    .lightbox-content {
+      position: relative;
+      max-width: min(1100px, 94vw);
+      text-align: center;
+      cursor: default;
+    }
     #lightbox img {
       max-width: min(1100px, 94vw);
       max-height: 82vh;
       border-radius: 14px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      cursor: zoom-out;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--line);
+      font-size: 24px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+      transition: transform 0.15s ease, background 0.15s ease;
+      z-index: 10;
+    }
+    .lightbox-close:hover {
+      transform: scale(1.08);
+      background: var(--card-alt);
     }
     #lightbox-cap {
       margin-top: 12px;
@@ -815,7 +877,7 @@
       position: relative;
       display: inline-block;
       white-space: nowrap;
-      color: #d9381e;
+      color: #c53018; /* WCAG AA: 5.2:1 Kontrast gegen #f7f6f2 */
     }
     .shoes-old::after {
       content: "";
@@ -825,7 +887,7 @@
       width: 100%;
       height: 4.5px;
       border-radius: 4px;
-      background: #d9381e;
+      background: #c53018;
       transform: scaleX(0);
       transform-origin: 0 50%;
       animation: drawUnderline 0.75s 0.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -1042,8 +1104,8 @@
         </div>
       </div>
 
-      <h1 data-de="<span class=&quot;shoes-old&quot;>Konzernschuhe</span> aus.<br>Schnelle &amp;amp; leichte <span class=&quot;shoes-accent&quot;>Laufschuhe</span> an."
-          data-en="<span class=&quot;shoes-old&quot;>Corporate boots</span> off.<br>Fast &amp;amp; light <span class=&quot;shoes-accent&quot;>running shoes</span> on.">
+      <h1 data-de="<span class=&quot;shoes-old&quot;>Konzernschuhe</span> aus.<br>Schnelle &amp; leichte <span class=&quot;shoes-accent&quot;>Laufschuhe</span> an."
+          data-en="<span class=&quot;shoes-old&quot;>Corporate boots</span> off.<br>Fast &amp; light <span class=&quot;shoes-accent&quot;>running shoes</span> on.">
         <span class="shoes-old">Konzernschuhe</span> aus.<br>Schnelle &amp; leichte <span class="shoes-accent">Laufschuhe</span> an.
       </h1>
 
@@ -1177,32 +1239,33 @@
     <div class="journey-wrap">
       <div class="journey stagger" aria-label="Drei Stationen bei BMW">
         <div class="step">
-          <small data-de="Station 1 · Portale" data-en="Stage 1 · Portals">Station 1 · Portale</small>
-          <strong data-de="Frontend-Architektur" data-en="Frontend Architecture">Frontend-Architektur</strong>
-          <p data-de="Zentrale Kundenplattformen und Marken-Websites mitentwickelt. Gewachsene Frontend-Systeme auf moderne Architekturen umgestellt."
-             data-en="Co-developed key customer platforms and brand web properties. Migrated legacy frontends to modern component architectures.">
-            Zentrale Kundenplattformen und Marken-Websites mitentwickelt. Gewachsene Frontend-Systeme auf moderne Architekturen umgestellt.
+          <small data-de="Station 1 · Portale &amp; Banking" data-en="Stage 1 · Portals &amp; Banking">Station 1 · Portale &amp; Banking</small>
+          <strong data-de="Sichere Kundenportale &amp; APIs" data-en="Secure Customer Portals &amp; APIs">Sichere Kundenportale &amp; APIs</strong>
+          <p data-de="Geschäftskritische Webanwendungen und REST-APIs für die BMW Bank sowie das MyBMW@SF-Portal gebaut – unter strengen Compliance- und Sicherheitsstandards."
+             data-en="Built mission-critical web applications and REST APIs for BMW Bank and the MyBMW@SF portal under strict regulatory and security standards.">
+            Geschäftskritische Webanwendungen und REST-APIs für die BMW Bank sowie das MyBMW@SF-Portal gebaut – unter strengen Compliance- und Sicherheitsstandards.
           </p>
         </div>
         <div class="step">
-          <small data-de="Station 2 · Datenströme" data-en="Stage 2 · Data Streams">Station 2 · Datenströme</small>
-          <strong data-de="Data Engineering &amp; Monitoring" data-en="Data Engineering &amp; Monitoring">Data Engineering &amp; Monitoring</strong>
-          <p data-de="Milliarden Nutzungs-Events aus der Kunden-App über AWS Glue und Spark in den Data Lake überführt. Laufzeiten optimiert und Monitoring aufgesetzt."
-             data-en="Ingested billions of user app events into central lakehouses using AWS Glue and Spark. Optimized job runtimes and established monitoring.">
-            Milliarden Nutzungs-Events aus der Kunden-App über AWS Glue und Spark in den Data Lake überführt. Laufzeiten optimiert und Monitoring aufgesetzt.
+          <small data-de="Station 2 · Webplattform mini.de" data-en="Stage 2 · mini.de Web Platform">Station 2 · Webplattform mini.de</small>
+          <strong data-de="Frontend-Architektur &amp; Migration" data-en="Frontend Architecture &amp; Migration">Frontend-Architektur &amp; Migration</strong>
+          <p data-de="Zentrale Marken- und Kundenplattform www.mini.de technisch betreut und von gewachsenem AngularJS auf moderne Architekturen mit React und TypeScript migriert."
+             data-en="Managed the core brand platform www.mini.de and migrated legacy AngularJS architecture to modern React and TypeScript.">
+            Zentrale Marken- und Kundenplattform www.mini.de technisch betreut und von gewachsenem AngularJS auf moderne Architekturen mit React und TypeScript migriert.
           </p>
         </div>
         <div class="step">
           <small data-de="Station 3 · KI &amp; Analytics" data-en="Stage 3 · AI &amp; Analytics">Station 3 · KI &amp; Analytics</small>
           <strong data-de="Angewandte KI für Fachbereiche" data-en="Applied AI for Business Teams">Angewandte KI für Fachbereiche</strong>
-          <p data-de="Semantische Datenschicht für NL-to-SQL aufgebaut und Kundenfeedback per LLM klassifiziert. Fachbereiche erstellen eigene Analysen in Minuten."
-             data-en="Built semantic data layers for NL-to-SQL and classified user feedback with LLMs. Business users run self-service analyses in minutes.">
-            Semantische Datenschicht für NL-to-SQL aufgebaut und Kundenfeedback per LLM klassifiziert. Fachbereiche erstellen eigene Analysen in Minuten.
+          <p data-de="„Chat your data“-Offensive mit semantischer Schicht vorangetrieben, LLM-Klassifikationen mit 90 % Genauigkeit in Produktion gebracht und Fachbereiche für Self-Service-Analysen befähigt."
+             data-en="Led the 'Chat your data' initiative with semantic data layers, shipped production LLM classifications with 90% accuracy, and enabled self-service business analytics.">
+            „Chat your data“-Offensive mit semantischer Schicht vorangetrieben, LLM-Klassifikationen mit 90 % Genauigkeit in Produktion gebracht und Fachbereiche für Self-Service-Analysen befähigt.
           </p>
         </div>
       </div>
+    </div>
 
-      <figure class="telemetry-card" style="margin:0"
+    <figure class="telemetry-card" style="margin:0"
               data-lightbox="./assets/flug-telemetrie-3330m.jpg"
               data-caption-de="Echter 3D-Flugtrack &amp; Vario-Telemetrie: 3.330 m Höhe, +2,2 m/s Thermik, 48,3 km Strecke"
               data-caption-en="Real 3D flight track &amp; vario telemetry: 3,330 m altitude, +2.2 m/s thermal climb, 48.3 km distance">
@@ -1473,9 +1536,10 @@
 </main>
 
 <!-- Lightbox für Vollbild-Ansicht -->
-<div id="lightbox" role="dialog" aria-label="Foto-Vollbildansicht">
-  <div>
-    <img id="lightbox-img" src="" alt="">
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Foto-Vollbildansicht">
+  <div class="lightbox-content">
+    <button type="button" id="lightbox-close" class="lightbox-close" aria-label="Schließen">&times;</button>
+    <img id="lightbox-img" src="" alt="Vergrößerte Bildansicht">
     <div id="lightbox-cap"></div>
   </div>
 </div>
@@ -1564,6 +1628,9 @@
     document.documentElement.lang = currentLang;
     document.getElementById("lang-de").classList.toggle("active", currentLang === "de");
     document.getElementById("lang-en").classList.toggle("active", currentLang === "en");
+    document.getElementById("lang-de").setAttribute("aria-pressed", currentLang === "de" ? "true" : "false");
+    document.getElementById("lang-en").setAttribute("aria-pressed", currentLang === "en" ? "true" : "false");
+    const closeBtn = document.getElementById("lightbox-close"); if (closeBtn) closeBtn.setAttribute("aria-label", currentLang === "en" ? "Close" : "Schließen");
 
     document.querySelectorAll("[data-de][data-en]").forEach(el => {
       const val = el.getAttribute("data-" + currentLang);
@@ -1608,15 +1675,27 @@
   const lb = document.getElementById("lightbox");
   const lbImg = document.getElementById("lightbox-img");
   const lbCap = document.getElementById("lightbox-cap");
+  const lbClose = document.getElementById("lightbox-close");
   document.querySelectorAll("[data-lightbox]").forEach(el => {
     el.addEventListener("click", () => {
       lbImg.src = el.getAttribute("data-lightbox");
       const cap = el.getAttribute("data-caption-" + currentLang) || el.getAttribute("data-caption-de") || "";
       lbCap.textContent = cap;
       lb.classList.add("open");
+      if (lbClose) lbClose.focus();
     });
   });
-  lb.addEventListener("click", () => lb.classList.remove("open"));
+  if (lbClose) {
+    lbClose.addEventListener("click", (e) => {
+      e.stopPropagation();
+      lb.classList.remove("open");
+    });
+  }
+  lb.addEventListener("click", (e) => {
+    if (e.target === lb || e.target === lbImg || e.target === lbClose) {
+      lb.classList.remove("open");
+    }
+  });
   document.addEventListener("keydown", e => { if (e.key === "Escape") lb.classList.remove("open"); });
 
   // 6. Consent Banner
