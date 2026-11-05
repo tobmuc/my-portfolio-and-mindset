@@ -791,14 +791,308 @@
     #cc-banner .actions { margin-top: 14px; }
     #cc-banner .btn { flex: 1; justify-content: center; }
 
-    @media (max-width: 960px) {
-      .hero, .mindset-grid, .journey-wrap, .journey, .team-layout, .track-showcase { grid-template-columns: 1fr; }
-      .gallery-grid { grid-template-columns: 1fr 1fr; }
-      .nav-links { display: none; }
+    /* Scroll-Fortschritt als Höhenband unter der Topbar */
+    .scroll-progress {
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      height: 3px;
+      width: 100%;
+      background: linear-gradient(90deg, var(--alpine-green), var(--accent));
+      transform-origin: 0 50%;
+      transform: scaleX(0);
     }
-    @media (max-width: 560px) {
-      .gallery-grid, .hero-mosaic, .tandem-photos, .team-pillars { grid-template-columns: 1fr; }
-      .topbar-inner { padding: 10px 16px; }
+
+    /* Headline: Konzernschuhe aus, Laufschuhe an */
+    .h1-line { display: block; }
+    .h1-off, .h1-on {
+      opacity: 0;
+      transform: translateY(14px);
+      animation: lineIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .h1-off { position: relative; width: fit-content; color: var(--muted); animation-delay: 0.1s; }
+    .h1-off::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 55%;
+      height: 3px;
+      border-radius: 3px;
+      background: var(--warm-amber);
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+      animation: strike 0.6s 0.9s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+    }
+    .h1-on { animation-delay: 0.45s; }
+    .swoosh { position: relative; white-space: nowrap; color: var(--accent); }
+    .swoosh::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -4px;
+      height: 6px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, var(--alpine-green), var(--accent));
+      opacity: 0.35;
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+      animation: strike 0.7s 1.35s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+    }
+    @keyframes lineIn { to { opacity: 1; transform: none; } }
+    @keyframes strike { to { transform: scaleX(1); } }
+
+    /* Gestaffeltes Einblenden von Kindelementen */
+    .stagger > * {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .visible .stagger > *, .stagger.visible > * { opacity: 1; transform: none; }
+    .stagger > *:nth-child(2) { transition-delay: 0.1s; }
+    .stagger > *:nth-child(3) { transition-delay: 0.2s; }
+    .stagger > *:nth-child(4) { transition-delay: 0.3s; }
+    .stagger > *:nth-child(5) { transition-delay: 0.4s; }
+
+    /* Business-Kontext: KPI-Kacheln */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .kpi {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--alpine-green), var(--accent));
+    }
+    .kpi-num {
+      display: block;
+      font-size: clamp(26px, 3.2vw, 34px);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+    .kpi-label {
+      display: block;
+      margin-top: 6px;
+      font-size: 13.4px;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+    .kpi-label strong { color: var(--text); display: block; font-size: 14px; }
+
+    /* Business-Kontext: Projekt-Fälle */
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+    .case-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px 22px;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+    .case-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+    .case-card h3 { margin: 0 0 12px; font-size: 18px; line-height: 1.3; }
+    .case-flow { margin: 0; padding: 0; list-style: none; position: relative; }
+    .case-flow::before, .case-flow::after {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--line);
+    }
+    .case-flow::after {
+      background: linear-gradient(180deg, var(--accent), var(--alpine-green));
+      transform: scaleY(0);
+      transform-origin: 50% 0;
+      transition: transform 1.2s 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+    .visible .case-flow::after { transform: scaleY(1); }
+    .case-flow li {
+      position: relative;
+      padding-left: 26px;
+      margin-bottom: 10px;
+      font-size: 14.4px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+    .case-flow li:last-child { margin-bottom: 0; color: var(--text); }
+    .case-flow li::before {
+      content: "";
+      position: absolute;
+      left: 1px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 2px solid var(--accent);
+      z-index: 1;
+    }
+    .case-flow li:last-child::before { background: var(--alpine-green); border-color: var(--alpine-green); }
+    .case-flow b {
+      display: block;
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+    }
+    .case-flow li:last-child b { color: var(--alpine-green); }
+
+    /* Konzern-Erfahrung, die im Scaleup trägt */
+    .bring-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .bring {
+      background: var(--card-alt);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 13.6px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+    .bring strong { display: block; color: var(--text); font-size: 14.5px; margin-bottom: 4px; }
+
+    /* Tech-Laufband */
+    .marquee {
+      margin-top: 22px;
+      overflow: hidden;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 12px 0;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+    .marquee-track {
+      display: flex;
+      gap: 10px;
+      width: max-content;
+      animation: marquee 48s linear infinite;
+    }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    .marquee-track span {
+      white-space: nowrap;
+      font-size: 13px;
+      font-weight: 650;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .marquee-track span:nth-child(3n) { background: var(--alpine-soft); color: var(--alpine-green); }
+    @keyframes marquee { to { transform: translateX(calc(-50% - 5px)); } }
+
+    /* Tablet: Breite nutzen statt endlos stapeln */
+    @media (max-width: 960px) {
+      .hero, .journey-wrap, .team-layout, .track-showcase { grid-template-columns: 1fr; }
+      .journey { grid-template-columns: repeat(3, 1fr); }
+      .mindset-grid { grid-template-columns: 1fr; gap: 16px; }
+      .mindset-card { flex-direction: row; }
+      .mindset-card img { width: 40%; height: auto; min-height: 230px; flex-shrink: 0; }
+      .kpi-grid, .bring-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+      .gallery-item img { height: 180px; }
+      .mosaic-main img { height: 320px; }
+      .mosaic-sub img { height: 190px; }
+      .nav-links { display: none; }
+      .video-frame video { max-height: 360px; }
+    }
+
+    /* Smartphone */
+    @media (max-width: 640px) {
+      main { padding: 18px 16px 24px; }
+      .topbar-inner { padding: 8px 14px; flex-wrap: nowrap; }
+      .brand-mini { font-size: 14px; min-width: 0; }
+      .brand-mini span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .theme-btn { padding: 6px 9px; }
+      #theme-label { display: none; }
+      .section { margin-top: 40px; scroll-margin-top: 60px; }
+      .author-row { gap: 12px; }
+      .avatar { width: 54px; height: 54px; }
+      .lead { font-size: 16.5px; }
+      .sublead { font-size: 15px; }
+      .hero { gap: 22px; padding-bottom: 26px; }
+      .hero .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+      .hero .actions .btn { justify-content: center; padding: 0 12px; font-size: 14px; text-align: center; }
+      .hero .actions .btn-primary { grid-column: 1 / -1; }
+      .hero-mosaic { gap: 8px; }
+      .mosaic-main img { height: 240px; }
+      .mosaic-sub img { height: 130px; }
+      .mosaic-sub .img-badge { left: 6px; right: 6px; bottom: 6px; padding: 5px 8px; font-size: 11px; }
+      .mindset-card { flex-direction: column; }
+      .mindset-card img { width: 100%; height: 190px; min-height: 0; }
+      .mindset-body { padding: 16px 18px 18px; }
+      .journey { grid-template-columns: 1fr; padding: 18px; gap: 16px; }
+      .telemetry-img-wrap { height: 170px; }
+      .kpi-grid { gap: 10px; }
+      .kpi { padding: 14px 14px 14px 16px; }
+      .case-grid, .bring-grid { grid-template-columns: 1fr; }
+      .case-card { padding: 18px; }
+      .team-feature-img { height: 260px; }
+      .team-feature-body { padding: 18px; }
+      .team-pillars { grid-template-columns: 1fr; gap: 8px; }
+      /* Tandem-Fotos als wischbares Band statt drei Bildschirmhöhen */
+      .tandem-photos {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: 74%;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        margin: 0 -16px;
+        padding: 0 16px 6px;
+        scrollbar-width: none;
+      }
+      .tandem-photos::-webkit-scrollbar { display: none; }
+      .tandem-photo { scroll-snap-align: center; min-height: 0; height: 230px; }
+      .tandem-card { padding: 18px; }
+      .track-showcase { padding: 14px; gap: 16px; }
+      .video-frame video { max-height: 300px; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .gallery-item img { height: 150px; }
+      .gallery-item figcaption { padding: 8px 10px; font-size: 12px; }
+      #lightbox { padding: 12px; }
+      #lightbox img { max-width: 100%; max-height: 74vh; }
+    }
+
+    @media (max-width: 360px) {
+      .brand-mini span { display: none; }
+      .hero .actions { grid-template-columns: 1fr; }
+      .kpi-num { font-size: 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal, .stagger > *, .h1-off, .h1-on { opacity: 1 !important; transform: none !important; }
+      .h1-off::after, .swoosh::after, .case-flow::after { transform: none !important; }
+      .marquee-track { flex-wrap: wrap; width: auto; }
+      .marquee-track [aria-hidden] { display: none; }
     }
   </style>
 </head>
@@ -813,10 +1107,11 @@
     </a>
 
     <nav class="nav-links" aria-label="Seitennavigation">
-      <a href="#mindset" data-de="Haltung &amp; Weg" data-en="Mindset &amp; Journey">Haltung &amp; Weg</a>
-      <a href="#team" data-de="Team &amp; Tandem" data-en="Teamwork &amp; Tandem">Team &amp; Tandem</a>
-      <a href="#track-app" data-de="3D-Flug-Auswertung" data-en="3D Flight Analyzer">3D-Flug-Auswertung</a>
-      <a href="#galerie" data-de="Berg- &amp; Flugbilder" data-en="Alpine Gallery">Berg- &amp; Flugbilder</a>
+      <a href="#mindset" data-de="Haltung" data-en="Mindset">Haltung</a>
+      <a href="#business" data-de="Business" data-en="Business">Business</a>
+      <a href="#team" data-de="Team &amp; Tandem" data-en="Team &amp; Tandem">Team &amp; Tandem</a>
+      <a href="#track-app" data-de="3D-Flug" data-en="3D Flight">3D-Flug</a>
+      <a href="#galerie" data-de="Galerie" data-en="Gallery">Galerie</a>
     </nav>
 
     <div class="controls">
@@ -830,6 +1125,7 @@
       </button>
     </div>
   </div>
+  <div class="scroll-progress" aria-hidden="true"></div>
 </header>
 
 <main>
@@ -849,7 +1145,7 @@
         </div>
       </div>
 
-      <h1 data-de="Konzernschuh aus.&lt;br&gt;Schnellere Laufschuhe an." data-en="Stepping out of corporate boots.&lt;br&gt;Lacing up faster running shoes.">Konzernschuh aus.<br>Schnellere Laufschuhe an.</h1>
+      <h1 class="hero-title" data-de="&lt;span class=&quot;h1-line h1-off&quot;&gt;Konzernschuhe aus.&lt;/span&gt; &lt;span class=&quot;h1-line h1-on&quot;&gt;Schnellere &amp;amp; leichtere &lt;span class=&quot;swoosh&quot;&gt;Laufschuhe&lt;/span&gt; an.&lt;/span&gt;" data-en="&lt;span class=&quot;h1-line h1-off&quot;&gt;Corporate boots off.&lt;/span&gt; &lt;span class=&quot;h1-line h1-on&quot;&gt;Faster &amp;amp; lighter &lt;span class=&quot;swoosh&quot;&gt;running shoes&lt;/span&gt; on.&lt;/span&gt;"><span class="h1-line h1-off">Konzernschuhe aus.</span> <span class="h1-line h1-on">Schnellere &amp; leichtere <span class="swoosh">Laufschuhe</span> an.</span></h1>
 
       <p class="lead"
          data-de="Ich habe mich beruflich alle drei bis vier Jahre intern komplett neu erfunden und mir immer wieder bewusst neue Stellen mit ganz neuen Aufgaben und Herausforderungen gesucht. „Training on the job“ war dabei meine Devise."
@@ -858,15 +1154,15 @@
       </p>
 
       <p class="sublead"
-         data-de="Ob beim Gleitschirmfliegen vor den Gletschern, als Tandempilot, auf Hochtour am Grat oder beim Bau digitaler Lösungen: Mich treibt ein nimmersattes Wesen bei Neuerungen, eigene Kreativität und das selbst gewählte Kredo des lebenslangen Lernens an. Jetzt bin ich bereit, meinen groß und träge gewordenen Konzernschuh gegen schnellere Laufschuhe einzutauschen."
-         data-en="Whether paragliding in front of glaciers, flying tandem passengers, climbing alpine ridges, or building digital products: I am driven by an insatiable curiosity for innovation, hands-on creativity, and lifelong learning. Now I am ready to trade my heavy, slow-moving corporate shoe for faster running shoes.">
-        Ob beim Gleitschirmfliegen vor den Gletschern, als Tandempilot, auf Hochtour am Grat oder beim Bau digitaler Lösungen: Mich treibt ein nimmersattes Wesen bei Neuerungen, eigene Kreativität und das selbst gewählte Kredo des lebenslangen Lernens an. Jetzt bin ich bereit, meinen groß und träge gewordenen Konzernschuh gegen schnellere Laufschuhe einzutauschen.
+         data-de="Ob beim Gleitschirmfliegen vor den Gletschern, als Tandempilot, auf Hochtour am Grat oder beim Bau digitaler Lösungen: Mich treibt ein nimmersattes Wesen bei Neuerungen, eigene Kreativität und das selbst gewählte Kredo des lebenslangen Lernens an. Jetzt bin ich bereit, meine groß und träge gewordenen Konzernschuhe gegen schnellere, leichtere Laufschuhe einzutauschen."
+         data-en="Whether paragliding in front of glaciers, flying tandem passengers, climbing alpine ridges, or building digital products: I am driven by an insatiable curiosity for innovation, hands-on creativity, and lifelong learning. Now I am ready to trade my heavy, slow-moving corporate boots for faster, lighter running shoes.">
+        Ob beim Gleitschirmfliegen vor den Gletschern, als Tandempilot, auf Hochtour am Grat oder beim Bau digitaler Lösungen: Mich treibt ein nimmersattes Wesen bei Neuerungen, eigene Kreativität und das selbst gewählte Kredo des lebenslangen Lernens an. Jetzt bin ich bereit, meine groß und träge gewordenen Konzernschuhe gegen schnellere, leichtere Laufschuhe einzutauschen.
       </p>
 
       <div class="actions">
         <a class="btn btn-primary" href="mailto:tobias.muenchen@gmail.com" data-de="Schreib mir direkt" data-en="Get in touch">Schreib mir direkt</a>
         <a class="btn btn-outline" href="https://www.linkedin.com/in/tobias-your-new-ai-expert" target="_blank" rel="noopener" data-de="LinkedIn-Profil" data-en="LinkedIn Profile">LinkedIn-Profil</a>
-        <a class="btn btn-outline" href="#team" data-de="Team &amp; Tandem" data-en="Team &amp; Tandem">Team &amp; Tandem</a>
+        <a class="btn btn-outline" href="#business" data-de="Business-Kontext" data-en="Business Context">Business-Kontext</a>
         <a class="btn btn-outline" href="#track-app" data-de="3D-Flug-Auswertung" data-en="3D Flight Analyzer">3D-Flug-Auswertung</a>
       </div>
     </div>
@@ -926,7 +1222,7 @@
       Auf dem Papier sieht man viele Jahre unter einem Dach. Wer genauer hinschaut, erkennt jemanden, der nie stillgestanden ist, sondern sich alle paar Jahre in ein völlig neues Feld eingearbeitet hat.
     </p>
 
-    <div class="mindset-grid">
+    <div class="mindset-grid stagger">
       <article class="mindset-card">
         <img src="./assets/chamonix-gletscher-luftbild.jpg"
              alt="Blick aus dem Gleitschirm auf Gletscher und Felsnadeln"
@@ -978,7 +1274,7 @@
 
     <!-- Die 3 Etappen (neutral formuliert) + animierter 3D-Flugtrack -->
     <div class="journey-wrap">
-      <div class="journey" aria-label="Meine drei Stationen der Neuerfindung">
+      <div class="journey stagger" aria-label="Meine drei Stationen der Neuerfindung">
         <div class="step">
           <small data-de="Etappe 1 · Web &amp; Portale" data-en="Stage 1 · Web &amp; Portals">Etappe 1 · Web &amp; Portale</small>
           <strong data-de="Digitale Kundenplattformen" data-en="Digital Customer Platforms">Digitale Kundenplattformen</strong>
@@ -1026,7 +1322,95 @@
     </div>
   </section>
 
-  <!-- 3. TEAMFÄHIGKEIT: Gemeinsam im Aufwind & Tandemfliegen -->
+  <!-- 3. BUSINESS-KONTEXT: Zahlen, Fälle und was ich mitbringe -->
+  <section class="section reveal" id="business" aria-labelledby="h-business">
+    <p class="section-kicker" data-de="Business-Kontext · Was am Ende rauskommt" data-en="Business Context · What Actually Ships">Business-Kontext · Was am Ende rauskommt</p>
+    <h2 class="section-title" id="h-business"
+        data-de="Metaphern sind schön. Zahlen sind ehrlicher."
+        data-en="Metaphors are nice. Numbers are more honest.">Metaphern sind schön. Zahlen sind ehrlicher.</h2>
+    <p class="section-intro"
+       data-de="Vier Projekte aus meinen letzten Jahren im Konzern, jeweils mit Ziel, Vorgehen und Ergebnis. Die meisten davon habe ich selbst angestoßen, technisch geleitet oder Zeile für Zeile gebaut."
+       data-en="Four projects from my recent corporate years, each with goal, approach and result. Most of them I initiated, led technically or built line by line myself.">
+      Vier Projekte aus meinen letzten Jahren im Konzern, jeweils mit Ziel, Vorgehen und Ergebnis. Die meisten davon habe ich selbst angestoßen, technisch geleitet oder Zeile für Zeile gebaut.
+    </p>
+
+    <div class="kpi-grid stagger" aria-label="Kennzahlen">
+      <div class="kpi">
+        <span class="kpi-num" data-count="100" data-suffix="+">100+</span>
+        <span class="kpi-label" data-de="&lt;strong&gt;Fachanwender befähigt&lt;/strong&gt;Fragen an die Daten in normaler Sprache" data-en="&lt;strong&gt;Business users enabled&lt;/strong&gt;Asking data questions in plain language"><strong>Fachanwender befähigt</strong>Fragen an die Daten in normaler Sprache</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-num" data-count="90" data-suffix-de=" %" data-suffix-en="%">90 %</span>
+        <span class="kpi-label" data-de="&lt;strong&gt;Reproduzierbare Genauigkeit&lt;/strong&gt;LLM-Klassifikation von Kundenfeedback" data-en="&lt;strong&gt;Reproducible accuracy&lt;/strong&gt;LLM classification of customer feedback"><strong>Reproduzierbare Genauigkeit</strong>LLM-Klassifikation von Kundenfeedback</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-num" data-count="30" data-prefix="+" data-suffix-de=" %" data-suffix-en="%">+30 %</span>
+        <span class="kpi-label" data-de="&lt;strong&gt;Funnel-Eintritte ggü. Vorjahr&lt;/strong&gt;Digitale Upgrades in der Kunden-App" data-en="&lt;strong&gt;Funnel entries year over year&lt;/strong&gt;Digital upgrades in the customer app"><strong>Funnel-Eintritte ggü. Vorjahr</strong>Digitale Upgrades in der Kunden-App</span>
+      </div>
+      <div class="kpi">
+        <span class="kpi-num" data-count="10" data-prefix="+" data-suffix-de=" %" data-suffix-en="%">+10 %</span>
+        <span class="kpi-label" data-de="&lt;strong&gt;Erwarteter Umsatz&lt;/strong&gt;Aus demselben Upgrade-Funnel" data-en="&lt;strong&gt;Expected revenue&lt;/strong&gt;From the same upgrade funnel"><strong>Erwarteter Umsatz</strong>Aus demselben Upgrade-Funnel</span>
+      </div>
+    </div>
+
+    <div class="case-grid stagger">
+      <article class="case-card">
+        <span class="mindset-tag" data-de="Chat your data · Technische Projektleitung" data-en="Chat Your Data · Technical Project Lead">Chat your data · Technische Projektleitung</span>
+        <h3 data-de="Von der Frage in normaler Sprache bis ins fertige Foliendeck" data-en="From a plain-language question to a finished slide deck">Von der Frage in normaler Sprache bis ins fertige Foliendeck</h3>
+        <ul class="case-flow">
+          <li data-de="&lt;b&gt;Ziel&lt;/b&gt;Fachbereiche sollen ihre Fragen direkt an die Daten stellen und das Ergebnis sofort weiterverwenden können." data-en="&lt;b&gt;Goal&lt;/b&gt;Business teams ask their questions directly against the data and reuse the answer right away."><b>Ziel</b>Fachbereiche sollen ihre Fragen direkt an die Daten stellen und das Ergebnis sofort weiterverwenden können.</li>
+          <li data-de="&lt;b&gt;Vorgehen&lt;/b&gt;NL-to-SQL-Lösung (Veezoo) eingekauft und technisch geleitet. Daten AI-ready aufbereitet, die Unternehmens-Ontologie als Semantic Layer abgebildet, Query Governance aufgesetzt und den OAuth-Handshake zwischen Active Directory und Veezoo über ein M2M-Gateway gebaut." data-en="&lt;b&gt;Approach&lt;/b&gt;Procured and technically led an NL-to-SQL solution (Veezoo). Made the data AI-ready, modeled the company ontology as a semantic layer, set up query governance and built the OAuth handshake between Active Directory and Veezoo via an M2M gateway."><b>Vorgehen</b>NL-to-SQL-Lösung (Veezoo) eingekauft und technisch geleitet. Daten AI-ready aufbereitet, die Unternehmens-Ontologie als Semantic Layer abgebildet, Query Governance aufgesetzt und den OAuth-Handshake zwischen Active Directory und Veezoo über ein M2M-Gateway gebaut.</li>
+          <li data-de="&lt;b&gt;Ergebnis&lt;/b&gt;Über 100 Fachanwender erstellen in wenigen Minuten eigene Auswertungen, auf Wunsch direkt im Standard-PowerPoint-Deck des Unternehmens." data-en="&lt;b&gt;Result&lt;/b&gt;More than 100 business users build their own analyses in minutes, straight into the company's standard PowerPoint deck if needed."><b>Ergebnis</b>Über 100 Fachanwender erstellen in wenigen Minuten eigene Auswertungen, auf Wunsch direkt im Standard-PowerPoint-Deck des Unternehmens.</li>
+        </ul>
+      </article>
+
+      <article class="case-card">
+        <span class="mindset-tag green" data-de="Enterprise AI · LLM-Klassifikation" data-en="Enterprise AI · LLM Classification">Enterprise AI · LLM-Klassifikation</span>
+        <h3 data-de="Mehrsprachiges Kundenfeedback automatisch den Produkt-Features zuordnen" data-en="Mapping multilingual customer feedback to product features automatically">Mehrsprachiges Kundenfeedback automatisch den Produkt-Features zuordnen</h3>
+        <ul class="case-flow">
+          <li data-de="&lt;b&gt;Ziel&lt;/b&gt;App-Feedback aus vielen Märkten soll verlässlich bei dem Feature-Team landen, das es betrifft." data-en="&lt;b&gt;Goal&lt;/b&gt;App feedback from many markets should reliably reach the feature team it concerns."><b>Ziel</b>App-Feedback aus vielen Märkten soll verlässlich bei dem Feature-Team landen, das es betrifft.</li>
+          <li data-de="&lt;b&gt;Vorgehen&lt;/b&gt;Ein älteres BERT-Modell durch eine LLM-Klassifikation abgelöst: Feature-Taxonomie als JSON-Kontext (einfacher RAG-Ansatz), Mehrheitsentscheid über mehrere Läufe. Erst über Azure OpenAI, später über eine interne API mit selbst gehosteten Modellen." data-en="&lt;b&gt;Approach&lt;/b&gt;Replaced an older BERT model with LLM classification: feature taxonomy as JSON context (simple RAG approach), majority vote across several runs. First via Azure OpenAI, later via an internal API with self-hosted models."><b>Vorgehen</b>Ein älteres BERT-Modell durch eine LLM-Klassifikation abgelöst: Feature-Taxonomie als JSON-Kontext (einfacher RAG-Ansatz), Mehrheitsentscheid über mehrere Läufe. Erst über Azure OpenAI, später über eine interne API mit selbst gehosteten Modellen.</li>
+          <li data-de="&lt;b&gt;Ergebnis&lt;/b&gt;90 % reproduzierbare Genauigkeit, gemessen an Ground-Truth-Sets mit 250 und 2.000 Einträgen." data-en="&lt;b&gt;Result&lt;/b&gt;90% reproducible accuracy, measured against ground-truth sets of 250 and 2,000 entries."><b>Ergebnis</b>90 % reproduzierbare Genauigkeit, gemessen an Ground-Truth-Sets mit 250 und 2.000 Einträgen.</li>
+        </ul>
+      </article>
+
+      <article class="case-card">
+        <span class="mindset-tag" data-de="Product Analytics · Funnel" data-en="Product Analytics · Funnel">Product Analytics · Funnel</span>
+        <h3 data-de="Mehr Kunden in den Kaufprozess für digitale Upgrades" data-en="More customers entering the purchase flow for digital upgrades">Mehr Kunden in den Kaufprozess für digitale Upgrades</h3>
+        <ul class="case-flow">
+          <li data-de="&lt;b&gt;Ziel&lt;/b&gt;Den Upgrade-Funnel in der Kunden-App messbar machen und gezielt verbessern." data-en="&lt;b&gt;Goal&lt;/b&gt;Make the upgrade funnel in the customer app measurable and improve it."><b>Ziel</b>Den Upgrade-Funnel in der Kunden-App messbar machen und gezielt verbessern.</li>
+          <li data-de="&lt;b&gt;Vorgehen&lt;/b&gt;Event- und View-Taxonomie sowie Metrik-Definitionen verantwortet, den Funnel Schritt für Schritt ausgewertet und Kennzahlen wie die Customer Retail Rate bis an C-Level und Vorstand berichtet." data-en="&lt;b&gt;Approach&lt;/b&gt;Owned the event and view taxonomy plus metric definitions, analyzed the funnel step by step and reported KPIs such as the customer retail rate up to C-level and the board."><b>Vorgehen</b>Event- und View-Taxonomie sowie Metrik-Definitionen verantwortet, den Funnel Schritt für Schritt ausgewertet und Kennzahlen wie die Customer Retail Rate bis an C-Level und Vorstand berichtet.</li>
+          <li data-de="&lt;b&gt;Ergebnis&lt;/b&gt;+30 % Funnel-Eintritte gegenüber dem Vorjahr und +10 % erwarteter Umsatz." data-en="&lt;b&gt;Result&lt;/b&gt;+30% funnel entries year over year and +10% expected revenue."><b>Ergebnis</b>+30 % Funnel-Eintritte gegenüber dem Vorjahr und +10 % erwarteter Umsatz.</li>
+        </ul>
+      </article>
+
+      <article class="case-card">
+        <span class="mindset-tag green" data-de="Data Engineering · Multi-Cloud" data-en="Data Engineering · Multi-Cloud">Data Engineering · Multi-Cloud</span>
+        <h3 data-de="Eine Datenstrecke, auf die sich Reports verlassen können" data-en="A data pipeline that reports can rely on">Eine Datenstrecke, auf die sich Reports verlassen können</h3>
+        <ul class="case-flow">
+          <li data-de="&lt;b&gt;Ziel&lt;/b&gt;Nutzungsdaten der Kunden-App vollständig und pünktlich im zentralen Data Lake." data-en="&lt;b&gt;Goal&lt;/b&gt;Customer app usage data complete and on time in the central data lake."><b>Ziel</b>Nutzungsdaten der Kunden-App vollständig und pünktlich im zentralen Data Lake.</li>
+          <li data-de="&lt;b&gt;Vorgehen&lt;/b&gt;ETL von Countly bis in den Data Lake verantwortet. Laufzeitoptimierte AWS-Glue-Jobs mit PySpark, S3-Partitionierung und Parquet. Monitoring mit Datenqualitäts-Regeln, Schema-Validierung, CloudWatch-Alerts, Grafana und Dashboards in Power BI und QuickSight." data-en="&lt;b&gt;Approach&lt;/b&gt;Owned the ETL from Countly into the data lake. Runtime-optimized AWS Glue jobs with PySpark, S3 partitioning and Parquet. Monitoring with data quality rules, schema validation, CloudWatch alerts, Grafana and dashboards in Power BI and QuickSight."><b>Vorgehen</b>ETL von Countly bis in den Data Lake verantwortet. Laufzeitoptimierte AWS-Glue-Jobs mit PySpark, S3-Partitionierung und Parquet. Monitoring mit Datenqualitäts-Regeln, Schema-Validierung, CloudWatch-Alerts, Grafana und Dashboards in Power BI und QuickSight.</li>
+          <li data-de="&lt;b&gt;Ergebnis&lt;/b&gt;Mehrere Monitorings im Betrieb, die Datenstrecke läuft dauerhaft stabil." data-en="&lt;b&gt;Result&lt;/b&gt;Several monitors in production, the pipeline runs stable over time."><b>Ergebnis</b>Mehrere Monitorings im Betrieb, die Datenstrecke läuft dauerhaft stabil.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="bring-grid stagger">
+      <div class="bring" data-de="&lt;strong&gt;Security &amp;amp; Governance&lt;/strong&gt;OAuth, Active Directory, Query Governance und Compliance kenne ich aus dem Konzernalltag." data-en="&lt;strong&gt;Security &amp;amp; Governance&lt;/strong&gt;OAuth, Active Directory, query governance and compliance are part of my daily corporate work."><strong>Security &amp; Governance</strong>OAuth, Active Directory, Query Governance und Compliance kenne ich aus dem Konzernalltag.</div>
+      <div class="bring" data-de="&lt;strong&gt;Große Datenmengen&lt;/strong&gt;Spark-Jobs, Partitionierung und Lakehouse auf AWS, Azure Databricks und Snowflake." data-en="&lt;strong&gt;Large data volumes&lt;/strong&gt;Spark jobs, partitioning and lakehouse on AWS, Azure Databricks and Snowflake."><strong>Große Datenmengen</strong>Spark-Jobs, Partitionierung und Lakehouse auf AWS, Azure Databricks und Snowflake.</div>
+      <div class="bring" data-de="&lt;strong&gt;Bis in den Vorstand&lt;/strong&gt;Kennzahlen so aufbereiten, dass C-Level damit entscheiden kann." data-en="&lt;strong&gt;Up to the board&lt;/strong&gt;Preparing KPIs so that C-level can make decisions with them."><strong>Bis in den Vorstand</strong>Kennzahlen so aufbereiten, dass C-Level damit entscheiden kann.</div>
+      <div class="bring" data-de="&lt;strong&gt;KI-Agenten im Alltag&lt;/strong&gt;Eigene Agent Skills und MCP-Server. Ein Agent testet die Kunden-App vor jedem Release auf einem echten Gerät." data-en="&lt;strong&gt;AI agents in daily work&lt;/strong&gt;Own agent skills and MCP servers. An agent tests the customer app on a real device before every release."><strong>KI-Agenten im Alltag</strong>Eigene Agent Skills und MCP-Server. Ein Agent testet die Kunden-App vor jedem Release auf einem echten Gerät.</div>
+    </div>
+
+    <div class="marquee" aria-label="Werkzeuge und Plattformen">
+      <div class="marquee-track">
+        <span>Python</span><span>SQL</span><span>PySpark</span><span>Azure Databricks</span><span>Delta Lake</span><span>Snowflake</span><span>AWS Glue</span><span>Amazon QuickSight</span><span>Azure OpenAI</span><span>Self-Hosted LLMs</span><span>Microsoft Fabric</span><span>Power BI</span><span>Palantir Foundry</span><span>TypeScript</span><span>React</span><span>Terraform</span><span>OpenTelemetry</span><span>Grafana</span><span>Playwright</span><span>MCP</span><span>Claude</span><span>GitHub Copilot</span>
+        <span aria-hidden="true">Python</span><span aria-hidden="true">SQL</span><span aria-hidden="true">PySpark</span><span aria-hidden="true">Azure Databricks</span><span aria-hidden="true">Delta Lake</span><span aria-hidden="true">Snowflake</span><span aria-hidden="true">AWS Glue</span><span aria-hidden="true">Amazon QuickSight</span><span aria-hidden="true">Azure OpenAI</span><span aria-hidden="true">Self-Hosted LLMs</span><span aria-hidden="true">Microsoft Fabric</span><span aria-hidden="true">Power BI</span><span aria-hidden="true">Palantir Foundry</span><span aria-hidden="true">TypeScript</span><span aria-hidden="true">React</span><span aria-hidden="true">Terraform</span><span aria-hidden="true">OpenTelemetry</span><span aria-hidden="true">Grafana</span><span aria-hidden="true">Playwright</span><span aria-hidden="true">MCP</span><span aria-hidden="true">Claude</span><span aria-hidden="true">GitHub Copilot</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. TEAMFÄHIGKEIT: Gemeinsam im Aufwind & Tandemfliegen -->
   <section class="section reveal" id="team" aria-labelledby="h-team">
     <p class="section-kicker" data-de="Teamfähigkeit · Vertrauen &amp; Verantwortung" data-en="Teamwork · Trust &amp; Shared Responsibility">Teamfähigkeit · Vertrauen &amp; Verantwortung</p>
     <h2 class="section-title" id="h-team"
@@ -1064,7 +1448,7 @@
               Beim Streckenfliegen beobachtet man sich gegenseitig am Himmel: Steigt ein Pilot vor dir in einem Bart, fliegst du dazu, zentrierst gemeinsam und erreichst zusammen die Wolkenbasis viel schneller als allein. Genauso verstehe ich Teamarbeit: Wissen nicht horten, sondern Kollegen sofort mitnehmen, wenn man einen guten Lösungsweg gefunden hat.
             </p>
           </div>
-          <div class="team-pillars">
+          <div class="team-pillars stagger">
             <div class="team-pillar">
               <strong data-de="Wissen teilen" data-en="Share Knowledge">Wissen teilen</strong>
               <span data-de="Training on the Job aktiv an Kollegen weitergeben" data-en="Actively pass on lessons learned on the job">Training on the Job aktiv an Kollegen weitergeben</span>
@@ -1133,7 +1517,7 @@
     </div>
   </section>
 
-  <!-- 4. LIVE 3D-FLUG-VIDEO & EIGENE WEB-APP (TRACK-AUSWERTUNG) -->
+  <!-- 5. LIVE 3D-FLUG-VIDEO & EIGENE WEB-APP (TRACK-AUSWERTUNG) -->
   <section class="section reveal" id="track-app" aria-labelledby="h-track">
     <p class="section-kicker" data-de="Wenn Fliegen &amp; Daten zusammenkommen · Eigenes Projekt" data-en="Where Flying Meets Data · Personal Project">Wenn Fliegen &amp; Daten zusammenkommen · Eigenes Projekt</p>
     <h2 class="section-title" id="h-track"
@@ -1161,7 +1545,7 @@
            data-en="Every thermal climb, glide transition, and in-flight decision leaves a trail of timestamps, coordinates, and altitude meters. The web app visualizes exactly where the lift carried and how the flight unfolded across alpine terrain.">
           Jeder Aufwind, jede Gleitpassage und jede Entscheidung in der Luft hinterlässt eine Spur aus Zeitstempeln, Koordinaten und Höhenmetern. Die Anwendung macht genau sichtbar, wo die Thermik getragen hat und wie der Flug im alpinen Gelände verlief.
         </p>
-        <div class="track-metrics" aria-label="Eckdaten aus dem Demo-Flug">
+        <div class="track-metrics stagger" aria-label="Eckdaten aus dem Demo-Flug">
           <div class="track-metric"><strong>3.330 m</strong><span data-de="Maximale Flughöhe" data-en="Peak Altitude">Maximale Flughöhe</span></div>
           <div class="track-metric"><strong>+2,2 m/s</strong><span data-de="Thermik-Steigen" data-en="Thermal Climb">Thermik-Steigen</span></div>
           <div class="track-metric"><strong>48,3 km</strong><span data-de="Streckenflug" data-en="XC Distance">Streckenflug</span></div>
@@ -1176,13 +1560,13 @@
     </div>
   </section>
 
-  <!-- 5. AUTHENTISCHE GALERIE (mit Lightbox) -->
+  <!-- 6. AUTHENTISCHE GALERIE (mit Lightbox) -->
   <section class="section reveal" id="galerie" aria-labelledby="h-gal">
     <p class="section-kicker" data-de="Echte Momente · Klick zum Vergrößern" data-en="Authentic Moments · Click to Enlarge">Echte Momente · Klick zum Vergrößern</p>
     <h2 class="section-title" id="h-gal"
         data-de="Draußen unterwegs – zwischen Viertausendern, Felsgrat und Thermik"
         data-en="Out in the Elements – Between 4,000-Meter Peaks, Rock Ridges, and Thermals">Draußen unterwegs – zwischen Viertausendern, Felsgrat und Thermik</h2>
-    <div class="gallery-grid">
+    <div class="gallery-grid stagger">
       <figure class="gallery-item" style="margin:0"
               data-lightbox="./assets/hero-oberaar-gipfel.jpg"
               data-caption-de="Gipfelglück in den Berner Alpen: oben ankommen, durchatmen, weiterdenken"
@@ -1375,6 +1759,7 @@
 
     const altEl = document.getElementById("alt-counter");
     if (altEl) altEl.textContent = (3330).toLocaleString(currentLang === "en" ? "en-US" : "de-DE") + " m";
+    document.querySelectorAll(".kpi-num").forEach(el => renderKpi(el, el.dataset.done ? 1 : 0));
   }
 
   (function initLang(){
@@ -1382,7 +1767,10 @@
     const urlLang = params.get("lang");
     let saved = null;
     try { saved = localStorage.getItem("tb-lang"); } catch(e){}
-    const initial = (urlLang === "en" || urlLang === "de") ? urlLang : (saved === "en" ? "en" : "de");
+    const browser = (navigator.languages && navigator.languages[0]) || navigator.language || "de";
+    const initial = (urlLang === "en" || urlLang === "de") ? urlLang
+      : (saved === "en" || saved === "de") ? saved
+      : (/^de\b/i.test(browser) ? "de" : "en");
     applyLanguage(initial);
   })();
 
@@ -1393,6 +1781,39 @@
       applyLanguage(lang);
     });
   });
+
+  // 6. KPI-Zähler: zählen hoch, sobald die Kacheln ins Bild kommen
+  function renderKpi(el, p) {
+    const target = Number(el.dataset.count);
+    const suffix = el.getAttribute("data-suffix-" + currentLang) ?? el.dataset.suffix ?? "";
+    el.textContent = (el.dataset.prefix || "") + Math.round(target * p) + suffix;
+  }
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const kpiObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      kpiObserver.unobserve(el);
+      if (reduceMotion) { el.dataset.done = "1"; renderKpi(el, 1); return; }
+      const start = performance.now();
+      (function tick(now) {
+        const p = Math.min(1, (now - start) / 1300);
+        renderKpi(el, 1 - Math.pow(1 - p, 3));
+        if (p < 1) requestAnimationFrame(tick); else el.dataset.done = "1";
+      })(start);
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll(".kpi-num").forEach(el => { renderKpi(el, 0); kpiObserver.observe(el); });
+
+  // 7. Scroll-Fortschritt in der Topbar
+  const progress = document.querySelector(".scroll-progress");
+  function updateProgress() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.transform = "scaleX(" + (max > 0 ? Math.min(1, window.scrollY / max) : 0) + ")";
+  }
+  window.addEventListener("scroll", updateProgress, { passive: true });
+  window.addEventListener("resize", updateProgress);
+  updateProgress();
 
   // 5. Lightbox
   const lb = document.getElementById("lightbox");
