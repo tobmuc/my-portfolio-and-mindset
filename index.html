@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tobias Burkard · Portfolio &amp; Mindset</title>
+  <meta name="description" content="Tobias Burkard – Allrounder für KI, Daten und digitale Produkte in München. Alle 3–4 Jahre neu erfunden, Training on the Job, Weitblick beim Gleitschirmfliegen und am Berg.">
+  <meta name="theme-color" content="#f8f7f4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+
+  <!-- Google tag (gtag.js) mit Consent Mode v2 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NXHY8714SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    (function(){
+      var c = 'denied';
+      try { if (localStorage.getItem('ga-consent') === 'granted') c = 'granted'; } catch(e){}
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: c
+      });
+    })();
+    gtag('js', new Date());
+    gtag('config', 'G-NXHY8714SY');
+  </script>
+
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f8f7f4;
+      --card: #ffffff;
+      --card-alt: #f1efe9;
+      --text: #181c20;
+      --muted: #57606a;
+      --line: #e2dfd7;
+      --accent: #0f5499;
+      --accent-soft: #e6f0fa;
+      --alpine-green: #1b6b52;
+      --sunset: #c85a17;
+      --code-bg: #111827;
+      --code-fg: #e5e7eb;
+      --font: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d1117;
+        --card: #151b23;
+        --card-alt: #1c2430;
+        --text: #f0f3f6;
+        --muted: #9ca3af;
+        --line: #2a3441;
+        --accent: #6cb6ff;
+        --accent-soft: #182b49;
+        --alpine-green: #3fb984;
+        --sunset: #f0883e;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.6 var(--font);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    main { max-width: 1140px; margin: 0 auto; padding: 36px 24px 28px; }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: center;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--line);
+    }
+    .author-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+    }
+    .eyebrow {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--alpine-green);
+      margin: 0;
+    }
+    h1 {
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      margin: 0 0 12px;
+      font-weight: 800;
+    }
+    .lead {
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--text);
+      margin: 0 0 16px;
+    }
+    .sublead {
+      font-size: 15.5px;
+      color: var(--muted);
+      margin: 0 0 22px;
+    }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 0 20px;
+      border-radius: 999px;
+      font: 600 15px var(--font);
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none !important;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #ffffff; }
+    @media (prefers-color-scheme: dark) {
+      .btn-primary { color: #091326; }
+    }
+    .btn-outline { border-color: var(--line); color: var(--text); background: var(--card); }
+
+    .hero-photo-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.08);
+    }
+    .hero-photo-card img {
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      display: block;
+    }
+    .photo-caption {
+      padding: 12px 16px;
+      font-size: 13.5px;
+      color: var(--muted);
+      background: var(--card);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .photo-caption strong { color: var(--text); }
+
+    /* Section Headers */
+    .section { margin-top: 42px; }
+    .section-kicker {
+      font-size: 12.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      color: var(--alpine-green);
+      margin: 0 0 6px;
+    }
+    .section-title {
+      font-size: clamp(22px, 2.8vw, 30px);
+      margin: 0 0 8px;
+      font-weight: 750;
+      letter-spacing: -0.01em;
+    }
+    .section-intro {
+      margin: 0 0 22px;
+      color: var(--muted);
+      max-width: 72ch;
+    }
+
+    /* Mindset 3 Columns with real photos */
+    .mindset-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .mindset-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .mindset-card img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      display: block;
+    }
+    .mindset-body {
+      padding: 18px 20px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .mindset-tag {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .mindset-body h3 {
+      margin: 0 0 8px;
+      font-size: 18.5px;
+      line-height: 1.3;
+    }
+    .mindset-body p {
+      margin: 0;
+      font-size: 14.8px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* Timeline / 3-4 Years Reinvention */
+    .journey {
+      margin-top: 22px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .step {
+      border-left: 3px solid var(--accent);
+      padding-left: 14px;
+    }
+    .step small {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .step strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+    .step p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Interactive Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+    }
+    .card h3 { font-size: 20px; margin: 0 0 6px; }
+    .card .what { margin: 0 0 14px; color: var(--muted); font-size: 14.5px; }
+    .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .chips button {
+      min-height: 36px;
+      padding: 0 13px;
+      border-radius: 9px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      font: 500 13px var(--font);
+      cursor: pointer;
+    }
+    .chips button[aria-pressed="true"] {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .chips button[aria-pressed="true"]::before { content: "✓ "; }
+    .box {
+      background: var(--card-alt);
+      border-radius: 14px;
+      padding: 16px;
+      flex: 1;
+    }
+    .k {
+      font-size: 11.5px;
+      color: var(--muted);
+      margin: 0 0 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+    .say { margin: 0 0 12px; font-size: 15px; font-style: italic; }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      font-size: 13px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--card);
+    }
+    .tag.pos::before { content: "▲ "; color: var(--alpine-green); }
+    .tag.neg::before { content: "▼ "; color: #d9381e; }
+    .proof { margin: 14px 0 0; font-size: 13.8px; color: var(--muted); }
+    .proof strong { color: var(--text); }
+    pre {
+      margin: 0 0 12px;
+      background: var(--code-bg);
+      color: var(--code-fg);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font: 12px/1.5 var(--mono);
+      overflow-x: auto;
+      white-space: pre;
+    }
+    .bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+    .bars li { display: grid; grid-template-columns: 115px 1fr 44px; gap: 10px; align-items: center; font-size: 13px; }
+    .bar { height: 8px; border-radius: 4px; background: var(--card); overflow: hidden; }
+    .bar i { display: block; height: 100%; background: var(--accent); border-radius: 4px; transition: width .3s ease; }
+    .bars b { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+    .slide-badge {
+      margin-top: 12px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      background: var(--card);
+      border: 1px dashed var(--line);
+      font-size: 13px;
+      color: var(--text);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Outdoor Photo Strip */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .gallery-item {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--card);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 195px;
+      object-fit: cover;
+      display: block;
+      transition: transform .25s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.03); }
+    .gallery-item figcaption {
+      padding: 9px 12px;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    /* Footer & Consent */
+    footer {
+      max-width: 1140px;
+      margin: 28px auto 0;
+      padding: 20px 24px 36px;
+      border-top: 1px solid var(--line);
+      font-size: 13.5px;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      align-items: center;
+    }
+    .linkbtn {
+      background: none;
+      border: 0;
+      padding: 0;
+      color: var(--muted);
+      font: inherit;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    #cc-banner {
+      display: none;
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      max-width: 500px;
+      margin: 0 auto;
+      z-index: 50;
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.2);
+      font-size: 14px;
+    }
+    #cc-banner strong { display: block; font-size: 15px; margin-bottom: 4px; }
+    #cc-banner .actions { margin-top: 14px; }
+    #cc-banner .btn { flex: 1; justify-content: center; }
+
+    @media (max-width: 900px) {
+      .hero, .mindset-grid, .journey, .projects-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .hero-photo-card img { height: 290px; }
+    }
+    @media (max-width: 520px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<main>
+
+  <!-- 1. HERO: Mensch, Haltung & echtes Gleitschirm-Foto -->
+  <section class="hero" aria-label="Über Tobias Burkard">
+    <div>
+      <div class="author-row">
+        <img class="avatar" src="./assets/foto_tobias.jpg" alt="Porträt von Tobias Burkard">
+        <div>
+          <p class="eyebrow">Portfolio &amp; Mindset · München</p>
+          <strong>Tobias Burkard</strong> · <span style="color:var(--muted)">Allrounder für KI, Daten &amp; digitale Produkte</span>
+        </div>
+      </div>
+      <h1>Konzernschuh aus.<br>Schnellere Laufschuhe an.</h1>
+      <p class="lead">
+        Ich habe mich bei der BMW Group alle drei bis vier Jahre intern bewusst neu erfunden und mir immer wieder komplett neue Aufgaben gesucht. „Training on the job“ war dabei meine Devise.
+      </p>
+      <p class="sublead">
+        Ob beim Gleitschirmfliegen in der Thermik, beim Bergsteigen oder beim Bau digitaler Lösungen: Mich treibt ein nimmersattes Wesen bei Neuerungen, eigene Kreativität und das selbst gewählte Kredo des lebenslangen Lernens an. Jetzt bin ich bereit, meinen groß und träge gewordenen Konzernschuh gegen schnellere Laufschuhe einzutauschen.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="mailto:tobias.muenchen@gmail.com">Schreib mir direkt</a>
+        <a class="btn btn-outline" href="https://www.linkedin.com/in/tobias-your-new-ai-expert" target="_blank" rel="noopener">LinkedIn-Profil</a>
+        <a class="btn btn-outline" href="#projekte">Zu meinen KI-Anwendungen</a>
+      </div>
+    </div>
+
+    <figure class="hero-photo-card" style="margin:0">
+      <img src="./assets/gleitschirm-kueste.jpg" alt="Tobias beim Gleitschirm-Soaring über der Küstendüne">
+      <figcaption class="photo-caption">
+        <span><strong>In der Luft zu Hause:</strong> Aufwind nutzen, Überblick behalten, sauber landen.</span>
+        <span>Eigene Aufnahme</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- 2. MINDSET: Gleitschirm, Bergsteigen & Neuerfindung -->
+  <section class="section" aria-labelledby="h-mindset">
+    <p class="section-kicker">Haltung &amp; Antrieb</p>
+    <h2 class="section-title" id="h-mindset">Warum ich so arbeite, wie ich fliege und in die Berge gehe</h2>
+    <p class="section-intro">
+      Auf dem Papier sieht man viele Jahre im selben Unternehmen. Wer genauer hinschaut, sieht jemanden, der nie stillgestanden ist, sondern sich alle paar Jahre in ein völlig neues Feld eingearbeitet hat.
+    </p>
+
+    <div class="mindset-grid">
+      <article class="mindset-card">
+        <img src="./assets/gleitschirm-pilot.jpg" alt="Im Gleitschirm-Gurtzeug über den Dünen">
+        <div class="mindset-body">
+          <span class="mindset-tag">Gleitschirmfliegen · Weitblick</span>
+          <h3>Thermik lesen, nicht gegen den Wind kämpfen</h3>
+          <p>
+            In der Luft gewinnt man Höhe, indem man das Gelände liest, tragende Luftströme spürt und im richtigen Moment konsequent steuert. Genauso baue ich digitale Produkte: erst aus der Vogelperspektive verstehen, wo es hakt, und dann eine Lösung schaffen, die den Alltag spürbar leichter macht.
+          </p>
+        </div>
+      </article>
+
+      <article class="mindset-card">
+        <img src="./assets/bergtour-gipfel.jpg" alt="Aufstieg durch ein alpines Gebirgstal Richtung Gipfel">
+        <div class="mindset-body">
+          <span class="mindset-tag">Bergsteigen · Training on the Job</span>
+          <h3>Alle 3 bis 4 Jahre ein neuer Gipfel</h3>
+          <p>
+            Routine ohne Lernkurve liegt mir nicht. Sobald ein Thema rund lief, habe ich mir intern das nächste Neuland gesucht: von großen Webportalen über das Bändigen riesiger Datenmengen bis hin zu interaktiven KI-Systemen. Lebenslanges Lernen ist für mich kein Schlagwort, sondern gelebter Alltag.
+          </p>
+        </div>
+      </article>
+
+      <article class="mindset-card">
+        <img src="./assets/berg-thermik.jpg" alt="Alpengipfel mit Gipfelkreuz und Gleitschirmen in der Thermik">
+        <div class="mindset-body">
+          <span class="mindset-tag">Wechselbereit · Startup-Tempo</span>
+          <h3>Schnellere Laufschuhe für echtes Wachstum</h3>
+          <p>
+            Ein Konzern gibt Sicherheit, wird über die Jahre aber auch schwerfällig. Ich möchte meine Energie, meine Kreativität und meine Hands-on-Erfahrung jetzt dort einbringen, wo Entscheidungen schnell fallen und man gemeinsam an sichtbarem Wachstum baut.
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <!-- Die 3 Etappen "Alles aus einem Guss" ohne Technik-Blimblam -->
+    <div class="journey" aria-label="Meine drei Stationen der Neuerfindung">
+      <div class="step">
+        <small>Etappe 1 · Web &amp; Kundenportale</small>
+        <strong>MyBMW@SF &amp; www.mini.de</strong>
+        <p>Web-Frontend-Anwendungen gebaut und die zentrale Weblösung www.mini.de betreut – inklusive des kompletten Umbaus von AngularJS auf React.</p>
+      </div>
+      <div class="step">
+        <small>Etappe 2 · Datenstrecken &amp; Stabilität</small>
+        <strong>MyBMW App Daten &amp; Monitoring</strong>
+        <p>Die Datenpipeline von der App-Erfassung bis in den Data Lake angebunden, enorme Datenmengen laufzeitoptimiert geteilt und durch mehrere Monitorings stabilisiert.</p>
+      </div>
+      <div class="step">
+        <small>Etappe 3 · KI aus einem Guss</small>
+        <strong>„Chat your data“ bis zur Folie</strong>
+        <p>Daten AI-ready strukturiert und die Unternehmens-Ontologie abgebildet: Stakeholder erstellen in wenigen Minuten selbst Auswertungen bis ins fertige Standard-PowerPoint-Deck.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. INTERAKTIVE PROJEKTE (zum Ausprobieren) -->
+  <section class="section" id="projekte" aria-labelledby="h-proj">
+    <p class="section-kicker">Interaktives Portfolio · Alles aus einem Guss</p>
+    <h2 class="section-title" id="h-proj">Zwei meiner KI-Anwendungen direkt zum Ausprobieren</h2>
+    <p class="section-intro">
+      Klicke auf ein Beispiel. Beide Demos laufen direkt hier im Browser mit fiktiven Beispieldaten und zeigen das Prinzip hinter meinen produktiven Lösungen.
+    </p>
+
+    <div class="projects-grid">
+      <!-- Projekt 1: Kundenfeedback -->
+      <article class="card" aria-labelledby="p1">
+        <h3 id="p1">1. Mehrsprachiges Kundenfeedback einordnen</h3>
+        <p class="what">Freitext-Stimmen automatisch dem richtigen Thema, Unterthema und Stimmungsbild zuordnen.</p>
+        <div class="chips" role="group" aria-label="Beispiel-Feedback wählen">
+          <button type="button" data-fb="0" aria-pressed="true">DE · App-Login</button>
+          <button type="button" data-fb="1" aria-pressed="false">EN · Ladeplanung</button>
+          <button type="button" data-fb="2" aria-pressed="false">FR · Digitaler Schlüssel</button>
+          <button type="button" data-fb="3" aria-pressed="false">ES · Abo-Verlängerung</button>
+        </div>
+        <div class="box" aria-live="polite">
+          <p class="k">Kundenstimme</p>
+          <p class="say" id="fb-text">„Nach dem Update klappt die Anmeldung sofort per Fingerabdruck, aber der Ladestand aktualisiert sich morgens erst nach zwei Minuten.“</p>
+          <p class="k">Automatische Einordnung (Mehrheitsentscheid aus 3 Durchläufen)</p>
+          <div class="tags" id="fb-tags">
+            <span class="tag">Kategorie: App &amp; Fahrzeugstatus</span>
+            <span class="tag">Thema: Remote-Ladestand</span>
+            <span class="tag neg">Stimmung: Gemischt / Verzögerung</span>
+          </div>
+        </div>
+        <p class="proof">
+          <strong>Warum man sich darauf verlassen kann:</strong> Gegen 250 und 2.000 handgeprüfte Referenzfälle gemessen; mehrere Durchläufe stimmen per Mehrheitsentscheid ab – <strong>90 % reproduzierbare Trefferquote</strong>, das frühere Modell wurde abgelöst.
+        </p>
+      </article>
+
+      <!-- Projekt 2: Chat your data -->
+      <article class="card" aria-labelledby="p2">
+        <h3 id="p2">2. „Chat your data“ – Von der Frage bis zum Foliendeck</h3>
+        <p class="what">Fachbereiche stellen Fragen in Alltagssprache an unsere AI-ready aufbereiteten Daten und die abgebildete Unternehmens-Ontologie.</p>
+        <div class="chips" role="group" aria-label="Beispielfrage wählen">
+          <button type="button" data-q="0" aria-pressed="true">Umsatz nach Kategorie</button>
+          <button type="button" data-q="1" aria-pressed="false">Upgrade-Abschlüsse im Quartal</button>
+          <button type="button" data-q="2" aria-pressed="false">Top-Märkte im Vergleich</button>
+        </div>
+        <div class="box" aria-live="polite">
+          <p class="k">Automatisch erzeugte Abfrage auf der Ontologie</p>
+          <pre><code id="q-sql">SELECT kategorie, ROUND(SUM(umsatz_eur)/1000, 1) AS tsd_eur
+FROM ontologie.connected_upgrades
+WHERE jahr = 2026
+GROUP BY kategorie ORDER BY tsd_eur DESC;</code></pre>
+          <ul class="bars" id="q-bars">
+            <li><span>Fahrassistenz</span><span class="bar"><i style="width:100%"></i></span><b>482 T€</b></li>
+            <li><span>Komfort-Pakete</span><span class="bar"><i style="width:74%"></i></span><b>356 T€</b></li>
+            <li><span>Karten &amp; Licht</span><span class="bar"><i style="width:51%"></i></span><b>245 T€</b></li>
+          </ul>
+          <div class="slide-badge">
+            <span><strong>Export aus einem Guss:</strong> Ergebnis &amp; Grafik direkt als Standard-PowerPoint-Folie fertiggestellt.</span>
+            <span>✓ 100+ aktive Nutzer</span>
+          </div>
+        </div>
+        <p class="proof">
+          <strong>Was dahintersteckt:</strong> Technische Projektleitung von der Datenmodellierung über die sichere Anbindung bis zur Schulung von über 100 Stakeholdern, die heute in wenigen Minuten selbst Auswertungen bis zur fertigen Präsentationsfolie erstellen.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- 4. AUTHENTISCHE BILDERGALERIE -->
+  <section class="section" aria-labelledby="h-gal">
+    <p class="section-kicker">Perspektivenwechsel</p>
+    <h2 class="section-title" id="h-gal">Draußen unterwegs – zwischen Thermik, Küste und Alpenkamm</h2>
+    <div class="gallery-grid">
+      <figure class="gallery-item" style="margin:0">
+        <img src="./assets/isartal-flug.jpg" alt="Blick aus dem Gleitschirm auf Flusslauf und Voralpenland" loading="lazy">
+        <figcaption>Blick von oben: Struktur im Gelände erkennen</figcaption>
+      </figure>
+      <figure class="gallery-item" style="margin:0">
+        <img src="./assets/alpen-weitblick.jpg" alt="Weitblick vom Alpengipfel über das Voralpenland" loading="lazy">
+        <figcaption>Weitblick nach dem Aufstieg</figcaption>
+      </figure>
+      <figure class="gallery-item" style="margin:0">
+        <img src="./assets/gleitschirm-pilot.jpg" alt="Steuern im Gurtzeug über der Küste" loading="lazy">
+        <figcaption>Fokus &amp; Feingefühl an den Steuerleinen</figcaption>
+      </figure>
+      <figure class="gallery-item" style="margin:0">
+        <img src="./assets/gleitschirm-sunset.jpg" alt="Gleitschirm im Sonnenuntergang über der Düne" loading="lazy">
+        <figcaption>Abendflug bis zum letzten Aufwind</figcaption>
+      </figure>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span>© 2026 Tobias Burkard · München</span>
+  <a href="mailto:tobias.muenchen@gmail.com">tobias.muenchen@gmail.com</a>
+  <a href="https://www.linkedin.com/in/tobias-your-new-ai-expert" target="_blank" rel="noopener">LinkedIn</a>
+  <a href="./datenschutzhinweise.html">Datenschutzhinweise</a>
+  <button type="button" class="linkbtn" id="cc-reopen">Cookie-Einstellungen</button>
+</footer>
+
+<aside id="cc-banner" role="dialog" aria-labelledby="cc-title">
+  <strong id="cc-title">Hinweis zu Statistik-Cookies</strong>
+  <span>Ich nutze Google Analytics 4 nur mit deiner Zustimmung, um zu sehen, welche Bereiche dieser Seite besucht werden.</span>
+  <div class="actions">
+    <button type="button" class="btn btn-primary" id="cc-accept">Einverstanden</button>
+    <button type="button" class="btn btn-outline" id="cc-decline">Nur notwendige</button>
+  </div>
+</aside>
+
+<script>
+  const FB = [
+    {
+      say: "„Nach dem Update klappt die Anmeldung sofort per Fingerabdruck, aber der Ladestand aktualisiert sich morgens erst nach zwei Minuten.“",
+      tags: [["Kategorie: App & Fahrzeugstatus",""],["Thema: Remote-Ladestand",""],["Stimmung: Gemischt / Verzögerung","neg"]]
+    },
+    {
+      say: "“The trip planner suggested two fast chargers right along our highway route and adjusted automatically when traffic built up.”",
+      tags: [["Kategorie: Navigation & Laden",""],["Thema: Dynamische Ladeplanung",""],["Stimmung: Positiv","pos"]]
+    },
+    {
+      say: "« La clé numérique sur le téléphone fonctionne bien au quotidien, mais le partage avec un deuxième conducteur a demandé trois essais. »",
+      tags: [["Kategorie: Fahrzeugzugang",""],["Thema: Schlüssel teilen",""],["Stimmung: Verbesserungswürdig","neg"]]
+    },
+    {
+      say: "« La renovación del paquete en la tienda fue muy clara y se activó en el coche en menos de un minuto. »",
+      tags: [["Kategorie: Connected Store",""],["Thema: Sofort-Aktivierung",""],["Stimmung: Positiv","pos"]]
+    }
+  ];
+
+  document.querySelectorAll("[data-fb]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("[data-fb]").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+      const d = FB[Number(btn.dataset.fb)];
+      document.getElementById("fb-text").textContent = d.say;
+      document.getElementById("fb-tags").innerHTML = d.tags
+        .map(([t, c]) => `<span class="tag ${c}">${t}</span>`).join("");
+    });
+  });
+
+  const Q = [
+    {
+      sql: `SELECT kategorie, ROUND(SUM(umsatz_eur)/1000, 1) AS tsd_eur\nFROM ontologie.connected_upgrades\nWHERE jahr = 2026\nGROUP BY kategorie ORDER BY tsd_eur DESC;`,
+      rows: [["Fahrassistenz", 100, "482 T€"], ["Komfort-Pakete", 74, "356 T€"], ["Karten & Licht", 51, "245 T€"]]
+    },
+    {
+      sql: `SELECT quartal, COUNT(*) AS abschluesse\nFROM ontologie.funnel_conversions\nWHERE kanal = 'MyBMW_App'\nGROUP BY quartal ORDER BY quartal;`,
+      rows: [["Q1 / 2026", 68, "14.200"], ["Q2 / 2026", 83, "17.400"], ["Q3 / 2026", 100, "20.900"]]
+    },
+    {
+      sql: `SELECT markt, ROUND(AVG(nutzer_zufriedenheit), 1) AS score\nFROM ontologie.app_release_metriken\nGROUP BY markt ORDER BY score DESC LIMIT 3;`,
+      rows: [["Deutschland", 100, "4,7 ★"], ["Großbritannien", 96, "4,5 ★"], ["Frankreich", 91, "4,3 ★"]]
+    }
+  ];
+
+  document.querySelectorAll("[data-q]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("[data-q]").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+      const d = Q[Number(btn.dataset.q)];
+      document.getElementById("q-sql").textContent = d.sql;
+      document.getElementById("q-bars").innerHTML = d.rows
+        .map(([l, w, v]) => `<li><span>${l}</span><span class="bar"><i style="width:${w}%"></i></span><b>${v}</b></li>`).join("");
+    });
+  });
+
+  // Consent Banner
+  (function(){
+    var banner = document.getElementById("cc-banner");
+    var stored = null;
+    try { stored = localStorage.getItem("ga-consent"); } catch(e){}
+    if (!stored) banner.style.display = "block";
+    function setConsent(val) {
+      try { localStorage.setItem("ga-consent", val); } catch(e){}
+      gtag("consent", "update", { analytics_storage: val });
+      banner.style.display = "none";
+    }
+    document.getElementById("cc-accept").addEventListener("click", function(){ setConsent("granted"); });
+    document.getElementById("cc-decline").addEventListener("click", function(){ setConsent("denied"); });
+    document.getElementById("cc-reopen").addEventListener("click", function(){ banner.style.display = "block"; });
+  })();
+</script>
+</body>
+</html>
