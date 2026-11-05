@@ -1,13 +1,24 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tobias Burkard · Portfolio &amp; Mindset</title>
-  <meta name="description" content="Tobias Burkard – Allrounder für KI, Daten und digitale Produkte in München. Alle 3–4 Jahre neu erfunden, Training on the Job, zu Hause beim Gleitschirmfliegen und am Berg.">
-  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0b0f17" media="(prefers-color-scheme: dark)">
+  <meta name="description" content="Tobias Burkard – Allrounder für KI, Daten und digitale Produkte in München. Alle 3–4 Jahre neu erfunden, Training on the Job, Tandemflieger &amp; Bergsteiger.">
+  <meta name="theme-color" content="#f7f6f2">
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+
+  <!-- Early Theme & Language Init to avoid flash -->
+  <script>
+    (function(){
+      try {
+        var savedTheme = localStorage.getItem('tb-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = savedTheme ? savedTheme : (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e){}
+    })();
+  </script>
 
   <!-- Google tag (gtag.js) mit Consent Mode v2 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NXHY8714SY"></script>
@@ -29,9 +40,10 @@
   </script>
 
   <style>
-    :root {
-      color-scheme: light dark;
+    :root, html[data-theme="light"] {
+      color-scheme: light;
       --bg: #f7f6f2;
+      --bg-glass: rgba(247, 246, 242, 0.86);
       --card: #ffffff;
       --card-alt: #efede6;
       --text: #161a1f;
@@ -39,29 +51,31 @@
       --line: #dfdcd2;
       --accent: #0d5296;
       --accent-soft: #e5effa;
+      --btn-fg: #ffffff;
       --alpine-green: #186a4f;
       --alpine-soft: #e3f5ee;
       --warm-amber: #c85a17;
-      --code-bg: #0f172a;
-      --code-fg: #e5e7eb;
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
       --font: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
     }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0b0f17;
-        --card: #141b24;
-        --card-alt: #1b2430;
-        --text: #f1f4f8;
-        --muted: #9ba5b1;
-        --line: #283240;
-        --accent: #6eb6ff;
-        --accent-soft: #172b48;
-        --alpine-green: #42c28d;
-        --alpine-soft: #132f26;
-        --warm-amber: #f0883e;
-      }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0b0f17;
+      --bg-glass: rgba(11, 15, 23, 0.86);
+      --card: #141b24;
+      --card-alt: #1b2430;
+      --text: #f1f4f8;
+      --muted: #9ba5b1;
+      --line: #283240;
+      --accent: #6eb6ff;
+      --accent-soft: #172b48;
+      --btn-fg: #081223;
+      --alpine-green: #42c28d;
+      --alpine-soft: #132f26;
+      --warm-amber: #f0883e;
+      --shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
     }
+
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
@@ -71,10 +85,103 @@
       font: 16px/1.6 var(--font);
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
-    main { max-width: 1160px; margin: 0 auto; padding: 34px 24px 28px; }
+
+    /* Sticky Topbar with Navigation, Language Switcher & Dark/Light Mode */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand-mini {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 750;
+      font-size: 14.5px;
+      color: var(--text);
+      text-decoration: none !important;
+    }
+    .brand-mini img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13.8px;
+      font-weight: 600;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pill-switch {
+      display: inline-flex;
+      align-items: center;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 2px;
+    }
+    .pill-switch button {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font: 700 12.5px var(--font);
+      padding: 5px 11px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .pill-switch button.active {
+      background: var(--accent);
+      color: var(--btn-fg);
+    }
+    .theme-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      color: var(--text);
+      font: 600 12.8px var(--font);
+      padding: 6px 13px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+    .theme-btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+    main { max-width: 1160px; margin: 0 auto; padding: 30px 24px 28px; }
 
     /* Scroll Reveal & Keyframe Animations */
     .reveal {
@@ -96,10 +203,6 @@
     }
     @keyframes dashTrack {
       to { stroke-dashoffset: 0; }
-    }
-    @keyframes popIn {
-      0% { opacity: 0; transform: translateY(6px) scale(0.97); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     /* Hero */
@@ -175,14 +278,11 @@
       text-decoration: none !important;
       transition: transform .18s ease, box-shadow .18s ease;
     }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
-    .btn-primary { background: var(--accent); color: #ffffff; }
-    @media (prefers-color-scheme: dark) {
-      .btn-primary { color: #081223; }
-    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+    .btn-primary { background: var(--accent); color: var(--btn-fg); }
     .btn-outline { border-color: var(--line); color: var(--text); background: var(--card); }
 
-    /* Hero Collage with subtle floating & hover zoom */
+    /* Hero Collage */
     .hero-mosaic {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -195,7 +295,7 @@
       overflow: hidden;
       border: 1px solid var(--line);
       background: var(--card);
-      box-shadow: 0 14px 32px rgba(0,0,0,0.1);
+      box-shadow: var(--shadow);
       cursor: zoom-in;
     }
     .mosaic-main img, .mosaic-sub img {
@@ -250,7 +350,7 @@
     }
 
     /* Section Headers */
-    .section { margin-top: 48px; }
+    .section { margin-top: 52px; scroll-margin-top: 72px; }
     .section-kicker {
       font-size: 12.5px;
       text-transform: uppercase;
@@ -268,7 +368,7 @@
     .section-intro {
       margin: 0 0 22px;
       color: var(--muted);
-      max-width: 74ch;
+      max-width: 76ch;
     }
 
     /* Mindset 3 Columns */
@@ -284,11 +384,11 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      box-shadow: var(--shadow);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
     .mindset-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 14px 30px rgba(0,0,0,0.07);
     }
     .mindset-card img {
       width: 100%;
@@ -316,6 +416,10 @@
       color: var(--accent);
       margin-bottom: 10px;
     }
+    .mindset-tag.green {
+      background: var(--alpine-soft);
+      color: var(--alpine-green);
+    }
     .mindset-body h3 {
       margin: 0 0 8px;
       font-size: 18.5px;
@@ -328,7 +432,7 @@
       line-height: 1.55;
     }
 
-    /* Journey + Telemetry Banner (Neutralized Career Stages) */
+    /* Journey + Telemetry Banner */
     .journey-wrap {
       margin-top: 22px;
       display: grid;
@@ -344,6 +448,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 18px;
+      box-shadow: var(--shadow);
     }
     .step {
       border-left: 3px solid var(--accent);
@@ -378,6 +483,7 @@
       flex-direction: column;
       cursor: zoom-in;
       position: relative;
+      box-shadow: var(--shadow);
     }
     .telemetry-img-wrap {
       position: relative;
@@ -414,160 +520,119 @@
       margin-bottom: 2px;
     }
 
-    /* Interactive Projects (Neutralized + Animated) */
-    .projects-grid {
+    /* Teamfähigkeit / Tandem & Formation Block */
+    .team-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.15fr 0.85fr;
       gap: 20px;
+      align-items: stretch;
     }
-    .card {
+    .team-feature {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow);
+    }
+    .team-feature-img {
+      position: relative;
+      height: 310px;
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+    .team-feature-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 62%;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .team-feature-img:hover img { transform: scale(1.04); }
+    .team-feature-body {
+      padding: 22px 24px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .team-feature-body h3 {
+      margin: 0 0 10px;
+      font-size: 21px;
+      line-height: 1.3;
+    }
+    .team-feature-body p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .tandem-stack {
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: 16px;
+    }
+    .tandem-photos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .tandem-photo {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--card);
+      cursor: zoom-in;
+      min-height: 220px;
+      box-shadow: var(--shadow);
+    }
+    .tandem-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .tandem-photo:hover img { transform: scale(1.05); }
+    .tandem-card {
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: 18px;
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
+      padding: 20px 22px;
+      box-shadow: var(--shadow);
     }
-    .card h3 { font-size: 20px; margin: 0 0 6px; }
-    .card .what { margin: 0 0 14px; color: var(--muted); font-size: 14.5px; }
-    .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-    .chips button {
-      min-height: 36px;
-      padding: 0 13px;
-      border-radius: 9px;
-      border: 1px solid var(--line);
-      background: transparent;
-      color: var(--text);
-      font: 500 13px var(--font);
-      cursor: pointer;
-      transition: all .15s ease;
+    .tandem-card h3 {
+      margin: 0 0 8px;
+      font-size: 19px;
+      line-height: 1.3;
     }
-    .chips button:hover { border-color: var(--accent); }
-    .chips button[aria-pressed="true"] {
-      background: var(--accent-soft);
-      border-color: var(--accent);
-      color: var(--accent);
-      font-weight: 600;
-    }
-    .chips button[aria-pressed="true"]::before { content: "✓ "; }
-    .box {
-      background: var(--card-alt);
-      border-radius: 14px;
-      padding: 16px;
-      flex: 1;
-    }
-    .k {
-      font-size: 11.5px;
+    .tandem-card p {
+      margin: 0 0 14px;
+      font-size: 14.6px;
       color: var(--muted);
-      margin: 0 0 5px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-weight: 700;
+      line-height: 1.55;
     }
-    .say {
-      margin: 0 0 12px;
-      font-size: 15px;
-      font-style: italic;
-      animation: popIn 0.3s ease;
-    }
-
-    /* Animated 3-Run Majority Voting Bar */
-    .vote-row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
-    .run-pill {
-      font-size: 12px;
-      padding: 3px 9px;
-      border-radius: 6px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      color: var(--muted);
-      transition: all 0.25s ease;
-    }
-    .run-pill.active {
-      background: var(--alpine-soft);
-      border-color: var(--alpine-green);
-      color: var(--alpine-green);
-      font-weight: 600;
-    }
-
-    .tags { display: flex; gap: 6px; flex-wrap: wrap; }
-    .tag {
-      font-size: 13px;
-      padding: 4px 11px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: var(--card);
-      animation: popIn 0.32s ease;
-    }
-    .tag.pos::before { content: "▲ "; color: var(--alpine-green); }
-    .tag.neg::before { content: "▼ "; color: #d9381e; }
-    .proof { margin: 14px 0 0; font-size: 13.8px; color: var(--muted); }
-    .proof strong { color: var(--text); }
-
-    /* Animated 4-Step Pipeline Pill Bar in Demo 2 */
-    .flow-steps {
+    .team-pillars {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      margin-bottom: 10px;
-    }
-    .flow-step {
-      font-size: 11.5px;
-      text-align: center;
-      padding: 4px 6px;
-      border-radius: 7px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      color: var(--muted);
-      transition: all 0.25s ease;
-    }
-    .flow-step.done {
-      background: var(--accent-soft);
-      border-color: var(--accent);
-      color: var(--accent);
-      font-weight: 650;
-    }
-
-    pre {
-      margin: 0 0 12px;
-      background: var(--code-bg);
-      color: var(--code-fg);
-      padding: 10px 12px;
-      border-radius: 10px;
-      font: 12px/1.5 var(--mono);
-      overflow-x: auto;
-      white-space: pre;
-    }
-    .bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
-    .bars li { display: grid; grid-template-columns: 125px 1fr 56px; gap: 10px; align-items: center; font-size: 13px; }
-    .bar { height: 8px; border-radius: 4px; background: var(--card); overflow: hidden; }
-    .bar i { display: block; height: 100%; background: var(--accent); border-radius: 4px; transition: width .45s cubic-bezier(0.22, 1, 0.36, 1); }
-    .bars b { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
-
-    /* Animated Slide Deck Preview Card */
-    .slide-preview {
-      margin-top: 12px;
-      padding: 10px 13px;
-      border-radius: 10px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-left: 3.5px solid var(--alpine-green);
-      font-size: 12.8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      animation: popIn 0.38s ease;
+      margin-top: 12px;
     }
-    .slide-preview small {
-      color: var(--alpine-green);
-      font-weight: 700;
-      white-space: nowrap;
+    .team-pillar {
+      background: var(--card-alt);
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      padding: 10px 12px;
+      font-size: 12.8px;
+    }
+    .team-pillar strong {
+      display: block;
+      color: var(--text);
+      font-size: 13.5px;
+      margin-bottom: 2px;
     }
 
     /* 3D Track Video Showcase */
@@ -580,7 +645,7 @@
       grid-template-columns: 1.25fr 0.75fr;
       gap: 24px;
       align-items: center;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+      box-shadow: var(--shadow);
     }
     .video-frame {
       position: relative;
@@ -632,6 +697,7 @@
       cursor: zoom-in;
       display: flex;
       flex-direction: column;
+      box-shadow: var(--shadow);
       transition: transform 0.22s ease;
     }
     .gallery-item:hover { transform: translateY(-3px); }
@@ -685,7 +751,7 @@
     /* Footer & Consent */
     footer {
       max-width: 1160px;
-      margin: 32px auto 0;
+      margin: 36px auto 0;
       padding: 20px 24px 36px;
       border-top: 1px solid var(--line);
       font-size: 13.5px;
@@ -725,16 +791,47 @@
     #cc-banner .actions { margin-top: 14px; }
     #cc-banner .btn { flex: 1; justify-content: center; }
 
-    @media (max-width: 940px) {
-      .hero, .mindset-grid, .journey-wrap, .journey, .projects-grid, .track-showcase { grid-template-columns: 1fr; }
+    @media (max-width: 960px) {
+      .hero, .mindset-grid, .journey-wrap, .journey, .team-layout, .track-showcase { grid-template-columns: 1fr; }
       .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
     }
-    @media (max-width: 520px) {
-      .gallery-grid, .hero-mosaic, .flow-steps { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 560px) {
+      .gallery-grid, .hero-mosaic, .tandem-photos, .team-pillars { grid-template-columns: 1fr; }
+      .topbar-inner { padding: 10px 16px; }
     }
   </style>
 </head>
 <body>
+
+<!-- STICKY TOPBAR: Navigation, DE/EN Switch & Dark/Light Mode -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand-mini" href="#">
+      <img src="./assets/foto_tobias.jpg" alt="Tobias Burkard">
+      <span>Tobias Burkard</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Seitennavigation">
+      <a href="#mindset" data-de="Haltung &amp; Weg" data-en="Mindset &amp; Journey">Haltung &amp; Weg</a>
+      <a href="#team" data-de="Team &amp; Tandem" data-en="Teamwork &amp; Tandem">Team &amp; Tandem</a>
+      <a href="#track-app" data-de="3D-Flug-Auswertung" data-en="3D Flight Analyzer">3D-Flug-Auswertung</a>
+      <a href="#galerie" data-de="Berg- &amp; Flugbilder" data-en="Alpine Gallery">Berg- &amp; Flugbilder</a>
+    </nav>
+
+    <div class="controls">
+      <div class="pill-switch" role="group" aria-label="Sprache wählen / Select language">
+        <button type="button" id="lang-de" class="active" data-set-lang="de">DE</button>
+        <button type="button" id="lang-en" data-set-lang="en">EN</button>
+      </div>
+      <button type="button" class="theme-btn" id="theme-toggle" aria-label="Darstellung wechseln">
+        <span id="theme-icon">🌙</span>
+        <span id="theme-label" data-de="Dark Mode" data-en="Dark Mode">Dark Mode</span>
+      </button>
+    </div>
+  </div>
+</header>
+
 <main>
 
   <!-- 1. HERO: Mensch, Haltung & echte Berg-/Flugbilder -->
@@ -743,85 +840,136 @@
       <div class="author-row">
         <img class="avatar" src="./assets/foto_tobias.jpg" alt="Porträt von Tobias Burkard">
         <div>
-          <p class="eyebrow"><span class="live-dot"></span>Portfolio &amp; Mindset · München</p>
-          <strong>Tobias Burkard</strong> · <span style="color:var(--muted)">Allrounder für KI, Daten &amp; digitale Produkte</span>
+          <p class="eyebrow">
+            <span class="live-dot"></span>
+            <span data-de="Portfolio &amp; Mindset · München" data-en="Portfolio &amp; Mindset · Munich">Portfolio &amp; Mindset · München</span>
+          </p>
+          <strong>Tobias Burkard</strong> ·
+          <span style="color:var(--muted)" data-de="Allrounder für KI, Daten &amp; digitale Produkte" data-en="All-Rounder for AI, Data &amp; Digital Products">Allrounder für KI, Daten &amp; digitale Produkte</span>
         </div>
       </div>
-      <h1>Konzernschuh aus.<br>Schnellere Laufschuhe an.</h1>
-      <p class="lead">
+
+      <h1 data-de="Konzernschuh aus.&lt;br&gt;Schnellere Laufschuhe an." data-en="Stepping out of corporate boots.&lt;br&gt;Lacing up faster running shoes.">Konzernschuh aus.<br>Schnellere Laufschuhe an.</h1>
+
+      <p class="lead"
+         data-de="Ich habe mich beruflich alle drei bis vier Jahre intern komplett neu erfunden und mir immer wieder bewusst neue Stellen mit ganz neuen Aufgaben und Herausforderungen gesucht. „Training on the job“ war dabei meine Devise."
+         data-en="Every three to four years, I deliberately reinvented myself internally—seeking out completely new roles, unfamiliar challenges, and fresh territory. 'Training on the job' has always been my guiding principle.">
         Ich habe mich beruflich alle drei bis vier Jahre intern komplett neu erfunden und mir immer wieder bewusst neue Stellen mit ganz neuen Aufgaben und Herausforderungen gesucht. „Training on the job“ war dabei meine Devise.
       </p>
-      <p class="sublead">
-        Ob beim Gleitschirmfliegen vor den Gletschern, auf Hochtour am Grat oder beim Bau digitaler Lösungen: Mich treibt ein nimmersattes Wesen bei Neuerungen, eigene Kreativität und das selbst gewählte Kredo des lebenslangen Lernens an. Jetzt bin ich bereit, meinen groß und träge gewordenen Konzernschuh gegen schnellere Laufschuhe einzutauschen.
+
+      <p class="sublead"
+         data-de="Ob beim Gleitschirmfliegen vor den Gletschern, als Tandempilot, auf Hochtour am Grat oder beim Bau digitaler Lösungen: Mich treibt ein nimmersattes Wesen bei Neuerungen, eigene Kreativität und das selbst gewählte Kredo des lebenslangen Lernens an. Jetzt bin ich bereit, meinen groß und träge gewordenen Konzernschuh gegen schnellere Laufschuhe einzutauschen."
+         data-en="Whether paragliding in front of glaciers, flying tandem passengers, climbing alpine ridges, or building digital products: I am driven by an insatiable curiosity for innovation, hands-on creativity, and lifelong learning. Now I am ready to trade my heavy, slow-moving corporate shoe for faster running shoes.">
+        Ob beim Gleitschirmfliegen vor den Gletschern, als Tandempilot, auf Hochtour am Grat oder beim Bau digitaler Lösungen: Mich treibt ein nimmersattes Wesen bei Neuerungen, eigene Kreativität und das selbst gewählte Kredo des lebenslangen Lernens an. Jetzt bin ich bereit, meinen groß und träge gewordenen Konzernschuh gegen schnellere Laufschuhe einzutauschen.
       </p>
+
       <div class="actions">
-        <a class="btn btn-primary" href="mailto:tobias.muenchen@gmail.com">Schreib mir direkt</a>
-        <a class="btn btn-outline" href="https://www.linkedin.com/in/tobias-your-new-ai-expert" target="_blank" rel="noopener">LinkedIn-Profil</a>
-        <a class="btn btn-outline" href="#track-app">3D-Flug-Auswertung</a>
-        <a class="btn btn-outline" href="#galerie">Berg- &amp; Flugbilder</a>
+        <a class="btn btn-primary" href="mailto:tobias.muenchen@gmail.com" data-de="Schreib mir direkt" data-en="Get in touch">Schreib mir direkt</a>
+        <a class="btn btn-outline" href="https://www.linkedin.com/in/tobias-your-new-ai-expert" target="_blank" rel="noopener" data-de="LinkedIn-Profil" data-en="LinkedIn Profile">LinkedIn-Profil</a>
+        <a class="btn btn-outline" href="#team" data-de="Team &amp; Tandem" data-en="Team &amp; Tandem">Team &amp; Tandem</a>
+        <a class="btn btn-outline" href="#track-app" data-de="3D-Flug-Auswertung" data-en="3D Flight Analyzer">3D-Flug-Auswertung</a>
       </div>
     </div>
 
     <div class="hero-mosaic" aria-label="Eigene Aufnahmen vom Gleitschirmfliegen und Bergsteigen">
-      <figure class="mosaic-main" style="margin:0" data-lightbox="./assets/chamonix-flug-selfie.jpg" data-caption="Gleitschirmflug auf über 3.300 m vor den Gletschern von Chamonix">
+      <figure class="mosaic-main" style="margin:0"
+              data-lightbox="./assets/chamonix-flug-selfie.jpg"
+              data-caption-de="Gleitschirmflug auf über 3.300 m vor den Gletschern von Chamonix"
+              data-caption-en="Paragliding above 3,300 m in front of the Chamonix glaciers">
         <img src="./assets/chamonix-flug-selfie.jpg" alt="Tobias beim Gleitschirmfliegen vor den Gletschern von Chamonix">
         <figcaption class="img-badge">
-          <span><strong>In der Luft über Chamonix:</strong> Überblick behalten, Thermik sauber zentrieren</span>
+          <span data-de="&lt;strong&gt;In der Luft über Chamonix:&lt;/strong&gt; Überblick behalten, Thermik sauber zentrieren"
+                data-en="&lt;strong&gt;Airborne above Chamonix:&lt;/strong&gt; Keeping the big picture, centering the thermal">
+            <strong>In der Luft über Chamonix:</strong> Überblick behalten, Thermik sauber zentrieren
+          </span>
           <span class="alt-pill" id="alt-counter">3.330 m</span>
         </figcaption>
       </figure>
-      <figure class="mosaic-sub" style="margin:0" data-lightbox="./assets/hero-oberaar-gipfel.jpg" data-caption="Am Gipfelkreuz in den Westalpen mit Eispickel">
+
+      <figure class="mosaic-sub" style="margin:0"
+              data-lightbox="./assets/hero-oberaar-gipfel.jpg"
+              data-caption-de="Am Gipfelkreuz in den Westalpen mit Eispickel"
+              data-caption-en="At the summit cross in the Western Alps with ice axe">
         <img src="./assets/hero-oberaar-gipfel.jpg" alt="Tobias am Gipfelkreuz mit Eispickel vor verschneiten Viertausendern">
         <figcaption class="img-badge">
-          <span><strong>Am Gipfelkreuz</strong> · Schritt für Schritt</span>
+          <span data-de="&lt;strong&gt;Am Gipfelkreuz&lt;/strong&gt; · Schritt für Schritt"
+                data-en="&lt;strong&gt;At the Summit&lt;/strong&gt; · Step by step">
+            <strong>Am Gipfelkreuz</strong> · Schritt für Schritt
+          </span>
         </figcaption>
       </figure>
-      <figure class="mosaic-sub" style="margin:0" data-lightbox="./assets/grat-stirnlampe-daemmerung.jpg" data-caption="Aufbruch am Grat vor Sonnenaufgang mit Stirnlampe">
+
+      <figure class="mosaic-sub" style="margin:0"
+              data-lightbox="./assets/grat-stirnlampe-daemmerung.jpg"
+              data-caption-de="Aufbruch am Grat vor Sonnenaufgang mit Stirnlampe"
+              data-caption-en="Alpine ridge ascent before sunrise with headlamp">
         <img src="./assets/grat-stirnlampe-daemmerung.jpg" alt="Silhouette von Tobias mit Stirnlampe auf einem alpinen Grat in der Morgendämmerung">
         <figcaption class="img-badge">
-          <span><strong>Früher Aufbruch</strong> · Eigene Spur legen</span>
+          <span data-de="&lt;strong&gt;Früher Aufbruch&lt;/strong&gt; · Eigene Spur legen"
+                data-en="&lt;strong&gt;Early Start&lt;/strong&gt; · Setting the trail">
+            <strong>Früher Aufbruch</strong> · Eigene Spur legen
+          </span>
         </figcaption>
       </figure>
     </div>
   </section>
 
   <!-- 2. MINDSET: Gleitschirm, Bergsteigen & Neuerfindung -->
-  <section class="section reveal" aria-labelledby="h-mindset">
-    <p class="section-kicker">Metaphern mit Tiefgang · Haltung &amp; Antrieb</p>
-    <h2 class="section-title" id="h-mindset">Warum ich so arbeite, wie ich fliege und auf Berge steige</h2>
-    <p class="section-intro">
+  <section class="section reveal" id="mindset" aria-labelledby="h-mindset">
+    <p class="section-kicker" data-de="Metaphern mit Tiefgang · Haltung &amp; Antrieb" data-en="Metaphors with Depth · Mindset &amp; Drive">Metaphern mit Tiefgang · Haltung &amp; Antrieb</p>
+    <h2 class="section-title" id="h-mindset"
+        data-de="Warum ich so arbeite, wie ich fliege und auf Berge steige"
+        data-en="Why I work the same way I fly and climb mountains">Warum ich so arbeite, wie ich fliege und auf Berge steige</h2>
+    <p class="section-intro"
+       data-de="Auf dem Papier sieht man viele Jahre unter einem Dach. Wer genauer hinschaut, erkennt jemanden, der nie stillgestanden ist, sondern sich alle paar Jahre in ein völlig neues Feld eingearbeitet hat."
+       data-en="On paper, you see many years under one roof. Look closer and you will find someone who never stood still—stepping into an entirely new field every few years.">
       Auf dem Papier sieht man viele Jahre unter einem Dach. Wer genauer hinschaut, erkennt jemanden, der nie stillgestanden ist, sondern sich alle paar Jahre in ein völlig neues Feld eingearbeitet hat.
     </p>
 
     <div class="mindset-grid">
       <article class="mindset-card">
-        <img src="./assets/chamonix-gletscher-luftbild.jpg" alt="Blick aus dem Gleitschirm auf Gletscher und Felsnadeln" data-lightbox="./assets/chamonix-gletscher-luftbild.jpg" data-caption="Blick aus dem Gurtzeug auf die Gletscherwelt: komplexe Strukturen von oben überblicken">
+        <img src="./assets/chamonix-gletscher-luftbild.jpg"
+             alt="Blick aus dem Gleitschirm auf Gletscher und Felsnadeln"
+             data-lightbox="./assets/chamonix-gletscher-luftbild.jpg"
+             data-caption-de="Blick aus dem Gurtzeug auf die Gletscherwelt: komplexe Strukturen von oben überblicken"
+             data-caption-en="View from the harness onto the glacier world: seeing complex terrain from above">
         <div class="mindset-body">
-          <span class="mindset-tag">Gleitschirmfliegen · Weitblick</span>
-          <h3>Thermik lesen, nicht blind gegen den Wind kämpfen</h3>
-          <p>
+          <span class="mindset-tag" data-de="Gleitschirmfliegen · Weitblick" data-en="Paragliding · Big Picture">Gleitschirmfliegen · Weitblick</span>
+          <h3 data-de="Thermik lesen, nicht blind gegen den Wind kämpfen" data-en="Reading thermals instead of fighting the wind">Thermik lesen, nicht blind gegen den Wind kämpfen</h3>
+          <p data-de="Beim Streckenfliegen im Hochgebirge gewinnt man Höhe, indem man das Gelände liest, tragende Luftströme spürt und im richtigen Moment konsequent steuert. Genauso gehe ich digitale Produkte an: erst aus der Vogelperspektive verstehen, wo es hakt, und dann eine Lösung schaffen, die sich im Alltag leicht anfühlt."
+             data-en="In cross-country alpine flying, you gain altitude by reading the terrain, feeling lifting air currents, and steering decisively at the right moment. That is how I approach digital products: first understand the bottleneck from a bird's-eye view, then build a solution that feels effortless in daily use.">
             Beim Streckenfliegen im Hochgebirge gewinnt man Höhe, indem man das Gelände liest, tragende Luftströme spürt und im richtigen Moment konsequent steuert. Genauso gehe ich digitale Produkte an: erst aus der Vogelperspektive verstehen, wo es hakt, und dann eine Lösung schaffen, die sich im Alltag leicht anfühlt.
           </p>
         </div>
       </article>
 
       <article class="mindset-card">
-        <img src="./assets/granittuerme-schneegrat.jpg" alt="Aufstieg über einen steilen Schneegrat auf zwei markante Granittürme zu" data-lightbox="./assets/granittuerme-schneegrat.jpg" data-caption="Hochalpine Überschreitung: fokussiert bleiben, wenn das Gelände anspruchsvoll wird">
+        <img src="./assets/granittuerme-schneegrat.jpg"
+             alt="Aufstieg über einen steilen Schneegrat auf zwei markante Granittürme zu"
+             data-lightbox="./assets/granittuerme-schneegrat.jpg"
+             data-caption-de="Hochalpine Überschreitung: fokussiert bleiben, wenn das Gelände anspruchsvoll wird"
+             data-caption-en="High-alpine traverse: staying focused when the terrain gets demanding">
         <div class="mindset-body">
-          <span class="mindset-tag">Bergsteigen · Training on the Job</span>
-          <h3>Alle 3 bis 4 Jahre ein neuer Gipfel</h3>
-          <p>
+          <span class="mindset-tag" data-de="Bergsteigen · Training on the Job" data-en="Mountaineering · Training on the Job">Bergsteigen · Training on the Job</span>
+          <h3 data-de="Alle 3 bis 4 Jahre ein neuer Gipfel" data-en="A new summit every 3 to 4 years">Alle 3 bis 4 Jahre ein neuer Gipfel</h3>
+          <p data-de="Routine ohne Lernkurve liegt mir nicht. Sobald ein Thema rund lief, habe ich mir intern das nächste Neuland gesucht: von großen Webportalen über das Stabilisieren riesiger Datenströme bis hin zu interaktiven KI-Werkzeugen. Lebenslanges Lernen ist für mich kein Schlagwort, sondern gelebter Alltag."
+             data-en="Routine without a learning curve isn't for me. Whenever a system ran smoothly, I sought out the next uncharted territory: from large-scale customer web portals to stabilizing massive data streams and building interactive AI tools. Lifelong learning isn't a buzzword to me—it's how I work.">
             Routine ohne Lernkurve liegt mir nicht. Sobald ein Thema rund lief, habe ich mir intern das nächste Neuland gesucht: von großen Webportalen über das Stabilisieren riesiger Datenströme bis hin zu interaktiven KI-Werkzeugen. Lebenslanges Lernen ist für mich kein Schlagwort, sondern gelebter Alltag.
           </p>
         </div>
       </article>
 
       <article class="mindset-card">
-        <img src="./assets/gleitschirm-start-hochland.jpg" alt="Start mit dem Gleitschirm über einem weiten Hochland-See" data-lightbox="./assets/gleitschirm-start-hochland.jpg" data-caption="Startlauf am Hang: wenn Vorbereitung und Entschlossenheit zusammenkommen">
+        <img src="./assets/gleitschirm-start-hochland.jpg"
+             alt="Start mit dem Gleitschirm über einem weiten Hochland-See"
+             data-lightbox="./assets/gleitschirm-start-hochland.jpg"
+             data-caption-de="Startlauf am Hang: wenn Vorbereitung und Entschlossenheit zusammenkommen"
+             data-caption-en="Launch run on the slope: where preparation meets commitment">
         <div class="mindset-body">
-          <span class="mindset-tag">Wechselbereit · Startup-Tempo</span>
-          <h3>Schnellere Laufschuhe für echtes Wachstum</h3>
-          <p>
+          <span class="mindset-tag" data-de="Wechselbereit · Startup-Tempo" data-en="Ready for Change · Scaleup Pace">Wechselbereit · Startup-Tempo</span>
+          <h3 data-de="Schnellere Laufschuhe für echtes Wachstum" data-en="Faster running shoes for real momentum">Schnellere Laufschuhe für echtes Wachstum</h3>
+          <p data-de="Wer abheben will, braucht einen entschlossenen Startlauf und leichtes Gepäck. Mein Konzernschuh ist mir über die Jahre schlicht zu groß und zu träge geworden. Ich möchte meine Kreativität und Hands-on-Mentalität jetzt dort einbringen, wo Entscheidungen schnell fallen und man gemeinsam wächst."
+             data-en="To get airborne, you need a committed launch run and light gear. Over the years, my corporate shoe simply grew too big and sluggish. I want to bring my creativity and hands-on mentality to a place where decisions happen fast and teams grow together.">
             Wer abheben will, braucht einen entschlossenen Startlauf und leichtes Gepäck. Mein Konzernschuh ist mir über die Jahre schlicht zu groß und zu träge geworden. Ich möchte meine Kreativität und Hands-on-Mentalität jetzt dort einbringen, wo Entscheidungen schnell fallen und man gemeinsam wächst.
           </p>
         </div>
@@ -832,23 +980,35 @@
     <div class="journey-wrap">
       <div class="journey" aria-label="Meine drei Stationen der Neuerfindung">
         <div class="step">
-          <small>Etappe 1 · Web &amp; Portale</small>
-          <strong>Digitale Kundenplattformen</strong>
-          <p>Große Kundenportale und zentrale Marken-Webseiten gebaut und betreut – inklusive des Umbaus einer gewachsenen Frontend-Welt auf eine moderne Architektur.</p>
+          <small data-de="Etappe 1 · Web &amp; Portale" data-en="Stage 1 · Web &amp; Portals">Etappe 1 · Web &amp; Portale</small>
+          <strong data-de="Digitale Kundenplattformen" data-en="Digital Customer Platforms">Digitale Kundenplattformen</strong>
+          <p data-de="Große Kundenportale und zentrale Marken-Webseiten gebaut und betreut – inklusive des Umbaus einer gewachsenen Frontend-Welt auf eine moderne Architektur."
+             data-en="Built and ran major customer portals and flagship brand websites—including migrating a legacy frontend landscape to a modern architecture.">
+            Große Kundenportale und zentrale Marken-Webseiten gebaut und betreut – inklusive des Umbaus einer gewachsenen Frontend-Welt auf eine moderne Architektur.
+          </p>
         </div>
         <div class="step">
-          <small>Etappe 2 · Datenflüsse &amp; Stabilität</small>
-          <strong>Pipelines &amp; Monitoring</strong>
-          <p>Durchgängige Datenstrecken von der Nutzungserfassung bis in die zentrale Datenplattform angebunden, große Datenmengen laufzeitoptimiert geteilt und durch Monitorings abgesichert.</p>
+          <small data-de="Etappe 2 · Datenflüsse &amp; Stabilität" data-en="Stage 2 · Data Flows &amp; Reliability">Etappe 2 · Datenflüsse &amp; Stabilität</small>
+          <strong data-de="Pipelines &amp; Monitoring" data-en="Pipelines &amp; Monitoring">Pipelines &amp; Monitoring</strong>
+          <p data-de="Durchgängige Datenstrecken von der Nutzungserfassung bis in die zentrale Datenplattform angebunden, große Datenmengen laufzeitoptimiert geteilt und durch Monitorings abgesichert."
+             data-en="Connected end-to-end data pipelines from app telemetry to the central data platform, split massive datasets with runtime optimization, and safeguarded operations via multi-stage monitoring.">
+            Durchgängige Datenstrecken von der Nutzungserfassung bis in die zentrale Datenplattform angebunden, große Datenmengen laufzeitoptimiert geteilt und durch Monitorings abgesichert.
+          </p>
         </div>
         <div class="step">
-          <small>Etappe 3 · KI aus einem Guss</small>
-          <strong>Von der Frage bis zur Folie</strong>
-          <p>Daten KI-gerecht strukturiert und die Geschäftslogik als gemeinsame Sprache abgebildet: Teams erstellen in wenigen Minuten selbst Auswertungen bis ins fertige Präsentationsdeck.</p>
+          <small data-de="Etappe 3 · KI aus einem Guss" data-en="Stage 3 · End-to-End AI">Etappe 3 · KI aus einem Guss</small>
+          <strong data-de="Von der Frage bis zur Folie" data-en="From Question to Slide Deck">Von der Frage bis zur Folie</strong>
+          <p data-de="Daten KI-gerecht strukturiert und die Geschäftslogik als gemeinsame Sprache abgebildet: Teams erstellen in wenigen Minuten selbst Auswertungen bis ins fertige Präsentationsdeck."
+             data-en="Structured data for AI readiness and modeled business semantics as a shared language—enabling teams to go from plain-language questions to finished presentation decks in minutes.">
+            Daten KI-gerecht strukturiert und die Geschäftslogik als gemeinsame Sprache abgebildet: Teams erstellen in wenigen Minuten selbst Auswertungen bis ins fertige Präsentationsdeck.
+          </p>
         </div>
       </div>
 
-      <figure class="telemetry-card" style="margin:0" data-lightbox="./assets/flug-telemetrie-3330m.jpg" data-caption="Echter 3D-Flugtrack &amp; Vario-Telemetrie: 3.330 m Höhe, +2,2 m/s Thermik, 48,3 km Strecke">
+      <figure class="telemetry-card" style="margin:0"
+              data-lightbox="./assets/flug-telemetrie-3330m.jpg"
+              data-caption-de="Echter 3D-Flugtrack &amp; Vario-Telemetrie: 3.330 m Höhe, +2,2 m/s Thermik, 48,3 km Strecke"
+              data-caption-en="Real 3D flight track &amp; vario telemetry: 3,330 m altitude, +2.2 m/s thermal climb, 48.3 km distance">
         <div class="telemetry-img-wrap">
           <img src="./assets/flug-telemetrie-3330m.jpg" alt="3D-Flugtrack und Telemetriedaten eines Alpenflugs auf 3.330 m">
           <svg class="telemetry-svg" viewBox="0 0 300 150" preserveAspectRatio="none">
@@ -856,18 +1016,132 @@
           </svg>
         </div>
         <div class="telemetry-body">
-          <strong>Warum Daten für mich lebendig sind</strong>
-          Selbst in der Luft läuft die Telemetrie mit: 3.330 m Höhe, +2,2 m/s Steigen, 48,3 km Strecke – gute Daten zeigen sofort, wo der nächste Aufwind steht.
+          <strong data-de="Warum Daten für mich lebendig sind" data-en="Why data feels alive to me">Warum Daten für mich lebendig sind</strong>
+          <span data-de="Selbst in der Luft läuft die Telemetrie mit: 3.330 m Höhe, +2,2 m/s Steigen, 48,3 km Strecke – gute Daten zeigen sofort, wo der nächste Aufwind steht."
+                data-en="Even in the air, telemetry runs along: 3,330 m altitude, +2.2 m/s climb, 48.3 km distance—good data immediately reveals where the next thermal lifts.">
+            Selbst in der Luft läuft die Telemetrie mit: 3.330 m Höhe, +2,2 m/s Steigen, 48,3 km Strecke – gute Daten zeigen sofort, wo der nächste Aufwind steht.
+          </span>
         </div>
       </figure>
     </div>
   </section>
 
-  <!-- 3. LIVE 3D-FLUG-VIDEO & EIGENE WEB-APP (TRACK-AUSWERTUNG) -->
+  <!-- 3. TEAMFÄHIGKEIT: Gemeinsam im Aufwind & Tandemfliegen -->
+  <section class="section reveal" id="team" aria-labelledby="h-team">
+    <p class="section-kicker" data-de="Teamfähigkeit · Vertrauen &amp; Verantwortung" data-en="Teamwork · Trust &amp; Shared Responsibility">Teamfähigkeit · Vertrauen &amp; Verantwortung</p>
+    <h2 class="section-title" id="h-team"
+        data-de="Warum man gemeinsam höher steigt – beim Fliegen wie im Team"
+        data-en="Why you climb higher together—in the air and in a team">Warum man gemeinsam höher steigt – beim Fliegen wie im Team</h2>
+    <p class="section-intro"
+       data-de="Fliegen wirkt auf den ersten Blick wie ein Einzelsport. In Wahrheit lernt man nirgendwo schneller, was blindes Vertrauen, klare Kommunikation und gegenseitige Unterstützung bedeuten – ob zu zweit in derselben Thermik oder als Tandempilot mit einem Passagier."
+       data-en="At first glance, flying looks like a solo sport. In reality, nowhere do you learn faster what real trust, clear communication, and mutual support mean—whether sharing a thermal with a wingman or flying a passenger on a tandem wing.">
+      Fliegen wirkt auf den ersten Blick wie ein Einzelsport. In Wahrheit lernt man nirgendwo schneller, was blindes Vertrauen, klare Kommunikation und gegenseitige Unterstützung bedeuten – ob zu zweit in derselben Thermik oder als Tandempilot mit einem Passagier.
+    </p>
+
+    <div class="team-layout">
+      <!-- Left: P9085924.JPG (Two gliders over the alpine ridge) -->
+      <article class="team-feature">
+        <div class="team-feature-img"
+             data-lightbox="./assets/zwei-gleitschirme-alpen.jpg"
+             data-caption-de="Gemeinsam im Aufwind (P9085924): Wer die Thermik zuerst findet, zeigt dem anderen den Einstieg"
+             data-caption-en="Sharing the thermal (P9085924): Whoever finds the lift first shows the other pilot the entry">
+          <img src="./assets/zwei-gleitschirme-alpen.jpg" alt="Zwei Gleitschirme fliegen gemeinsam dicht über einem grünen Alpenhang">
+          <div class="img-badge">
+            <span data-de="&lt;strong&gt;Zu zweit am Grat:&lt;/strong&gt; Aufwind teilen statt Ellenbogen"
+                  data-en="&lt;strong&gt;Two Wings on the Ridge:&lt;/strong&gt; Sharing lift instead of elbows">
+              <strong>Zu zweit am Grat:</strong> Aufwind teilen statt Ellenbogen
+            </span>
+            <span class="alt-pill" data-de="Seilschaft in der Luft" data-en="Wingmen">Seilschaft in der Luft</span>
+          </div>
+        </div>
+        <div class="team-feature-body">
+          <div>
+            <span class="mindset-tag green" data-de="Gemeinsam im Aufwind · Keine Silos" data-en="Shared Lift · Zero Silos">Gemeinsam im Aufwind · Keine Silos</span>
+            <h3 data-de="Wer den Aufwind findet, zeigt den anderen den Einstieg"
+                data-en="Whoever finds the thermal shows the team the way up">Wer den Aufwind findet, zeigt den anderen den Einstieg</h3>
+            <p data-de="Beim Streckenfliegen beobachtet man sich gegenseitig am Himmel: Steigt ein Pilot vor dir in einem Bart, fliegst du dazu, zentrierst gemeinsam und erreichst zusammen die Wolkenbasis viel schneller als allein. Genauso verstehe ich Teamarbeit: Wissen nicht horten, sondern Kollegen sofort mitnehmen, wenn man einen guten Lösungsweg gefunden hat."
+               data-en="On cross-country flights, pilots watch out for one another in the sky: when one pilot finds a thermal climb ahead, you join in, center the lift together, and reach cloudbase much faster than alone. That is how I view teamwork: never hoard knowledge—bring teammates along as soon as you find a path that works.">
+              Beim Streckenfliegen beobachtet man sich gegenseitig am Himmel: Steigt ein Pilot vor dir in einem Bart, fliegst du dazu, zentrierst gemeinsam und erreichst zusammen die Wolkenbasis viel schneller als allein. Genauso verstehe ich Teamarbeit: Wissen nicht horten, sondern Kollegen sofort mitnehmen, wenn man einen guten Lösungsweg gefunden hat.
+            </p>
+          </div>
+          <div class="team-pillars">
+            <div class="team-pillar">
+              <strong data-de="Wissen teilen" data-en="Share Knowledge">Wissen teilen</strong>
+              <span data-de="Training on the Job aktiv an Kollegen weitergeben" data-en="Actively pass on lessons learned on the job">Training on the Job aktiv an Kollegen weitergeben</span>
+            </div>
+            <div class="team-pillar">
+              <strong data-de="Brücken bauen" data-en="Build Bridges">Brücken bauen</strong>
+              <span data-de="Zwischen Fachbereich, Technik und Entscheidern übersetzen" data-en="Translate clearly between business, tech, and leadership">Zwischen Fachbereich, Technik und Entscheidern übersetzen</span>
+            </div>
+            <div class="team-pillar">
+              <strong data-de="Verlässlichkeit" data-en="Reliability">Verlässlichkeit</strong>
+              <span data-de="Ruhe bewahren, auch wenn der Wind auffrischt" data-en="Stay calm and steady when headwinds pick up">Ruhe bewahren, auch wenn der Wind auffrischt</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Right: Tandemflug images (schliersee.jpg, tandem-1.jpg, einpacken.jpg) -->
+      <div class="tandem-stack">
+        <div class="tandem-photos" aria-label="Eindrücke vom Tandemfliegen">
+          <figure class="tandem-photo" style="margin:0"
+                  data-lightbox="./assets/schliersee.jpg"
+                  data-caption-de="Tandemflug über dem Schliersee: Verantwortung übernehmen und Begeisterung teilen"
+                  data-caption-en="Tandem flight above Lake Schliersee: taking responsibility and sharing the joy">
+            <img src="./assets/schliersee.jpg" alt="Tobias beim Tandemflug mit Passagier über dem Schliersee" loading="lazy">
+            <figcaption class="img-badge">
+              <span data-de="&lt;strong&gt;Tandem&lt;/strong&gt; · Vertrauen" data-en="&lt;strong&gt;Tandem&lt;/strong&gt; · Trust"><strong>Tandem</strong> · Vertrauen</span>
+            </figcaption>
+          </figure>
+
+          <figure class="tandem-photo" style="margin:0"
+                  data-lightbox="./assets/tandem-1.jpg"
+                  data-caption-de="Gemeinsam abheben in den Voralpen: im gleichen Takt beim Startlauf"
+                  data-caption-en="Taking off together in the foothills of the Alps: running in sync">
+            <img src="./assets/tandem-1.jpg" alt="Tandem-Gleitschirmflug in der Sonne über den grünen Voralpen" loading="lazy">
+            <figcaption class="img-badge">
+              <span data-de="&lt;strong&gt;Weitblick&lt;/strong&gt; · Voralpen" data-en="&lt;strong&gt;Perspective&lt;/strong&gt; · Alps"><strong>Weitblick</strong> · Voralpen</span>
+            </figcaption>
+          </figure>
+
+          <figure class="tandem-photo" style="margin:0"
+                  data-lightbox="./assets/einpacken.jpg"
+                  data-caption-de="Nach der Landung auf der Wiese: gemeinsam den Schirm zusammenlegen"
+                  data-caption-en="After landing on the meadow: packing up the wing together">
+            <img src="./assets/einpacken.jpg" alt="Gemeinsames Zusammenpacken des Tandem-Gleitschirms auf der Landewiese" loading="lazy">
+            <figcaption class="img-badge">
+              <span data-de="&lt;strong&gt;Landewiese&lt;/strong&gt; · Anpacken" data-en="&lt;strong&gt;Landing&lt;/strong&gt; · Hands-on"><strong>Landewiese</strong> · Anpacken</span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <article class="tandem-card">
+          <span class="mindset-tag" data-de="Tandempilot · Menschen abholen" data-en="Tandem Pilot · Empowering People">Tandempilot · Menschen abholen</span>
+          <h3 data-de="Tandemfliegen: Komplexität nehmen, gemeinsam sicher landen"
+              data-en="Tandem Flying: Removing complexity and landing safely together">Tandemfliegen: Komplexität nehmen, gemeinsam sicher landen</h3>
+          <p data-de="Als Tandempilot nehme ich Menschen mit in die Luft, die noch nie zuvor geflogen sind. Vor dem Start geht es darum, ruhig zu erklären, Unsicherheit zu nehmen und beim Startlauf im gleichen Schritt zu laufen – und nach der Landung packt man auf der Wiese gemeinsam den Schirm zusammen. Genauso begleite ich Teams und Fachbereiche bei neuen KI- und Datenlösungen: verständlich auf Augenhöhe, ohne Fachchinesisch, bis das Ergebnis sauber steht."
+             data-en="As a tandem pilot, I take passengers into the sky who have never flown before. Before takeoff, it is all about explaining calmly, removing uncertainty, and running in step—and after landing, we pack up the wing together on the meadow. That is exactly how I guide teams and stakeholders through new AI and data solutions: at eye level, without jargon, until we land the result together.">
+            Als Tandempilot nehme ich Menschen mit in die Luft, die noch nie zuvor geflogen sind. Vor dem Start geht es darum, ruhig zu erklären, Unsicherheit zu nehmen und beim Startlauf im gleichen Schritt zu laufen – und nach der Landung packt man auf der Wiese gemeinsam den Schirm zusammen. Genauso begleite ich Teams und Fachbereiche bei neuen KI- und Datenlösungen: verständlich auf Augenhöhe, ohne Fachchinesisch, bis das Ergebnis sauber steht.
+          </p>
+          <div class="actions">
+            <a class="btn btn-outline" href="https://tobmuc.github.io/tandemflug/" target="_blank" rel="noopener"
+               data-de="Tandemflug-Seite ansehen →"
+               data-en="Visit Tandem Flight Page →">Tandemflug-Seite ansehen →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. LIVE 3D-FLUG-VIDEO & EIGENE WEB-APP (TRACK-AUSWERTUNG) -->
   <section class="section reveal" id="track-app" aria-labelledby="h-track">
-    <p class="section-kicker">Wenn Fliegen &amp; Daten zusammenkommen · Eigenes Projekt</p>
-    <h2 class="section-title" id="h-track">3D-Track-Auswertung – meine Flüge als interaktives Datenmodell</h2>
-    <p class="section-intro">
+    <p class="section-kicker" data-de="Wenn Fliegen &amp; Daten zusammenkommen · Eigenes Projekt" data-en="Where Flying Meets Data · Personal Project">Wenn Fliegen &amp; Daten zusammenkommen · Eigenes Projekt</p>
+    <h2 class="section-title" id="h-track"
+        data-de="3D-Track-Auswertung – meine Flüge als interaktives Datenmodell"
+        data-en="3D Flight Track Analyzer – Turning my flights into an interactive data model">3D-Track-Auswertung – meine Flüge als interaktives Datenmodell</h2>
+    <p class="section-intro"
+       data-de="Für mich sind Daten keine trockenen Tabellen. In meiner selbst gebauten Browser-Anwendung werte ich echte GPS-Flugaufzeichnungen (IGC-Tracks) von Gleitschirm- und Hike-&amp;-Fly-Touren samt Thermik, Steigwerten und 3D-Gelände direkt im Browser aus."
+       data-en="To me, data is never just dry tables. In my self-built browser application, I analyze real GPS flight logs (IGC tracks) from paragliding and hike-and-fly tours—complete with thermal climbs, sink rates, and 3D terrain directly in the browser.">
       Für mich sind Daten keine trockenen Tabellen. In meiner selbst gebauten Browser-Anwendung werte ich echte GPS-Flugaufzeichnungen (IGC-Tracks) von Gleitschirm- und Hike-&amp;-Fly-Touren samt Thermik, Steigwerten und 3D-Gelände direkt im Browser aus.
     </p>
 
@@ -878,60 +1152,123 @@
         </video>
       </div>
       <div>
-        <span class="mindset-tag">Hands-on gebaut · Direkt im Browser</span>
-        <h3 style="margin:0 0 10px;font-size:21px;line-height:1.3">Vom Vario-Piepsen zur 3D-Visualisierung</h3>
-        <p style="margin:0;color:var(--muted);font-size:15px">
+        <span class="mindset-tag" data-de="Hands-on gebaut · Direkt im Browser" data-en="Built Hands-On · Directly in the Browser">Hands-on gebaut · Direkt im Browser</span>
+        <h3 style="margin:0 0 10px;font-size:21px;line-height:1.3"
+            data-de="Vom Vario-Piepsen zur 3D-Visualisierung"
+            data-en="From Vario Beeps to 3D Terrain Visualization">Vom Vario-Piepsen zur 3D-Visualisierung</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px"
+           data-de="Jeder Aufwind, jede Gleitpassage und jede Entscheidung in der Luft hinterlässt eine Spur aus Zeitstempeln, Koordinaten und Höhenmetern. Die Anwendung macht genau sichtbar, wo die Thermik getragen hat und wie der Flug im alpinen Gelände verlief."
+           data-en="Every thermal climb, glide transition, and in-flight decision leaves a trail of timestamps, coordinates, and altitude meters. The web app visualizes exactly where the lift carried and how the flight unfolded across alpine terrain.">
           Jeder Aufwind, jede Gleitpassage und jede Entscheidung in der Luft hinterlässt eine Spur aus Zeitstempeln, Koordinaten und Höhenmetern. Die Anwendung macht genau sichtbar, wo die Thermik getragen hat und wie der Flug im alpinen Gelände verlief.
         </p>
         <div class="track-metrics" aria-label="Eckdaten aus dem Demo-Flug">
-          <div class="track-metric"><strong>3.330 m</strong><span>Maximale Flughöhe</span></div>
-          <div class="track-metric"><strong>+2,2 m/s</strong><span>Thermik-Steigen</span></div>
-          <div class="track-metric"><strong>48,3 km</strong><span>Streckenflug</span></div>
-          <div class="track-metric"><strong>52 km/h</strong><span>Spitzentempo</span></div>
+          <div class="track-metric"><strong>3.330 m</strong><span data-de="Maximale Flughöhe" data-en="Peak Altitude">Maximale Flughöhe</span></div>
+          <div class="track-metric"><strong>+2,2 m/s</strong><span data-de="Thermik-Steigen" data-en="Thermal Climb">Thermik-Steigen</span></div>
+          <div class="track-metric"><strong>48,3 km</strong><span data-de="Streckenflug" data-en="XC Distance">Streckenflug</span></div>
+          <div class="track-metric"><strong>52 km/h</strong><span data-de="Spitzentempo" data-en="Top Speed">Spitzentempo</span></div>
         </div>
         <div class="actions">
-          <a class="btn btn-primary" href="https://tobmuc.github.io/track-auswertung/" target="_blank" rel="noopener">Track-Auswertung live öffnen →</a>
+          <a class="btn btn-primary" href="https://tobmuc.github.io/track-auswertung/" target="_blank" rel="noopener"
+             data-de="Track-Auswertung live öffnen →"
+             data-en="Open Live Track Analyzer →">Track-Auswertung live öffnen →</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 4. AUTHENTISCHE GALERIE (mit Lightbox) -->
+  <!-- 5. AUTHENTISCHE GALERIE (mit Lightbox) -->
   <section class="section reveal" id="galerie" aria-labelledby="h-gal">
-    <p class="section-kicker">Echte Momente · Klick zum Vergrößern</p>
-    <h2 class="section-title" id="h-gal">Draußen unterwegs – zwischen Viertausendern, Felsgrat und Thermik</h2>
+    <p class="section-kicker" data-de="Echte Momente · Klick zum Vergrößern" data-en="Authentic Moments · Click to Enlarge">Echte Momente · Klick zum Vergrößern</p>
+    <h2 class="section-title" id="h-gal"
+        data-de="Draußen unterwegs – zwischen Viertausendern, Felsgrat und Thermik"
+        data-en="Out in the Elements – Between 4,000-Meter Peaks, Rock Ridges, and Thermals">Draußen unterwegs – zwischen Viertausendern, Felsgrat und Thermik</h2>
     <div class="gallery-grid">
-      <figure class="gallery-item" style="margin:0" data-lightbox="./assets/hero-oberaar-gipfel.jpg" data-caption="Gipfelglück in den Berner Alpen: oben ankommen, durchatmen, weiterdenken">
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/hero-oberaar-gipfel.jpg"
+              data-caption-de="Gipfelglück in den Berner Alpen: oben ankommen, durchatmen, weiterdenken"
+              data-caption-en="Summit joy in the Bernese Alps: reaching the top, taking a breath, looking ahead">
         <img src="./assets/hero-oberaar-gipfel.jpg" alt="Tobias am Gipfelkreuz mit Eispickel" loading="lazy">
-        <figcaption><strong>Westalpen · Gipfelkreuz</strong>Wenn sich der frühe Aufstieg auszahlt</figcaption>
+        <figcaption data-de="&lt;strong&gt;Westalpen · Gipfelkreuz&lt;/strong&gt;Wenn sich der frühe Aufstieg auszahlt"
+                    data-en="&lt;strong&gt;Western Alps · Summit Cross&lt;/strong&gt;When the early climb pays off">
+          <strong>Westalpen · Gipfelkreuz</strong>Wenn sich der frühe Aufstieg auszahlt
+        </figcaption>
       </figure>
-      <figure class="gallery-item" style="margin:0" data-lightbox="./assets/chamonix-cockpit-smile.jpg" data-caption="Im Gurtzeug über Chamonix mit Blick auf Gletscher und Felsnadeln">
+
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/chamonix-cockpit-smile.jpg"
+              data-caption-de="Im Gurtzeug über Chamonix mit Blick auf Gletscher und Felsnadeln"
+              data-caption-en="In the harness above Chamonix overlooking glaciers and granite spires">
         <img src="./assets/chamonix-cockpit-smile.jpg" alt="Tobias im Gleitschirm-Gurtzeug vor Gletscherkulisse" loading="lazy">
-        <figcaption><strong>Chamonix · In der Thermik</strong>Fokus und Freude auf über 3.000 Metern</figcaption>
+        <figcaption data-de="&lt;strong&gt;Chamonix · In der Thermik&lt;/strong&gt;Fokus und Freude auf über 3.000 Metern"
+                    data-en="&lt;strong&gt;Chamonix · In the Thermal&lt;/strong&gt;Focus and joy above 3,000 meters">
+          <strong>Chamonix · In der Thermik</strong>Fokus und Freude auf über 3.000 Metern
+        </figcaption>
       </figure>
-      <figure class="gallery-item" style="margin:0" data-lightbox="./assets/gipfel-pickel-silhouette.jpg" data-caption="Mit Steigeisen und Pickel auf dem Felsgipfel">
+
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/gipfel-pickel-silhouette.jpg"
+              data-caption-de="Mit Steigeisen und Pickel auf dem Felsgipfel"
+              data-caption-en="With crampons and ice axe on the rock summit">
         <img src="./assets/gipfel-pickel-silhouette.jpg" alt="Tobias steht mit Eispickel auf einem markanten Felsblock am Gipfel" loading="lazy">
-        <figcaption><strong>Fels &amp; Eis · Hochtour</strong>Trittsicherheit, wenn es steil wird</figcaption>
+        <figcaption data-de="&lt;strong&gt;Fels &amp; Eis · Hochtour&lt;/strong&gt;Trittsicherheit, wenn es steil wird"
+                    data-en="&lt;strong&gt;Rock &amp; Ice · Alpine Tour&lt;/strong&gt;Sure-footed when it gets steep">
+          <strong>Fels &amp; Eis · Hochtour</strong>Trittsicherheit, wenn es steil wird
+        </figcaption>
       </figure>
-      <figure class="gallery-item" style="margin:0" data-lightbox="./assets/kletterfels-talblick.jpg" data-caption="Nach der Klettertour am Felsabsatz mit Blick ins grüne Alptal">
+
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/kletterfels-talblick.jpg"
+              data-caption-de="Nach der Klettertour am Felsabsatz mit Blick ins grüne Alptal"
+              data-caption-en="After the climb on the rock ledge overlooking the green alpine valley">
         <img src="./assets/kletterfels-talblick.jpg" alt="Tobias sitzt mit Kletterseil auf einer Felskante über dem Tal" loading="lazy">
-        <figcaption><strong>Mehrseillängen · Ausblick</strong>Seil aufnehmen und den Überblick genießen</figcaption>
+        <figcaption data-de="&lt;strong&gt;Mehrseillängen · Ausblick&lt;/strong&gt;Seil aufnehmen und den Überblick genießen"
+                    data-en="&lt;strong&gt;Multi-Pitch · Valley View&lt;/strong&gt;Coiling the rope and enjoying the view">
+          <strong>Mehrseillängen · Ausblick</strong>Seil aufnehmen und den Überblick genießen
+        </figcaption>
       </figure>
-      <figure class="gallery-item" style="margin:0" data-lightbox="./assets/gletscher-aufstieg.jpg" data-caption="Gletscher-Aufstieg vor den Granitnadeln von Chamonix">
+
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/gletscher-aufstieg.jpg"
+              data-caption-de="Gletscher-Aufstieg vor den Granitnadeln von Chamonix"
+              data-caption-en="Glacier ascent in front of the Chamonix granite needles">
         <img src="./assets/gletscher-aufstieg.jpg" alt="Tobias mit Helm und Gletscherbrille im hochalpinen Schnee" loading="lazy">
-        <figcaption><strong>Aiguille du Midi · Gletscher</strong>Gute Vorbereitung ist die halbe Route</figcaption>
+        <figcaption data-de="&lt;strong&gt;Aiguille du Midi · Gletscher&lt;/strong&gt;Gute Vorbereitung ist die halbe Route"
+                    data-en="&lt;strong&gt;Aiguille du Midi · Glacier&lt;/strong&gt;Preparation is half the route">
+          <strong>Aiguille du Midi · Gletscher</strong>Gute Vorbereitung ist die halbe Route
+        </figcaption>
       </figure>
-      <figure class="gallery-item" style="margin:0" data-lightbox="./assets/gleitschirm-vorbereitung-see.jpg" data-caption="Startvorbereitung mit dem Gleitschirm hoch über dem Gebirgssee">
+
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/gleitschirm-vorbereitung-see.jpg"
+              data-caption-de="Startvorbereitung mit dem Gleitschirm hoch über dem Gebirgssee"
+              data-caption-en="Pre-flight check with the paraglider high above the mountain lake">
         <img src="./assets/gleitschirm-vorbereitung-see.jpg" alt="Tobias beim Sortieren der Gleitschirmleinen vor einem tiefblauen See" loading="lazy">
-        <figcaption><strong>Startplatz · Leinencheck</strong>Sorgfalt vor dem Abheben</figcaption>
+        <figcaption data-de="&lt;strong&gt;Startplatz · Leinencheck&lt;/strong&gt;Sorgfalt vor dem Abheben"
+                    data-en="&lt;strong&gt;Launch Site · Line Check&lt;/strong&gt;Careful prep before takeoff">
+          <strong>Startplatz · Leinencheck</strong>Sorgfalt vor dem Abheben
+        </figcaption>
       </figure>
-      <figure class="gallery-item" style="margin:0" data-lightbox="./assets/kaukasus-bergdorf.jpg" data-caption="Blick auf verschneite Gipfelflanken über einem alten Wehrturm im Kaukasus">
+
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/kaukasus-bergdorf.jpg"
+              data-caption-de="Blick auf verschneite Gipfelflanken über einem alten Wehrturm im Kaukasus"
+              data-caption-en="View of snow-covered peaks above an ancient tower in the Caucasus">
         <img src="./assets/kaukasus-bergdorf.jpg" alt="Verschneiter Hochgebirgsgipfel hinter einem historischen Bergdorf" loading="lazy">
-        <figcaption><strong>Reisen · Neue Horizonte</strong>Neugier auf unbekanntes Terrain</figcaption>
+        <figcaption data-de="&lt;strong&gt;Reisen · Neue Horizonte&lt;/strong&gt;Neugier auf unbekanntes Terrain"
+                    data-en="&lt;strong&gt;Journeys · New Horizons&lt;/strong&gt;Curiosity for unfamiliar terrain">
+          <strong>Reisen · Neue Horizonte</strong>Neugier auf unbekanntes Terrain
+        </figcaption>
       </figure>
-      <figure class="gallery-item" style="margin:0" data-lightbox="./assets/grat-stirnlampe-daemmerung.jpg" data-caption="Mit der Stirnlampe am Grat kurz vor Sonnenaufgang">
+
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/grat-stirnlampe-daemmerung.jpg"
+              data-caption-de="Mit der Stirnlampe am Grat kurz vor Sonnenaufgang"
+              data-caption-en="With headlamp on the ridge shortly before sunrise">
         <img src="./assets/grat-stirnlampe-daemmerung.jpg" alt="Silhouette mit Stirnlampe auf einem Berggrat in der Dämmerung" loading="lazy">
-        <figcaption><strong>Stirnlampen-Start · 5 Uhr früh</strong>Bereit für den nächsten großen Schritt</figcaption>
+        <figcaption data-de="&lt;strong&gt;Stirnlampen-Start · 5 Uhr früh&lt;/strong&gt;Bereit für den nächsten großen Schritt"
+                    data-en="&lt;strong&gt;Headlamp Start · 5 AM&lt;/strong&gt;Ready for the next big step">
+          <strong>Stirnlampen-Start · 5 Uhr früh</strong>Bereit für den nächsten großen Schritt
+        </figcaption>
       </figure>
     </div>
   </section>
@@ -947,19 +1284,22 @@
 </div>
 
 <footer>
-  <span>© 2026 Tobias Burkard · München</span>
+  <span data-de="© 2026 Tobias Burkard · München" data-en="© 2026 Tobias Burkard · Munich">© 2026 Tobias Burkard · München</span>
   <a href="mailto:tobias.muenchen@gmail.com">tobias.muenchen@gmail.com</a>
   <a href="https://www.linkedin.com/in/tobias-your-new-ai-expert" target="_blank" rel="noopener">LinkedIn</a>
-  <a href="./datenschutzhinweise.html">Datenschutzhinweise</a>
-  <button type="button" class="linkbtn" id="cc-reopen">Cookie-Einstellungen</button>
+  <a href="./datenschutzhinweise.html" data-de="Datenschutzhinweise" data-en="Privacy Policy">Datenschutzhinweise</a>
+  <button type="button" class="linkbtn" id="cc-reopen" data-de="Cookie-Einstellungen" data-en="Cookie Settings">Cookie-Einstellungen</button>
 </footer>
 
 <aside id="cc-banner" role="dialog" aria-labelledby="cc-title">
-  <strong id="cc-title">Hinweis zu Statistik-Cookies</strong>
-  <span>Ich nutze Google Analytics 4 nur mit deiner Zustimmung, um zu sehen, welche Bereiche dieser Seite besucht werden.</span>
+  <strong id="cc-title" data-de="Hinweis zu Statistik-Cookies" data-en="Analytics Cookie Notice">Hinweis zu Statistik-Cookies</strong>
+  <span data-de="Ich nutze Google Analytics 4 nur mit deiner Zustimmung, um zu sehen, welche Bereiche dieser Seite besucht werden."
+        data-en="I use Google Analytics 4 only with your consent to understand which parts of this page are visited.">
+    Ich nutze Google Analytics 4 nur mit deiner Zustimmung, um zu sehen, welche Bereiche dieser Seite besucht werden.
+  </span>
   <div class="actions">
-    <button type="button" class="btn btn-primary" id="cc-accept">Einverstanden</button>
-    <button type="button" class="btn btn-outline" id="cc-decline">Nur notwendige</button>
+    <button type="button" class="btn btn-primary" id="cc-accept" data-de="Einverstanden" data-en="Accept">Einverstanden</button>
+    <button type="button" class="btn btn-outline" id="cc-decline" data-de="Nur notwendige" data-en="Essential only">Nur notwendige</button>
   </div>
 </aside>
 
@@ -973,6 +1313,7 @@
   document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
   // 2. Höhenmesser-Animation im Hero (0 -> 3.330 m)
+  let currentLang = "de";
   (function(){
     const el = document.getElementById("alt-counter");
     if (!el) return;
@@ -983,94 +1324,73 @@
       const p = Math.min(1, (now - start) / dur);
       const eased = 1 - Math.pow(1 - p, 3);
       const val = Math.round(eased * target);
-      el.textContent = val.toLocaleString("de-DE") + " m";
+      el.textContent = val.toLocaleString(currentLang === "en" ? "en-US" : "de-DE") + " m";
       if (p < 1) requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
   })();
 
-  // 3. Konzept 1: Mehrsprachiges Feedback (Neutrales Tourenportal) mit animiertem Mehrheitsentscheid
-  const FB = [
-    {
-      say: "„Der Offline-Download der Gratroute klappt sofort, aber das Höhenprofil aktualisiert sich bei schwachem Empfang erst nach zwei Minuten.“",
-      tags: [["Bereich: Tourenplanung & GPS",""],["Detail: Höhenprofil-Synchronisation",""],["Signal: Verzögerung prüfen","neg"]]
-    },
-    {
-      say: "“The thermal & wind forecast layer on the ridge map was spot on and helped us time our launch window before the valley wind picked up.”",
-      tags: [["Bereich: Flugwetter & Thermik",""],["Detail: Startfenster-Prognose",""],["Signal: Sehr positiv","pos"]]
-    },
-    {
-      say: "« La réservation du refuge en haute montagne est très rapide, mais le partage de la liste d'équipement avec le groupe a demandé deux essais. »",
-      tags: [["Bereich: Hütten & Seilschaft",""],["Detail: Packlisten-Freigabe",""],["Signal: Reibungspunkt","neg"]]
-    },
-    {
-      say: "« La traccia GPX del ghiacciaio è precisa al metro e l'avviso automatico sui passaggi chiave funziona perfettamente offline. »",
-      tags: [["Bereich: Hochtouren-Navigation",""],["Detail: Schlüsselstellen-Hinweis",""],["Signal: Sehr positiv","pos"]]
+  // 3. Dark / Light Mode Toggle
+  const themeBtn = document.getElementById("theme-toggle");
+  const themeIcon = document.getElementById("theme-icon");
+  const themeLabel = document.getElementById("theme-label");
+
+  function updateThemeUI(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) metaTheme.setAttribute("content", theme === "dark" ? "#0b0f17" : "#f7f6f2");
+    if (theme === "dark") {
+      themeIcon.textContent = "☀️";
+      themeLabel.setAttribute("data-de", "Light Mode");
+      themeLabel.setAttribute("data-en", "Light Mode");
+      themeLabel.textContent = "Light Mode";
+    } else {
+      themeIcon.textContent = "🌙";
+      themeLabel.setAttribute("data-de", "Dark Mode");
+      themeLabel.setAttribute("data-en", "Dark Mode");
+      themeLabel.textContent = "Dark Mode";
     }
-  ];
+  }
 
-  document.querySelectorAll("[data-fb]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll("[data-fb]").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
-      const d = FB[Number(btn.dataset.fb)];
-      const sayEl = document.getElementById("fb-text");
-      sayEl.style.animation = "none";
-      void sayEl.offsetWidth;
-      sayEl.style.animation = "";
-      sayEl.textContent = d.say;
+  updateThemeUI(document.documentElement.getAttribute("data-theme") || "light");
 
-      // Animate 3-run consensus pills sequentially
-      const pills = document.querySelectorAll("#vote-row .run-pill");
-      pills.forEach(p => p.classList.remove("active"));
-      pills.forEach((p, idx) => {
-        setTimeout(() => p.classList.add("active"), idx * 110);
-      });
-
-      document.getElementById("fb-tags").innerHTML = d.tags
-        .map(([t, c]) => `<span class="tag ${c}">${t}</span>`).join("");
-    });
+  themeBtn.addEventListener("click", () => {
+    const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    const next = current === "dark" ? "light" : "dark";
+    try { localStorage.setItem("tb-theme", next); } catch(e){}
+    updateThemeUI(next);
   });
 
-  // 4. Konzept 2: Mit Daten sprechen bis zur Folie (Neutrales Bergsport-Beispiel)
-  const Q = [
-    {
-      sql: `SELECT sparte, ROUND(SUM(volumen_eur)/1000, 1) AS tsd_eur\nFROM bergsport_modell.saison_auswertung\nWHERE saison = 2026\nGROUP BY sparte ORDER BY tsd_eur DESC;`,
-      rows: [["Gleitschirm & Flug", 100, "480 T€"], ["Hochtouren & Fels", 76, "365 T€"], ["Skitour & Lawine", 54, "260 T€"]],
-      slide: "„Gleitschirm & Flug führt die Saison 2026 mit 480 T€ (+18 % zum Vorjahr) an.“"
-    },
-    {
-      sql: `SELECT quartal, COUNT(*) AS touren_buchungen\nFROM bergsport_modell.alpen_buchungen\nWHERE kanal = 'Touren_Portal'\nGROUP BY quartal ORDER BY quartal;`,
-      rows: [["Frühjahr (Q1)", 64, "12.400"], ["Bergsommer (Q2)", 86, "16.800"], ["Herbstthermik (Q3)", 100, "19.500"]],
-      slide: "„Stärkstes Wachstum im Spätsommer: 19.500 gebuchte Touren (+30 % Neueinstiege).“"
-    },
-    {
-      sql: `SELECT alpen_region, ROUND(AVG(bewertung), 1) AS Zufriedenheit\nFROM bergsport_modell.routen_feedback\nGROUP BY alpen_region ORDER BY Zufriedenheit DESC;`,
-      rows: [["Berner Alpen", 100, "4,8 ★"], ["Mont-Blanc-Gebiet", 96, "4,7 ★"], ["Ostalpen & Dolomiten", 92, "4,6 ★"]],
-      slide: "„Höchste Touren-Zufriedenheit in den Westalpen mit durchschnittlich 4,8 von 5 Sternen.“"
-    }
-  ];
+  // 4. Language Switcher (DE / EN)
+  function applyLanguage(lang) {
+    currentLang = lang === "en" ? "en" : "de";
+    document.documentElement.lang = currentLang;
+    document.getElementById("lang-de").classList.toggle("active", currentLang === "de");
+    document.getElementById("lang-en").classList.toggle("active", currentLang === "en");
 
-  document.querySelectorAll("[data-q]").forEach(btn => {
+    document.querySelectorAll("[data-de][data-en]").forEach(el => {
+      const val = el.getAttribute("data-" + currentLang);
+      if (val !== null) el.innerHTML = val;
+    });
+
+    const altEl = document.getElementById("alt-counter");
+    if (altEl) altEl.textContent = (3330).toLocaleString(currentLang === "en" ? "en-US" : "de-DE") + " m";
+  }
+
+  (function initLang(){
+    const params = new URLSearchParams(window.location.search);
+    const urlLang = params.get("lang");
+    let saved = null;
+    try { saved = localStorage.getItem("tb-lang"); } catch(e){}
+    const initial = (urlLang === "en" || urlLang === "de") ? urlLang : (saved === "en" ? "en" : "de");
+    applyLanguage(initial);
+  })();
+
+  document.querySelectorAll("[data-set-lang]").forEach(btn => {
     btn.addEventListener("click", () => {
-      document.querySelectorAll("[data-q]").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
-      const d = Q[Number(btn.dataset.q)];
-
-      // Animate 4-step pipeline pills
-      const steps = document.querySelectorAll("#flow-steps .flow-step");
-      steps.forEach(s => s.classList.remove("done"));
-      steps.forEach((s, idx) => {
-        setTimeout(() => s.classList.add("done"), idx * 95);
-      });
-
-      document.getElementById("q-sql").textContent = d.sql;
-      document.getElementById("q-bars").innerHTML = d.rows
-        .map(([l, w, v]) => `<li><span>${l}</span><span class="bar"><i style="width:${w}%"></i></span><b>${v}</b></li>`).join("");
-
-      const slideEl = document.getElementById("q-slide");
-      slideEl.style.animation = "none";
-      void slideEl.offsetWidth;
-      slideEl.style.animation = "";
-      slideEl.querySelector("span").innerHTML = `<strong>Fertige Folien-Vorschau:</strong> ${d.slide}`;
+      const lang = btn.getAttribute("data-set-lang");
+      try { localStorage.setItem("tb-lang", lang); } catch(e){}
+      applyLanguage(lang);
     });
   });
 
@@ -1081,7 +1401,8 @@
   document.querySelectorAll("[data-lightbox]").forEach(el => {
     el.addEventListener("click", () => {
       lbImg.src = el.getAttribute("data-lightbox");
-      lbCap.textContent = el.getAttribute("data-caption") || "";
+      const cap = el.getAttribute("data-caption-" + currentLang) || el.getAttribute("data-caption-de") || "";
+      lbCap.textContent = cap;
       lb.classList.add("open");
     });
   });
