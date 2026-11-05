@@ -810,6 +810,32 @@
     #cc-banner .actions { margin-top: 14px; }
     #cc-banner .btn { flex: 1; justify-content: center; }
 
+        /* Animation unter "Laufschuhe" */
+    .shoes-accent {
+      position: relative;
+      display: inline-block;
+      white-space: nowrap;
+      color: var(--accent);
+    }
+    .shoes-accent::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 100%;
+      height: 5px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--alpine-green), var(--accent));
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+      animation: drawUnderline 0.85s 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      box-shadow: 0 2px 10px rgba(13, 82, 150, 0.3);
+    }
+    @keyframes drawUnderline {
+      0% { transform: scaleX(0); opacity: 0; }
+      100% { transform: scaleX(1); opacity: 1; }
+    }
+
     /* Scroll-Fortschritt als Höhenband unter der Topbar */
     .scroll-progress {
       position: absolute;
@@ -935,7 +961,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
-      .reveal, .stagger > * { opacity: 1 !important; transform: none !important; }
+      .reveal, .stagger > *, .shoes-accent::after { opacity: 1 !important; transform: none !important; animation: none !important; }
     }
   </style>
 </head>
@@ -987,7 +1013,7 @@
         </div>
       </div>
 
-      <h1 data-de="Konzernschuhe aus.<br>Schnellere &amp;amp; leichtere Laufschuhe an." data-en="Corporate boots off.<br>Faster &amp;amp; lighter running shoes on.">Konzernschuhe aus.<br>Schnellere &amp; leichtere Laufschuhe an.</h1>
+      <h1 data-de="Konzernschuhe aus.<br>Schnelle &amp;amp; leichte <span class=&quot;shoes-accent&quot;&gt;Laufschuhe&lt;/span&gt; an." data-en="Corporate boots off.<br>Fast &amp;amp; light <span class=&quot;shoes-accent&quot;&gt;running shoes&lt;/span&gt; on.">Konzernschuhe aus.<br>Schnelle &amp; leichte <span class="shoes-accent">Laufschuhe</span> an.</h1>
 
       <p class="lead"
          data-de="Ich habe mich beruflich alle drei bis vier Jahre intern komplett neu erfunden und mir immer wieder bewusst neue Stellen mit ganz neuen Aufgaben und Herausforderungen gesucht. „Training on the job“ war dabei meine Devise."
@@ -996,9 +1022,9 @@
       </p>
 
       <p class="sublead"
-         data-de="Ob beim Gleitschirmfliegen vor den Gletschern, als Tandempilot, auf Hochtour am Grat oder beim Bau digitaler Lösungen: Mich treibt ein nimmersattes Wesen bei Neuerungen, eigene Kreativität und das selbst gewählte Kredo des lebenslangen Lernens an. Jetzt bin ich bereit, meine groß und träge gewordenen Konzernschuhe gegen schnellere, leichtere Laufschuhe einzutauschen."
-         data-en="Whether paragliding in front of glaciers, flying tandem passengers, climbing alpine ridges, or building digital products: I am driven by an insatiable curiosity for innovation, hands-on creativity, and lifelong learning. Now I am ready to trade my heavy, slow-moving corporate boots for faster, lighter running shoes.">
-        Ob beim Gleitschirmfliegen vor den Gletschern, als Tandempilot, auf Hochtour am Grat oder beim Bau digitaler Lösungen: Mich treibt ein nimmersattes Wesen bei Neuerungen, eigene Kreativität und das selbst gewählte Kredo des lebenslangen Lernens an. Jetzt bin ich bereit, meine groß und träge gewordenen Konzernschuhe gegen schnellere, leichtere Laufschuhe einzutauschen.
+         data-de="Ob beim Gleitschirmfliegen vor den Gletschern, als Tandempilot, auf Hochtour am Grat oder beim Bau digitaler Lösungen: Mich treibt ein nimmersattes Wesen bei Neuerungen, eigene Kreativität und das selbst gewählte Kredo des lebenslangen Lernens an. Jetzt bin ich bereit, meine groß und träge gewordenen Konzernschuhe gegen schnelle, leichte Laufschuhe einzutauschen."
+         data-en="Whether paragliding in front of glaciers, flying tandem passengers, climbing alpine ridges, or building digital products: I am driven by an insatiable curiosity for innovation, hands-on creativity, and lifelong learning. Now I am ready to trade my heavy, slow-moving corporate boots for fast, light running shoes.">
+        Ob beim Gleitschirmfliegen vor den Gletschern, als Tandempilot, auf Hochtour am Grat oder beim Bau digitaler Lösungen: Mich treibt ein nimmersattes Wesen bei Neuerungen, eigene Kreativität und das selbst gewählte Kredo des lebenslangen Lernens an. Jetzt bin ich bereit, meine groß und träge gewordenen Konzernschuhe gegen schnelle, leichte Laufschuhe einzutauschen.
       </p>
 
       <div class="actions">
@@ -1006,7 +1032,6 @@
         <a class="btn btn-outline" href="https://www.linkedin.com/in/tobias-your-new-ai-expert" target="_blank" rel="noopener" data-de="LinkedIn-Profil" data-en="LinkedIn Profile">LinkedIn-Profil</a>
         <a class="btn btn-outline" href="#team" data-de="Team &amp; Tandem" data-en="Team &amp; Tandem">Team &amp; Tandem</a>
         <a class="btn btn-outline" href="#track-app" data-de="3D-Flug-Auswertung" data-en="3D Flight Analyzer">3D-Flug-Auswertung</a>
-      </div>
         <a class="btn btn-outline" href="#galerie" data-de="Berg- &amp; Flugbilder" data-en="Alpine Gallery">Berg- &amp; Flugbilder</a>
       </div>
     </div>
