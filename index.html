@@ -313,14 +313,8 @@
     .btn-primary { background: var(--accent); color: var(--btn-fg); }
     .btn-outline { border-color: var(--line); color: var(--text); background: var(--card); }
 
-    /* Hero Collage */
-    .hero-mosaic {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .mosaic-main {
-      grid-column: 1 / -1;
+    /* Hero-Bild: ein einzelnes Foto rechts */
+    .hero-photo, .data-photo {
       position: relative;
       border-radius: 18px;
       overflow: hidden;
@@ -329,28 +323,47 @@
       box-shadow: var(--shadow);
       cursor: zoom-in;
     }
-    .mosaic-main img, .mosaic-sub img {
+    .hero-photo img, .data-photo img {
       width: 100%;
       object-fit: cover;
       display: block;
       transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .mosaic-main img {
-      height: 270px;
-      object-position: center 35%;
+    .hero-photo img {
+      height: min(540px, 72vh);
+      object-position: 45% center;
     }
-    .mosaic-main:hover img, .mosaic-sub:hover img {
-      transform: scale(1.04);
+    .data-photo img {
+      height: 100%;
+      min-height: 300px;
+      object-position: center 60%;
     }
-    .mosaic-sub {
-      position: relative;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid var(--line);
+    .hero-photo:hover img, .data-photo:hover img { transform: scale(1.03); }
+
+    /* Data Analyst Sektion */
+    .data-layout {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+    .data-body {
       background: var(--card);
-      cursor: zoom-in;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px 24px 24px;
+      box-shadow: var(--shadow);
     }
-    .mosaic-sub img { height: 155px; }
+    .data-body .track-metrics { margin: 0 0 16px; }
+    .skill-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-chips span {
+      font-size: 12.5px;
+      font-weight: 650;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
     .img-badge {
       position: absolute;
       left: 10px;
@@ -960,21 +973,9 @@
       .mindset-grid { grid-template-columns: 1fr; gap: 16px; }
       .mindset-card { flex-direction: row; }
       .mindset-card img { width: 40%; height: auto; min-height: 230px; flex-shrink: 0; }
-      .mosaic-main img {
-      height: 290px;
-      object-fit: cover;
-      object-position: center 35%;
-    }
-    .mosaic-sub:nth-of-type(1) img {
-      height: 165px;
-      object-fit: cover;
-      object-position: center 22%;
-    }
-    .mosaic-sub:nth-of-type(2) img {
-      height: 165px;
-      object-fit: cover;
-      object-position: center 35%;
-    }
+      .data-layout { grid-template-columns: 1fr; }
+      .data-photo img { min-height: 0; height: 320px; }
+      .hero-photo img { height: 380px; }
       .nav-links { display: none; }
       .video-frame video { max-height: 360px; }
       .telemetry-img-wrap { height: 240px; }
@@ -997,23 +998,10 @@
       .hero .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
       .hero .actions .btn { justify-content: center; padding: 0 12px; font-size: 14px; text-align: center; }
       .hero .actions .btn-primary, .hero .actions .btn:last-child { grid-column: 1 / -1; }
-      .hero-mosaic { gap: 8px; }
-      .mosaic-main img {
-      height: 290px;
-      object-fit: cover;
-      object-position: center 35%;
-    }
-    .mosaic-sub:nth-of-type(1) img {
-      height: 165px;
-      object-fit: cover;
-      object-position: center 22%;
-    }
-    .mosaic-sub:nth-of-type(2) img {
-      height: 165px;
-      object-fit: cover;
-      object-position: center 35%;
-    }
-      .mosaic-sub .img-badge { left: 6px; right: 6px; bottom: 6px; padding: 5px 8px; font-size: 11px; }
+      .hero-photo img { height: 300px; }
+      .hero-photo .img-badge, .data-photo .img-badge { left: 6px; right: 6px; bottom: 6px; padding: 5px 8px; font-size: 11px; }
+      .data-body { padding: 16px 18px 18px; }
+      .data-photo img { height: 240px; }
       .mindset-card { flex-direction: column; }
       .mindset-card img { width: 100%; height: 190px; min-height: 0; }
       .mindset-body { padding: 16px 18px 18px; }
@@ -1068,6 +1056,7 @@
 
     <nav class="nav-links" aria-label="Seitennavigation">
       <a href="#mindset" data-de="Haltung" data-en="Mindset">Haltung</a>
+      <a href="#data" data-de="Data Analytics" data-en="Data Analytics">Data Analytics</a>
       <a href="#team" data-de="Team &amp; Tandem" data-en="Team &amp; Tandem">Team &amp; Tandem</a>
       <a href="#track-app" data-de="3D-Flug" data-en="3D Flight">3D-Flug</a>
       <a href="#galerie" data-de="Galerie" data-en="Gallery">Galerie</a>
@@ -1110,9 +1099,9 @@
       </h1>
 
       <p class="lead"
-         data-de="Über zehn Jahre bei BMW: Alle drei bis vier Jahre habe ich die Abteilung gewechselt und mich in neue Domänen eingearbeitet – vom Frontend über Big-Data-Pipelines bis zu Enterprise-KI. Alles direkt in der Praxis aufgebaut und produktiv gesetzt."
-         data-en="Over ten years at BMW: every three to four years, I switched teams and mastered a new domain—from web frontends to big data pipelines and enterprise AI. Everything built directly on the job and shipped to production.">
-        Über zehn Jahre bei BMW: Alle drei bis vier Jahre habe ich die Abteilung gewechselt und mich in neue Domänen eingearbeitet – vom Frontend über Big-Data-Pipelines bis zu Enterprise-KI. Alles direkt in der Praxis aufgebaut und produktiv gesetzt.
+         data-de="Über zehn Jahre bei BMW: Alle drei bis vier Jahre habe ich die Abteilung gewechselt und mich in neue Domänen eingearbeitet – vom Frontend über Big-Data-Pipelines bis zu Enterprise-KI. Heute arbeite ich dort als Data Analyst &amp;amp; AI Expert. Alles direkt in der Praxis aufgebaut und produktiv gesetzt."
+         data-en="Over ten years at BMW: every three to four years, I switched teams and mastered a new domain—from web frontends to big data pipelines and enterprise AI. Today I work there as a Data Analyst &amp;amp; AI Expert. Everything built directly on the job and shipped to production.">
+        Über zehn Jahre bei BMW: Alle drei bis vier Jahre habe ich die Abteilung gewechselt und mich in neue Domänen eingearbeitet – vom Frontend über Big-Data-Pipelines bis zu Enterprise-KI. Heute arbeite ich dort als Data Analyst &amp; AI Expert. Alles direkt in der Praxis aufgebaut und produktiv gesetzt.
       </p>
 
       <p class="sublead"
@@ -1124,53 +1113,25 @@
       <div class="actions">
         <a class="btn btn-primary" href="mailto:tobias.muenchen@gmail.com" data-de="Schreib mir direkt" data-en="Get in touch">Schreib mir direkt</a>
         <a class="btn btn-outline" href="https://www.linkedin.com/in/tobias-your-new-ai-expert" target="_blank" rel="noopener" data-de="LinkedIn-Profil" data-en="LinkedIn Profile">LinkedIn-Profil</a>
+        <a class="btn btn-outline" href="#data" data-de="Data Analytics bei BMW" data-en="Data Analytics at BMW">Data Analytics bei BMW</a>
         <a class="btn btn-outline" href="#team" data-de="Team &amp; Tandem" data-en="Team &amp; Tandem">Team &amp; Tandem</a>
         <a class="btn btn-outline" href="#track-app" data-de="3D-Flug-Auswertung" data-en="3D Flight Analyzer">3D-Flug-Auswertung</a>
         <a class="btn btn-outline" href="#galerie" data-de="Berg- &amp; Flugbilder" data-en="Alpine Gallery">Berg- &amp; Flugbilder</a>
       </div>
     </div>
 
-    <div class="hero-mosaic" aria-label="Eigene Aufnahmen vom Gleitschirmfliegen und Bergsteigen">
-      <figure class="mosaic-main" style="margin:0"
-              data-lightbox="./assets/chamonix-flug-selfie.jpg"
-              data-caption-de="Gleitschirmflug auf über 3.300 m vor den Gletschern von Chamonix"
-              data-caption-en="Paragliding above 3,300 m in front of the Chamonix glaciers">
-        <img src="./assets/chamonix-flug-selfie.jpg" alt="Tobias beim Gleitschirmfliegen vor den Gletschern von Chamonix">
-        <figcaption class="img-badge">
-          <span data-de="&lt;strong&gt;In der Luft über Chamonix:&lt;/strong&gt; Überblick behalten, Thermik sauber zentrieren"
-                data-en="&lt;strong&gt;Airborne above Chamonix:&lt;/strong&gt; Keeping the big picture, centering the thermal">
-            <strong>In der Luft über Chamonix:</strong> Überblick behalten, Thermik sauber zentrieren
-          </span>
-          <span class="alt-pill" id="alt-counter">3.330 m</span>
-        </figcaption>
-      </figure>
-
-      <figure class="mosaic-sub" style="margin:0"
-              data-lightbox="./assets/hero-oberaar-gipfel.jpg"
-              data-caption-de="Am Gipfelkreuz in den Westalpen mit Eispickel"
-              data-caption-en="At the summit cross in the Western Alps with ice axe">
-        <img src="./assets/hero-oberaar-gipfel.jpg" alt="Tobias am Gipfelkreuz mit Eispickel vor verschneiten Viertausendern">
-        <figcaption class="img-badge">
-          <span data-de="&lt;strong&gt;Am Gipfelkreuz&lt;/strong&gt; · Schritt für Schritt"
-                data-en="&lt;strong&gt;At the Summit&lt;/strong&gt; · Step by step">
-            <strong>Am Gipfelkreuz</strong> · Schritt für Schritt
-          </span>
-        </figcaption>
-      </figure>
-
-      <figure class="mosaic-sub" style="margin:0"
-              data-lightbox="./assets/grat-stirnlampe-daemmerung.jpg"
-              data-caption-de="Aufbruch am Grat vor Sonnenaufgang mit Stirnlampe"
-              data-caption-en="Alpine ridge ascent before sunrise with headlamp">
-        <img src="./assets/grat-stirnlampe-daemmerung.jpg" alt="Silhouette von Tobias mit Stirnlampe auf einem alpinen Grat in der Morgendämmerung">
-        <figcaption class="img-badge">
-          <span data-de="&lt;strong&gt;Früher Aufbruch&lt;/strong&gt; · Eigene Spur legen"
-                data-en="&lt;strong&gt;Early Start&lt;/strong&gt; · Setting the trail">
-            <strong>Früher Aufbruch</strong> · Eigene Spur legen
-          </span>
-        </figcaption>
-      </figure>
-    </div>
+    <figure class="hero-photo" style="margin:0"
+            data-lightbox="./assets/hero-frueher-aufbruch.jpg"
+            data-caption-de="Aufbruch am Grat vor Sonnenaufgang mit Stirnlampe"
+            data-caption-en="Alpine ridge ascent before sunrise with headlamp">
+      <img src="./assets/hero-frueher-aufbruch.jpg" alt="Silhouette von Tobias mit Stirnlampe auf einem alpinen Grat in der Morgendämmerung" fetchpriority="high">
+      <figcaption class="img-badge">
+        <span data-de="&lt;strong&gt;Früher Aufbruch&lt;/strong&gt; · Eigene Spur legen"
+              data-en="&lt;strong&gt;Early Start&lt;/strong&gt; · Setting the trail">
+          <strong>Früher Aufbruch</strong> · Eigene Spur legen
+        </span>
+      </figcaption>
+    </figure>
   </section>
 
   <!-- 2. MINDSET: Gleitschirm, Bergsteigen & Neuerfindung -->
@@ -1283,6 +1244,47 @@
           </span>
         </div>
       </figure>
+    </div>
+  </section>
+
+  <!-- 2b. DATA ANALYST & AI EXPERT (aktuelle Rolle, bewusst ohne interne Details) -->
+  <section class="section reveal" id="data" aria-labelledby="h-data">
+    <p class="section-kicker" data-de="Aktuelle Rolle · Data Analyst &amp; AI Expert" data-en="Current Role · Data Analyst &amp; AI Expert">Aktuelle Rolle · Data Analyst &amp; AI Expert</p>
+    <h2 class="section-title" id="h-data"
+        data-de="Aus Daten Entscheidungen machen"
+        data-en="Turning data into decisions">Aus Daten Entscheidungen machen</h2>
+    <p class="section-intro"
+       data-de="Im Cockpit lese ich Vario und Flugcomputer, im Job lese ich Kennzahlen. Als Data Analyst verbinde ich Datenstrecke, Analyse und eine Aufbereitung, die Fachbereiche ohne Umweg verstehen."
+       data-en="In the cockpit I read my vario and flight computer; at work I read metrics. As a data analyst I connect the data pipeline, the analysis and a presentation that business teams understand right away.">
+      Im Cockpit lese ich Vario und Flugcomputer, im Job lese ich Kennzahlen. Als Data Analyst verbinde ich Datenstrecke, Analyse und eine Aufbereitung, die Fachbereiche ohne Umweg verstehen.
+    </p>
+
+    <div class="data-layout">
+      <figure class="data-photo" style="margin:0"
+              data-lightbox="./assets/cockpit-vario-daten.jpg"
+              data-caption-de="Cockpit im Flug: Vario und Flugcomputer liefern Höhe, Steigen und Strecke in Echtzeit"
+              data-caption-en="In-flight cockpit: vario and flight computer deliver altitude, climb and distance in real time">
+        <img src="./assets/cockpit-vario-daten.jpg" alt="Gleitschirm-Cockpit mit Vario und Flugcomputer über grünen Voralpen" loading="lazy">
+        <figcaption class="img-badge">
+          <span data-de="&lt;strong&gt;Daten im Cockpit&lt;/strong&gt; · Entscheiden in Echtzeit"
+                data-en="&lt;strong&gt;Data in the Cockpit&lt;/strong&gt; · Real-time decisions">
+            <strong>Daten im Cockpit</strong> · Entscheiden in Echtzeit
+          </span>
+        </figcaption>
+      </figure>
+
+      <div class="data-body">
+        <div class="track-metrics stagger" aria-label="Schwerpunkte als Data Analyst">
+          <div class="track-metric"><strong data-de="Analysen &amp; KPIs" data-en="Analysis &amp; KPIs">Analysen &amp; KPIs</strong><span data-de="Funnel- und Kohortenanalysen, Kennzahlen sauber definieren" data-en="Funnel and cohort analysis, clearly defined metrics">Funnel- und Kohortenanalysen, Kennzahlen sauber definieren</span></div>
+          <div class="track-metric"><strong data-de="Dashboards &amp; Reporting" data-en="Dashboards &amp; Reporting">Dashboards &amp; Reporting</strong><span data-de="Ergebnisse so aufbereiten, dass Entscheider schnell handeln können" data-en="Presenting results so decision-makers can act fast">Ergebnisse so aufbereiten, dass Entscheider schnell handeln können</span></div>
+          <div class="track-metric"><strong data-de="Data Engineering" data-en="Data Engineering">Data Engineering</strong><span data-de="ETL-Strecken bauen und große Datenmengen performant verarbeiten" data-en="Building ETL pipelines and processing large data volumes efficiently">ETL-Strecken bauen und große Datenmengen performant verarbeiten</span></div>
+          <div class="track-metric"><strong data-de="Self-Service &amp; KI" data-en="Self-Service &amp; AI">Self-Service &amp; KI</strong><span data-de="Fachbereiche befähigen, eigene Fragen an die Daten zu stellen" data-en="Enabling business teams to ask their own questions of the data">Fachbereiche befähigen, eigene Fragen an die Daten zu stellen</span></div>
+        </div>
+
+        <div class="skill-chips" aria-label="Analytics-Werkzeuge">
+          <span>SQL</span><span>Python</span><span>PySpark</span><span>Power BI</span><span>Amazon QuickSight</span><span>Databricks</span><span>Snowflake</span><span>Delta Lake</span><span>AWS Glue</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1440,8 +1442,8 @@
   <section class="section reveal" id="galerie" aria-labelledby="h-gal">
     <p class="section-kicker" data-de="Echte Momente · Klick zum Vergrößern" data-en="Authentic Moments · Click to Enlarge">Echte Momente · Klick zum Vergrößern</p>
     <h2 class="section-title" id="h-gal"
-        data-de="Draußen unterwegs – zwischen Viertausendern, Felsgrat und Thermik"
-        data-en="Out in the Elements – Between 4,000-Meter Peaks, Rock Ridges, and Thermals">Draußen unterwegs – zwischen Viertausendern, Felsgrat und Thermik</h2>
+        data-de="Draußen unterwegs – von den Alpen bis in den Himalaya"
+        data-en="Out in the Elements – From the Alps to the Himalaya">Draußen unterwegs – von den Alpen bis in den Himalaya</h2>
     <div class="gallery-masonry stagger">
       <figure class="gallery-item" style="margin:0"
               data-lightbox="./assets/hero-oberaar-gipfel.jpg"
@@ -1521,13 +1523,112 @@
       </figure>
 
       <figure class="gallery-item" style="margin:0"
-              data-lightbox="./assets/grat-stirnlampe-daemmerung.jpg"
-              data-caption-de="Mit der Stirnlampe am Grat kurz vor Sonnenaufgang"
-              data-caption-en="With headlamp on the ridge shortly before sunrise">
-        <img src="./assets/grat-stirnlampe-daemmerung.jpg" alt="Silhouette mit Stirnlampe auf einem Berggrat in der Dämmerung" loading="lazy">
-        <figcaption data-de="&lt;strong&gt;Stirnlampen-Start · 5 Uhr früh&lt;/strong&gt;Bereit für den nächsten großen Schritt"
-                    data-en="&lt;strong&gt;Headlamp Start · 5 AM&lt;/strong&gt;Ready for the next big step">
-          <strong>Stirnlampen-Start · 5 Uhr früh</strong>Bereit für den nächsten großen Schritt
+              data-lightbox="./assets/chamonix-flug-selfie.jpg"
+              data-caption-de="Gleitschirmflug auf über 3.300 m vor den Gletschern von Chamonix"
+              data-caption-en="Paragliding above 3,300 m in front of the Chamonix glaciers">
+        <img src="./assets/chamonix-flug-selfie.jpg" alt="Tobias beim Gleitschirmfliegen vor den Gletschern von Chamonix" loading="lazy">
+        <figcaption data-de="&lt;strong&gt;Chamonix · 3.330 m&lt;/strong&gt;Überblick behalten, Thermik sauber zentrieren"
+                    data-en="&lt;strong&gt;Chamonix · 3,330 m&lt;/strong&gt;Keeping the big picture, centering the thermal">
+          <strong>Chamonix · 3.330 m</strong>Überblick behalten, Thermik sauber zentrieren
+        </figcaption>
+      </figure>
+
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/bir-billing-abendlicht.jpg"
+              data-caption-de="Abendstimmung am Startplatz über Bir Billing im indischen Himalaya"
+              data-caption-en="Evening light at the launch above Bir Billing in the Indian Himalaya">
+        <img src="./assets/bir-billing-abendlicht.jpg" alt="Zwei Piloten mit ausgebreiteten Armen auf einer Bergwiese im Gegenlicht der tief stehenden Sonne" loading="lazy">
+        <figcaption data-de="&lt;strong&gt;Bir Billing · Himalaya&lt;/strong&gt;Biwak am Startplatz, Sonne im Gesicht"
+                    data-en="&lt;strong&gt;Bir Billing · Himalaya&lt;/strong&gt;Bivouac at launch, sun in our faces">
+          <strong>Bir Billing · Himalaya</strong>Biwak am Startplatz, Sonne im Gesicht
+        </figcaption>
+      </figure>
+
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/insta360-see-flug.jpg"
+              data-caption-de="Mit der 360-Grad-Kamera hoch über einem Alpensee"
+              data-caption-en="Shot with a 360° camera high above an alpine lake">
+        <img src="./assets/insta360-see-flug.jpg" alt="Gleitschirmkappe und Steuerleinen aus der Pilotenperspektive über einem großen See zwischen Bergen" loading="lazy">
+        <figcaption data-de="&lt;strong&gt;Über dem See · 360°&lt;/strong&gt;Perspektive wechseln, Neues entdecken"
+                    data-en="&lt;strong&gt;Above the Lake · 360°&lt;/strong&gt;Change perspective, discover more">
+          <strong>Über dem See · 360°</strong>Perspektive wechseln, Neues entdecken
+        </figcaption>
+      </figure>
+
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/himalaya-hochsee-luftbild.jpg"
+              data-caption-de="Hochgebirgssee zwischen Geröllflanken im Himalaya"
+              data-caption-en="High-altitude lake between scree slopes in the Himalaya">
+        <img src="./assets/himalaya-hochsee-luftbild.jpg" alt="Kleiner dunkler Bergsee in einer kargen Geröllmulde vor einer Himalaya-Bergkette" loading="lazy">
+        <figcaption data-de="&lt;strong&gt;Himalaya · Hochgebirge&lt;/strong&gt;Weit weg von jeder Routine"
+                    data-en="&lt;strong&gt;Himalaya · High Mountains&lt;/strong&gt;Far away from any routine">
+          <strong>Himalaya · Hochgebirge</strong>Weit weg von jeder Routine
+        </figcaption>
+      </figure>
+
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/start-gipfelkreuz.jpg"
+              data-caption-de="Startlauf am Gipfelkreuz: die Füße schon in der Luft"
+              data-caption-en="Launch next to the summit cross: feet already off the ground">
+        <img src="./assets/start-gipfelkreuz.jpg" alt="Tobias hebt mit dem Gleitschirm von einer Gipfelwiese neben einem Gipfelkreuz ab" loading="lazy">
+        <figcaption data-de="&lt;strong&gt;Gipfelstart&lt;/strong&gt;Entschlossen loslaufen, sauber abheben"
+                    data-en="&lt;strong&gt;Summit Launch&lt;/strong&gt;Commit to the run, lift off cleanly">
+          <strong>Gipfelstart</strong>Entschlossen loslaufen, sauber abheben
+        </figcaption>
+      </figure>
+
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/gletscherstrom-luftbild.jpg"
+              data-caption-de="Gletscherströme und Gipfel aus der Vogelperspektive"
+              data-caption-en="Glacier streams and peaks from a bird's-eye view">
+        <img src="./assets/gletscherstrom-luftbild.jpg" alt="Luftbild eines großen Alpengletschers mit Moränenstreifen und spitzem Gipfel" loading="lazy">
+        <figcaption data-de="&lt;strong&gt;Gletscher von oben&lt;/strong&gt;Das große Bild sehen"
+                    data-en="&lt;strong&gt;Glacier from Above&lt;/strong&gt;Seeing the big picture">
+          <strong>Gletscher von oben</strong>Das große Bild sehen
+        </figcaption>
+      </figure>
+
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/insta360-flug-felder.jpg"
+              data-caption-de="Im Aufwind über Feldern und Dörfern, aufgenommen mit der 360-Grad-Kamera"
+              data-caption-en="Climbing above fields and villages, captured with a 360° camera">
+        <img src="./assets/insta360-flug-felder.jpg" alt="Tobias unter seiner rot-weißen Gleitschirmkappe über Feldern und Dörfern" loading="lazy">
+        <figcaption data-de="&lt;strong&gt;Im Aufwind&lt;/strong&gt;Leicht unterwegs, schnell oben"
+                    data-en="&lt;strong&gt;In the Lift&lt;/strong&gt;Travel light, climb fast">
+          <strong>Im Aufwind</strong>Leicht unterwegs, schnell oben
+        </figcaption>
+      </figure>
+
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/kuestenflug-atlantik.jpg"
+              data-caption-de="Steilküste, Meer und vorgelagerte Inseln aus der Luft"
+              data-caption-en="Sea cliffs, ocean and offshore islands from the air">
+        <img src="./assets/kuestenflug-atlantik.jpg" alt="Steilküste mit Strand, Meer und vorgelagerten Inseln im Abendlicht" loading="lazy">
+        <figcaption data-de="&lt;strong&gt;Küstenflug&lt;/strong&gt;Neue Reviere, neue Bedingungen"
+                    data-en="&lt;strong&gt;Coastal Flight&lt;/strong&gt;New sites, new conditions">
+          <strong>Küstenflug</strong>Neue Reviere, neue Bedingungen
+        </figcaption>
+      </figure>
+
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/duenen-soaring.jpg"
+              data-caption-de="Soaring an der Düne: mehrere Schirme im gleichmäßigen Seewind"
+              data-caption-en="Dune soaring: several wings in a steady sea breeze">
+        <img src="./assets/duenen-soaring.jpg" alt="Mehrere Gleitschirme soaren entlang einer langen Sanddüne am Meer" loading="lazy">
+        <figcaption data-de="&lt;strong&gt;Dünen-Soaring&lt;/strong&gt;Gemeinsam in der Luft, Abstand halten"
+                    data-en="&lt;strong&gt;Dune Soaring&lt;/strong&gt;Flying together, keeping spacing">
+          <strong>Dünen-Soaring</strong>Gemeinsam in der Luft, Abstand halten
+        </figcaption>
+      </figure>
+
+      <figure class="gallery-item" style="margin:0"
+              data-lightbox="./assets/bir-billing-zelt-sunrise.jpg"
+              data-caption-de="Sonnenaufgang am Zelt nach einer Nacht am Berg im Himalaya"
+              data-caption-en="Sunrise at the tent after a night on the mountain in the Himalaya">
+        <img src="./assets/bir-billing-zelt-sunrise.jpg" alt="Grünes Ein-Personen-Zelt auf einer Bergwiese im ersten Sonnenlicht" loading="lazy">
+        <figcaption data-de="&lt;strong&gt;Biwak · Sonnenaufgang&lt;/strong&gt;Früh raus, wenn die Luft noch ruhig ist"
+                    data-en="&lt;strong&gt;Bivouac · Sunrise&lt;/strong&gt;Up early while the air is still calm">
+          <strong>Biwak · Sonnenaufgang</strong>Früh raus, wenn die Luft noch ruhig ist
         </figcaption>
       </figure>
     </div>
